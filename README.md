@@ -1,1 +1,1 @@
-# Subscription Manager App
+# Subscriptions Manager App
