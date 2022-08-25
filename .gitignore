@@ -76,3 +76,6 @@ lint/tmp/
 
 # macos filesystem
 .DS_Store
+
+# architecture diagram backups
+architecture/*.bkp
