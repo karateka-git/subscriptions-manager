@@ -1,1 +1,1 @@
-# Subscriptions Manager App
+# 📝 Android applications for subscriptions management
