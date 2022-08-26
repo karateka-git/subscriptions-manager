@@ -1,3 +1,9 @@
 <resources>
+
+    <!-- General -->
     <string name="app_name">Subscriptions Manager</string>
+
+    <!-- Subscriptions list fragment -->
+    <string name="tv_subscriptions_title_text">Subscriptions</string>
+
 </resources>
