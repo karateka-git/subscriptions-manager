@@ -5,4 +5,6 @@ import com.vlatrof.subscriptionsmanager.R
 
 class SubscriptionsListFragment : Fragment(R.layout.fragment_subscriptions_list) {
 
+
+
 }
