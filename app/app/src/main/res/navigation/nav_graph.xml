@@ -8,8 +8,8 @@
 
     <fragment
         android:id="@+id/fragment_subscriptions_list"
-        android:name="com.vlatrof.subscriptionsmanager.presentation.screens.subscriptionslist.SubscriptionsListFragment"
-        tools:layout="@layout/fragment_subscriptions_list">
+        android:name="com.vlatrof.subscriptionsmanager.presentation.screens.subscriptions.SubscriptionsFragment"
+        tools:layout="@layout/fragment_subscriptions">
     </fragment>
 
 </navigation>
