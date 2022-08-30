@@ -43,9 +43,6 @@ class SubscriptionsFragment : Fragment(fragment_subscriptions) {
             )
         )
 
-        AppCompatDelegate. setDefaultNightMode(AppCompatDelegate. MODE_NIGHT_YES)
-
     }
-
 
 }
