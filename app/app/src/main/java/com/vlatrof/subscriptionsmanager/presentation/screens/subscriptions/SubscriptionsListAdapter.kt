@@ -7,8 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vlatrof.subscriptionsmanager.databinding.RvItemSubscriptionBinding
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 
-class SubscriptionsListAdapter
-    : RecyclerView.Adapter<SubscriptionsListAdapter.SubscriptionViewHolder>() {
+class SubscriptionsListAdapter : RecyclerView.Adapter<SubscriptionsListAdapter.SubscriptionViewHolder>() {
 
     var subscriptions: List<Subscription> = emptyList()
 
