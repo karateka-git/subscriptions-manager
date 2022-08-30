@@ -15,7 +15,7 @@
         android:fontFamily="@font/inter_regular"
         android:lines="1"
         android:text="Some Useful Subscription"
-        android:textColor="@color/black"
+        android:textColor="?android:textColorPrimary"
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/tv_subscription_cost"
@@ -28,7 +28,7 @@
         android:fontFamily="@font/inter_semibold"
         android:maxWidth="150dp"
         android:text="249 RUB / 3 M"
-        android:textColor="@color/black"
+        android:textColor="?android:textColorPrimary"
         android:textSize="18sp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_subscription_title" />

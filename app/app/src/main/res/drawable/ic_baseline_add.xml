@@ -2,7 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="28dp"
     android:height="28dp"
-    android:tint="#000000"
+    android:tint="?android:textColorPrimary"
     android:viewportWidth="24"
     android:viewportHeight="24">
 

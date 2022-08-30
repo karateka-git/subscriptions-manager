@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -12,7 +13,7 @@
         android:layout_marginTop="@dimen/screen_section_margin_top"
         android:fontFamily="@font/inter_semibold"
         android:text="@string/tv_subscriptions_title_text"
-        android:textColor="@color/black"
+        android:textColor="?android:textColorPrimary"
         android:textSize="@dimen/screen_title_text_size"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -23,12 +24,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="30dp"
-        android:contentDescription="@string/btn_new_subscription_content_description"
-        android:src="@drawable/ic_baseline_add_24"
-        app:layout_constraintBottom_toBottomOf="@id/tv_subscriptions_title"
-        app:layout_constraintRight_toRightOf="parent"
         android:background="?android:attr/selectableItemBackgroundBorderless"
-        />
+        android:contentDescription="@string/btn_new_subscription_content_description"
+        android:src="@drawable/ic_baseline_add"
+        app:layout_constraintBottom_toBottomOf="@id/tv_subscriptions_title"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_subscriptions_list"
