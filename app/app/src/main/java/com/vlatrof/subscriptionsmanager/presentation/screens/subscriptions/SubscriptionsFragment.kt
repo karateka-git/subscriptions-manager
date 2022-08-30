@@ -2,7 +2,6 @@ package com.vlatrof.subscriptionsmanager.presentation.screens.subscriptions
 
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.vlatrof.subscriptionsmanager.R.layout.fragment_subscriptions
 import com.vlatrof.subscriptionsmanager.databinding.FragmentSubscriptionsBinding
