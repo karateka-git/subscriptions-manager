@@ -6,8 +6,8 @@ import java.time.Period
 
 data class Subscription (
     val title: String = "",
-    val startDate: LocalDate,
-    val renewalPeriod: Period,
+    val startDate: LocalDate = LocalDate.now(),
+    val renewalPeriod: Period = Period.ZERO,
     val paymentCost: Int = 0,
-    val paymentCurrency: Currency
+    val paymentCurrency: Currency = Currency.getInstance("USD")
 )

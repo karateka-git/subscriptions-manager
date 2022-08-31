@@ -1,10 +1,11 @@
 package com.vlatrof.subscriptionsmanager
 
+import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import org.junit.Test
 import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
-import java.util.Locale
+import java.util.*
 
 class ExampleUnitTest {
 
@@ -22,6 +23,16 @@ class ExampleUnitTest {
         println(dtf.format(resultDate))
         println()
         println()
+
+        val s = Subscription(
+            title = "Yandex Plus",
+            startDate = LocalDate.of(2022, 8, 15),
+            renewalPeriod = Period.ofMonths(1),
+            paymentCost = 249,
+            paymentCurrency = Currency.getInstance("RUB")
+        )
+
+        println(s.toString())
 
     }
 }
