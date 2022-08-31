@@ -34,7 +34,7 @@ class SubscriptionsListAdapter : RecyclerView.Adapter<SubscriptionsListAdapter.S
     override fun onBindViewHolder(holder: SubscriptionViewHolder, position: Int) {
 
         holder.binding.tvSubscriptionTitle.text = subscriptions[position].title
-        holder.binding.tvSubscriptionCost.text = subscriptions[position].cost.toString()
+        holder.binding.tvSubscriptionCost.text = subscriptions[position].paymentCost.toString()
 
     }
 
