@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import com.vlatrof.subscriptionsmanager.databinding.RvItemSubscriptionBinding
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 
-class SubscriptionsListAdapter : RecyclerView.Adapter<SubscriptionsListAdapter.SubscriptionViewHolder>() {
+class SubscriptionsAdapter : RecyclerView.Adapter<SubscriptionsAdapter.SubscriptionViewHolder>() {
 
     var subscriptions: List<Subscription> = emptyList()
 
@@ -21,7 +21,7 @@ class SubscriptionsListAdapter : RecyclerView.Adapter<SubscriptionsListAdapter.S
 
         subscriptions = newSubscriptionsList
 
-        diffResult.dispatchUpdatesTo(this@SubscriptionsListAdapter)
+        diffResult.dispatchUpdatesTo(this@SubscriptionsAdapter)
 
     }
 

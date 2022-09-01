@@ -10,19 +10,19 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class SubscriptionsFragment : Fragment(fragment_subscriptions) {
 
     private lateinit var binding: FragmentSubscriptionsBinding
-    private lateinit var subscriptionsListAdapter: SubscriptionsListAdapter
+    private lateinit var subscriptionsAdapter: SubscriptionsAdapter
     private val subscriptionsViewModel by viewModel<SubscriptionsViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentSubscriptionsBinding.bind(view)
-        subscriptionsListAdapter = SubscriptionsListAdapter()
-        binding.rvSubscriptionsList.adapter = subscriptionsListAdapter
-        subscriptionsViewModel.subscriptionsLiveData.observe(viewLifecycleOwner) {
-            subscriptionsListAdapter.setData(newSubscriptionsList = it)
-        }
+        subscriptionsAdapter = SubscriptionsAdapter()
+        binding.rvSubscriptionsList.adapter = subscriptionsAdapter
         subscriptionsViewModel.getAllSubscriptions()
+        subscriptionsViewModel.subscriptionsLiveData.observe(viewLifecycleOwner) {
+            subscriptionsAdapter.setData(newSubscriptionsList = it)
+        }
 
     }
 
