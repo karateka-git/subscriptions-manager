@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
 import com.vlatrof.subscriptionsmanager.databinding.RvItemSubscriptionBinding
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 
@@ -11,10 +12,17 @@ class SubscriptionsListAdapter : RecyclerView.Adapter<SubscriptionsListAdapter.S
 
     var subscriptions: List<Subscription> = emptyList()
 
-    @SuppressLint("NotifyDataSetChanged")
     fun setData(newSubscriptionsList: List<Subscription>) {
+
+        val subscriptionsDiffUtilCallback =
+            SubscriptionsDiffUtilCallback(subscriptions, newSubscriptionsList)
+
+        val diffResult = DiffUtil.calculateDiff(subscriptionsDiffUtilCallback)
+
         subscriptions = newSubscriptionsList
-        notifyDataSetChanged()
+
+        diffResult.dispatchUpdatesTo(this@SubscriptionsListAdapter)
+
     }
 
     override fun getItemCount(): Int = subscriptions.size
@@ -41,6 +49,27 @@ class SubscriptionsListAdapter : RecyclerView.Adapter<SubscriptionsListAdapter.S
         b.tvSubscriptionTitle.text = s.title
         b.tvSubscriptionCost.text = costStr
 
+    }
+
+}
+
+class SubscriptionsDiffUtilCallback(
+
+    private val oldList: List<Subscription>,
+    private val newList: List<Subscription>
+
+    ) : DiffUtil.Callback() {
+
+    override fun getOldListSize(): Int = oldList.size
+
+    override fun getNewListSize(): Int = newList.size
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition].id == newList[newItemPosition].id
+    }
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition] == newList[newItemPosition]
     }
 
 }
