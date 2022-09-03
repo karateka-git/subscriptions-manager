@@ -2,6 +2,7 @@ package com.vlatrof.subscriptionsmanager.app
 
 import android.app.Application
 import com.vlatrof.subscriptionsmanager.di.appModule
+import com.vlatrof.subscriptionsmanager.di.dataModule
 import com.vlatrof.subscriptionsmanager.di.domainModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -19,8 +20,9 @@ class App : Application() {
             androidContext(this@App)
             modules(
                 listOf(
+                    dataModule,
+                    domainModule,
                     appModule,
-                    domainModule
                 )
             )
         }

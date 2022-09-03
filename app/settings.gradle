@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 rootProject.name = "Subscriptions Manager"
 include ':app'
 include ':domain'
+include ':data'
