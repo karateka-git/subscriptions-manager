@@ -11,9 +11,8 @@ class SubscriptionRepositoryImpl(private val subscriptionStorage: SubscriptionSt
 
         val storageSubscriptions = subscriptionStorage.getAllSubscriptions()
 
-        return SubscriptionModelMapper.mapListToDomain(storageSubscriptions)
+        return SubscriptionModelMapper.mapListStorageToDomain(storageSubscriptions)
 
     }
-
 
 }

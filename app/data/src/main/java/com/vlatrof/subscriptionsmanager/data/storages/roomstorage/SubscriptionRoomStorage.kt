@@ -1,13 +1,14 @@
 package com.vlatrof.subscriptionsmanager.data.storages.roomstorage
 
+import com.vlatrof.subscriptionsmanager.data.storages.SubscriptionStorage
 import com.vlatrof.subscriptionsmanager.data.storages.models.Subscription
 import java.time.LocalDate
 import java.time.Period
 import java.util.*
 
-class SubscriptionRoomStorage {
-    
-    fun foo(): List<Subscription> {
+class SubscriptionRoomStorage : SubscriptionStorage {
+
+    override fun getAllSubscriptions(): List<Subscription> {
 
         return listOf(
 
@@ -54,5 +55,5 @@ class SubscriptionRoomStorage {
         )
 
     }
-    
+
 }

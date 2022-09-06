@@ -5,7 +5,7 @@ import com.vlatrof.subscriptionsmanager.data.storages.models.Subscription as Sto
 
 object SubscriptionModelMapper {
 
-    fun mapToDomain(storageSubscription: StorageSubscriptionModel): DomainSubscriptionModel {
+    fun mapStorageToDomain(storageSubscription: StorageSubscriptionModel): DomainSubscriptionModel {
 
         return DomainSubscriptionModel(
             id = storageSubscription.id,
@@ -18,7 +18,7 @@ object SubscriptionModelMapper {
 
     }
 
-    fun mapToStorage(domainSubscription: DomainSubscriptionModel): StorageSubscriptionModel {
+    fun mapDomainToStorage(domainSubscription: DomainSubscriptionModel): StorageSubscriptionModel {
 
         return StorageSubscriptionModel(
             id = domainSubscription.id,
@@ -31,24 +31,24 @@ object SubscriptionModelMapper {
 
     }
 
-    fun mapListToDomain(storageSubscriptionList: List<StorageSubscriptionModel>): List<DomainSubscriptionModel> {
+    fun mapListStorageToDomain(storageSubscriptionList: List<StorageSubscriptionModel>): List<DomainSubscriptionModel> {
 
         val domainSubscriptionList = mutableListOf<DomainSubscriptionModel>()
 
         storageSubscriptionList.forEach {
-            domainSubscriptionList.add(mapToDomain(it))
+            domainSubscriptionList.add(mapStorageToDomain(it))
         }
 
         return domainSubscriptionList
 
     }
 
-    fun mapListToStorage(domainSubscriptionList: List<DomainSubscriptionModel>): List<StorageSubscriptionModel> {
+    fun mapListDomainToStorage(domainSubscriptionList: List<DomainSubscriptionModel>): List<StorageSubscriptionModel> {
 
         val storageSubscriptionList = mutableListOf<StorageSubscriptionModel>()
 
         domainSubscriptionList.forEach {
-            storageSubscriptionList.add(mapToStorage(it))
+            storageSubscriptionList.add(mapDomainToStorage(it))
         }
 
         return storageSubscriptionList
