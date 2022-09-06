@@ -1,18 +1,16 @@
-package com.vlatrof.subscriptionsmanager.data.storages.roomstorage
+package com.vlatrof.subscriptionsmanager.data.local
 
-import com.vlatrof.subscriptionsmanager.data.storages.SubscriptionStorage
-import com.vlatrof.subscriptionsmanager.data.storages.models.Subscription
 import java.time.LocalDate
 import java.time.Period
 import java.util.*
 
-class SubscriptionRoomStorage : SubscriptionStorage {
+class SubscriptionsLocalDataSource {
 
-    override fun getAllSubscriptions(): List<Subscription> {
+    fun getAllSubscriptions(): List<SubscriptionEntity> {
 
         return listOf(
 
-            Subscription(
+            SubscriptionEntity(
                 title = "Yandex Plus",
                 startDate = LocalDate.of(2022, 8, 15),
                 renewalPeriod = Period.ofMonths(1),
@@ -20,7 +18,7 @@ class SubscriptionRoomStorage : SubscriptionStorage {
                 paymentCurrency = Currency.getInstance("RUB")
             ),
 
-            Subscription(
+            SubscriptionEntity(
                 title = "Figma",
                 startDate = LocalDate.of(2012, 9, 25),
                 renewalPeriod = Period.ofYears(1),
@@ -28,7 +26,7 @@ class SubscriptionRoomStorage : SubscriptionStorage {
                 paymentCurrency = Currency.getInstance("USD")
             ),
 
-            Subscription(
+            SubscriptionEntity(
                 title = "Spotify Premium",
                 startDate = LocalDate.of(2022, 8, 15),
                 renewalPeriod = Period.ofMonths(1),
@@ -36,7 +34,7 @@ class SubscriptionRoomStorage : SubscriptionStorage {
                 paymentCurrency = Currency.getInstance("RUB")
             ),
 
-            Subscription(
+            SubscriptionEntity(
                 title = "Youtube Premium",
                 startDate = LocalDate.of(2022, 8, 15),
                 renewalPeriod = Period.ofWeeks(2),
@@ -44,7 +42,7 @@ class SubscriptionRoomStorage : SubscriptionStorage {
                 paymentCurrency = Currency.getInstance("AUD")
             ),
 
-            Subscription(
+            SubscriptionEntity(
                 title = "Tinkoff Pro",
                 startDate = LocalDate.of(2022, 8, 15),
                 renewalPeriod = Period.ofMonths(1),
@@ -52,7 +50,7 @@ class SubscriptionRoomStorage : SubscriptionStorage {
                 paymentCurrency = Currency.getInstance("RUB")
             ),
 
-        )
+            )
 
     }
 

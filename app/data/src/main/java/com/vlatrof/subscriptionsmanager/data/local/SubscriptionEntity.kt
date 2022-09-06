@@ -1,10 +1,10 @@
-package com.vlatrof.subscriptionsmanager.data.storages.models
+package com.vlatrof.subscriptionsmanager.data.local
 
 import java.util.Currency
 import java.time.LocalDate
 import java.time.Period
 
-data class Subscription (
+data class SubscriptionEntity (
     val id: Int = -1,
     val title: String = "",
     val startDate: LocalDate = LocalDate.MIN,

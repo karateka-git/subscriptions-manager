@@ -1,11 +1,11 @@
-package com.vlatrof.subscriptionsmanager.data.mappers
+package com.vlatrof.subscriptionsmanager.data.utils
 
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription as DomainSubscriptionModel
-import com.vlatrof.subscriptionsmanager.data.storages.models.Subscription as StorageSubscriptionModel
+import com.vlatrof.subscriptionsmanager.data.local.SubscriptionEntity as DataSubscriptionModel
 
 object SubscriptionModelMapper {
 
-    fun mapStorageToDomain(storageSubscription: StorageSubscriptionModel): DomainSubscriptionModel {
+    fun mapDataToDomain(storageSubscription: DataSubscriptionModel): DomainSubscriptionModel {
 
         return DomainSubscriptionModel(
             id = storageSubscription.id,
@@ -18,9 +18,9 @@ object SubscriptionModelMapper {
 
     }
 
-    fun mapDomainToStorage(domainSubscription: DomainSubscriptionModel): StorageSubscriptionModel {
+    fun mapDomainToData(domainSubscription: DomainSubscriptionModel): DataSubscriptionModel {
 
-        return StorageSubscriptionModel(
+        return DataSubscriptionModel(
             id = domainSubscription.id,
             title = domainSubscription.title,
             startDate = domainSubscription.startDate,
@@ -31,24 +31,24 @@ object SubscriptionModelMapper {
 
     }
 
-    fun mapListStorageToDomain(storageSubscriptionList: List<StorageSubscriptionModel>): List<DomainSubscriptionModel> {
+    fun mapListDataToDomain(storageSubscriptionList: List<DataSubscriptionModel>): List<DomainSubscriptionModel> {
 
         val domainSubscriptionList = mutableListOf<DomainSubscriptionModel>()
 
         storageSubscriptionList.forEach {
-            domainSubscriptionList.add(mapStorageToDomain(it))
+            domainSubscriptionList.add(mapDataToDomain(it))
         }
 
         return domainSubscriptionList
 
     }
 
-    fun mapListDomainToStorage(domainSubscriptionList: List<DomainSubscriptionModel>): List<StorageSubscriptionModel> {
+    fun mapListDomainToData(domainSubscriptionList: List<DomainSubscriptionModel>): List<DataSubscriptionModel> {
 
-        val storageSubscriptionList = mutableListOf<StorageSubscriptionModel>()
+        val storageSubscriptionList = mutableListOf<DataSubscriptionModel>()
 
         domainSubscriptionList.forEach {
-            storageSubscriptionList.add(mapDomainToStorage(it))
+            storageSubscriptionList.add(mapDomainToData(it))
         }
 
         return storageSubscriptionList
