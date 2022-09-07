@@ -1,6 +1,6 @@
 package com.vlatrof.subscriptionsmanager.data.repositories
 
-import com.vlatrof.subscriptionsmanager.data.utils.mappers.subscription.SubscriptionModelMapper
+import com.vlatrof.subscriptionsmanager.data.utils.mappers.subscription.SubscriptionModelListMapper
 import com.vlatrof.subscriptionsmanager.data.local.SubscriptionsLocalDataSource
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription as DomainSubscriptionModel
 import com.vlatrof.subscriptionsmanager.domain.repositories.SubscriptionRepository
@@ -13,10 +13,8 @@ class SubscriptionRepositoryImpl(
 
     override fun getAllSubscriptions(): List<DomainSubscriptionModel> {
 
-        val localDataSourceSubscriptions = subscriptionsLocalDataSource
-            .getAllSubscriptions()
-
-        return SubscriptionModelMapper.mapListDataToDomain(localDataSourceSubscriptions)
+        val dataSubscriptions = subscriptionsLocalDataSource.getAllSubscriptions()
+        return SubscriptionModelListMapper.mapDataToDomain(dataSubscriptions)
 
     }
 

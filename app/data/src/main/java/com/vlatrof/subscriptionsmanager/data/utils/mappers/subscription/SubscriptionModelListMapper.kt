@@ -4,7 +4,7 @@ import com.vlatrof.subscriptionsmanager.data.local.SubscriptionEntity as EntityS
 import com.vlatrof.subscriptionsmanager.data.models.Subscription as DataSubscription
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription as DomainSubscription
 
-class SubscriptionModelListMapper {
+object SubscriptionModelListMapper {
 
     fun mapEntityToData(entitySubscriptionList: List<EntitySubscription>): List<DataSubscription> {
 
