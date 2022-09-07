@@ -2,7 +2,7 @@ package com.vlatrof.subscriptionsmanager.data.local
 
 import java.time.LocalDate
 import java.time.Period
-import java.util.*
+import java.util.Currency
 
 class SubscriptionsLocalDataSource {
 

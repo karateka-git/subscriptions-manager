@@ -1,5 +1,6 @@
 package com.vlatrof.subscriptionsmanager
 
+import com.vlatrof.subscriptionsmanager.data.local.SubscriptionEntity
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import org.junit.Test
 import java.time.LocalDate
@@ -10,11 +11,28 @@ import java.util.*
 class ExampleUnitTest {
 
     @Test
-    fun addition_isCorrect() {
+    fun simpleTest() {
 
-        val s = Subscription()
+        val ld: LocalDate = LocalDate.parse("2010-07-20") // using default formatter ISO
+        val lds: String = ld.toString()
 
-        println(s.toString())
+        println()
+        println(ld)
+        println(lds)
+        println()
+
+        val p: Period = Period.parse("P1M")
+        val ps: String = p.toString()
+
+        println()
+        println(p)
+        println(ps)
+        println()
+
+        val currency = Currency.getAvailableCurrencies()
+
+        println(currency)
 
     }
+
 }

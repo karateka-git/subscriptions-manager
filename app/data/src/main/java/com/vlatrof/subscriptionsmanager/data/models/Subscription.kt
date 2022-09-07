@@ -1,4 +1,4 @@
-package com.vlatrof.subscriptionsmanager.domain.models
+package com.vlatrof.subscriptionsmanager.data.models
 
 import java.util.Currency
 import java.time.LocalDate
