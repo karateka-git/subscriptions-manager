@@ -1,11 +1,8 @@
 package com.vlatrof.subscriptionsmanager
 
-import com.vlatrof.subscriptionsmanager.data.local.SubscriptionEntity
-import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import org.junit.Test
 import java.time.LocalDate
 import java.time.Period
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 class ExampleUnitTest {

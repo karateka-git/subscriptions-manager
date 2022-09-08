@@ -1,4 +1,4 @@
-package com.vlatrof.subscriptionsmanager.data.local
+package com.vlatrof.subscriptionsmanager.data.local.room.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

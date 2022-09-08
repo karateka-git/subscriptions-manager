@@ -1,4 +1,4 @@
-package com.vlatrof.subscriptionsmanager.presentation.rootactivity
+package com.vlatrof.subscriptionsmanager.presentation.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

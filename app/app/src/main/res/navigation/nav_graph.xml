@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/fragment_subscriptions_list"
-        android:name="com.vlatrof.subscriptionsmanager.presentation.screens.subscriptions.SubscriptionsFragment"
+        android:name="com.vlatrof.subscriptionsmanager.presentation.fragments.SubscriptionsFragment"
         tools:layout="@layout/fragment_subscriptions">
     </fragment>
 

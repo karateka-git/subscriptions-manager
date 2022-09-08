@@ -2,7 +2,6 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
-    id 'kotlin-android-extensions'
 }
 
 android {
@@ -45,8 +44,13 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "com.google.android.material:material:$material_version"
 
+    // Kotlin components
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_stdlib_jdk7_version"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+
     // Room
-    implementation "androidx.room:room-runtime:$room_version"
+    api "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
     // To use Kotlin annotation processing tool (kapt)
     kapt("androidx.room:room-compiler:$room_version")

@@ -1,9 +1,9 @@
-package com.vlatrof.subscriptionsmanager.data.utils.mappers.subscription
+package com.vlatrof.subscriptionsmanager.data.utils
 
 import java.time.LocalDate
 import java.time.Period
 import java.util.*
-import com.vlatrof.subscriptionsmanager.data.local.SubscriptionEntity as EntitySubscription
+import com.vlatrof.subscriptionsmanager.data.local.room.entities.SubscriptionEntity as EntitySubscription
 import com.vlatrof.subscriptionsmanager.data.models.Subscription as DataSubscription
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription as DomainSubscription
 
