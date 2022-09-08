@@ -1,8 +1,8 @@
 package com.vlatrof.subscriptionsmanager.presentation.viewmodels
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import com.vlatrof.subscriptionsmanager.domain.usecases.GetAllSubscriptionsUseCase
@@ -17,18 +17,14 @@ class SubscriptionsViewModel(
 
 ) : ViewModel() {
 
-    private val _subscriptionsMutableLiveData = MutableLiveData<List<Subscription>>()
-    // to prevent changing subscriptionsMutableLiveData.value from outside
+    private val _subscriptionsMutableLiveData =
+        getAllSubscriptionsUseCase.execute().asLiveData()
     val subscriptionsLiveData: LiveData<List<Subscription>> = _subscriptionsMutableLiveData
 
     fun insertNewSubscription(subscription: Subscription) {
-
         viewModelScope.launch(Dispatchers.IO) {
             insertNewSubscriptionUseCase.execute(subscription)
-            // update subscriptions state after insert
-            _subscriptionsMutableLiveData.value = getAllSubscriptionsUseCase.execute()
         }
-
     }
 
 }

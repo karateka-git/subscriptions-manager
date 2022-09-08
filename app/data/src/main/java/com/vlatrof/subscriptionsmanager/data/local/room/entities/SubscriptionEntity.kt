@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 data class SubscriptionEntity (
 
     @PrimaryKey(autoGenerate = true)
-    val id: Int = -1,
+    val id: Int? = null,
 
     @ColumnInfo(name = "title", defaultValue = "")
     val title: String = "",

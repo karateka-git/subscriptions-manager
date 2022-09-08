@@ -28,6 +28,13 @@ class SubscriptionsFragment : Fragment(fragment_subscriptions) {
         subscriptionsViewModel.subscriptionsLiveData.observe(viewLifecycleOwner) { 
             subscriptionsAdapter.setData(newSubscriptionsList = it)
         }
+
+        // todo: create tool to clear all base (temp: maybe onClick() on main screen title)
+        // todo: change all execute methods to invoke operators in all usecases in project
+        // todo: create interfaces for all usecases in project
+        // todo: сделать правильно работу с айдишниками и crud
+
+
         binding.btnNewSubscription.setOnClickListener{
             val dummySubscriptionsList = listOf(
 

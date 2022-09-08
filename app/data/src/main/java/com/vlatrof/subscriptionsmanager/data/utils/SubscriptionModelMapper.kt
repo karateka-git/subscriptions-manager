@@ -12,7 +12,7 @@ object SubscriptionModelMapper {
     fun mapEntityToData(entitySubscription: EntitySubscription): DataSubscription {
 
         return DataSubscription(
-            id = entitySubscription.id,
+            id = entitySubscription.id ?: -1,
             title = entitySubscription.title,
             startDate = LocalDate.parse(entitySubscription.startDate),
             renewalPeriod = Period.parse(entitySubscription.renewalPeriod),
@@ -25,7 +25,6 @@ object SubscriptionModelMapper {
     fun mapDataToEntity(dataSubscription: DataSubscription): EntitySubscription {
 
         return EntitySubscription(
-            id = dataSubscription.id,
             title = dataSubscription.title,
             startDate = dataSubscription.startDate.toString(),
             renewalPeriod = dataSubscription.renewalPeriod.toString(),

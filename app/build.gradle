@@ -16,9 +16,12 @@ ext {
     appcompat_version = '1.5.0'
     material_version = '1.6.1'
 
+    // Lifecycle components
+    lifecycle_version = "2.5.1"
+
     // Kotlin components
     ext.kotlin_stdlib_jdk7_version = '1.7.10'
-    coroutines_version = '1.5.2'
+    coroutines_version = '1.6.4'
 
     // Navigation Component
     nav_component_version = '2.5.1'
