@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
-import com.vlatrof.subscriptionsmanager.domain.usecases.GetAllSubscriptionsUseCase
-import com.vlatrof.subscriptionsmanager.domain.usecases.InsertNewSubscriptionUseCase
+import com.vlatrof.subscriptionsmanager.domain.usecases.getallsubscriptions.GetAllSubscriptionsUseCase
+import com.vlatrof.subscriptionsmanager.domain.usecases.insertnewsubscription.InsertNewSubscriptionUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -17,13 +17,12 @@ class SubscriptionsViewModel(
 
 ) : ViewModel() {
 
-    private val _subscriptionsMutableLiveData =
-        getAllSubscriptionsUseCase.execute().asLiveData()
-    val subscriptionsLiveData: LiveData<List<Subscription>> = _subscriptionsMutableLiveData
+    val subscriptionsLiveData: LiveData<List<Subscription>> =
+        getAllSubscriptionsUseCase().asLiveData()
 
     fun insertNewSubscription(subscription: Subscription) {
         viewModelScope.launch(Dispatchers.IO) {
-            insertNewSubscriptionUseCase.execute(subscription)
+            insertNewSubscriptionUseCase(subscription)
         }
     }
 
