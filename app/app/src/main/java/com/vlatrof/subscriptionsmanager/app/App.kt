@@ -11,8 +11,6 @@ import org.koin.core.logger.Level
 
 class App : Application() {
 
-    // todo: сделать правильно работу с айдишниками, моделями и crud
-
     override fun onCreate() {
         super.onCreate()
 
