@@ -1,4 +1,4 @@
-package com.vlatrof.subscriptionsmanager.presentation.fragments
+package com.vlatrof.subscriptionsmanager.app
 
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import java.time.LocalDate
