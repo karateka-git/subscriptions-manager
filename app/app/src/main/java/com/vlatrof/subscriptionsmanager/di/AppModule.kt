@@ -9,7 +9,8 @@ val appModule = module {
     viewModel<SubscriptionsViewModel> {
         SubscriptionsViewModel(
             getAllSubscriptionsUseCase = get(),
-            insertNewSubscriptionUseCase = get()
+            insertNewSubscriptionUseCase = get(),
+            deleteAllSubscriptionsUseCase = get()
         )
     }
 

@@ -11,9 +11,7 @@ import org.koin.core.logger.Level
 
 class App : Application() {
 
-    // todo: create tool to clear all base (temp: maybe onClick() on main screen title)
     // todo: сделать правильно работу с айдишниками, моделями и crud
-    // todo: update app's architecture diagram to current version and update its png file
 
     override fun onCreate() {
         super.onCreate()

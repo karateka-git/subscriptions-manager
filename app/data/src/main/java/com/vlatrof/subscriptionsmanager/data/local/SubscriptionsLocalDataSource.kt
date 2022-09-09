@@ -18,4 +18,8 @@ class SubscriptionsLocalDataSource(private val subscriptionsDao: SubscriptionsDa
         subscriptionsDao.insert(SubscriptionModelMapper.mapDataToEntity(subscription))
     }
 
+    fun deleteAllSubscriptions() {
+        subscriptionsDao.deleteAllSubscriptions()
+    }
+
 }

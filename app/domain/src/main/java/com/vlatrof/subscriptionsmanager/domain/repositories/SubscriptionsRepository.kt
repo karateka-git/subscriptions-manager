@@ -9,4 +9,6 @@ interface SubscriptionsRepository {
 
     fun insertSubscription(subscription: DomainSubscription)
 
+    fun deleteAllSubscriptions()
+
 }

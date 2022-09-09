@@ -25,57 +25,19 @@ class SubscriptionsFragment : Fragment(fragment_subscriptions) {
         binding = FragmentSubscriptionsBinding.bind(view)
         subscriptionsAdapter = SubscriptionsAdapter()
         binding.rvSubscriptionsList.adapter = subscriptionsAdapter
-        subscriptionsViewModel.subscriptionsLiveData.observe(viewLifecycleOwner) { 
+
+        subscriptionsViewModel.subscriptionsLiveData.observe(viewLifecycleOwner) {
             subscriptionsAdapter.setData(newSubscriptionsList = it)
         }
 
         binding.btnNewSubscription.setOnClickListener{
-            val dummySubscriptionsList = listOf(
+            dummySubscriptionsList.forEach{
+                subscriptionsViewModel.insertNewSubscription(it)
+            }
+        }
 
-                Subscription(
-                    title = "Yandex Plus",
-                    startDate = LocalDate.of(2022, 8, 15),
-                    renewalPeriod = Period.ofMonths(1),
-                    paymentCost = 249,
-                    paymentCurrency = Currency.getInstance("RUB")
-                ),
-
-                Subscription(
-                    title = "Figma",
-                    startDate = LocalDate.of(2012, 9, 25),
-                    renewalPeriod = Period.ofYears(1),
-                    paymentCost = 5,
-                    paymentCurrency = Currency.getInstance("USD")
-                ),
-
-                Subscription(
-                    title = "Spotify Premium",
-                    startDate = LocalDate.of(2022, 8, 15),
-                    renewalPeriod = Period.ofMonths(1),
-                    paymentCost = 149,
-                    paymentCurrency = Currency.getInstance("RUB")
-                ),
-
-                Subscription(
-                    title = "Youtube Premium",
-                    startDate = LocalDate.of(2022, 8, 15),
-                    renewalPeriod = Period.ofWeeks(2),
-                    paymentCost = 199,
-                    paymentCurrency = Currency.getInstance("AUD")
-                ),
-
-                Subscription(
-                    title = "Tinkoff Pro",
-                    startDate = LocalDate.of(2022, 8, 15),
-                    renewalPeriod = Period.ofMonths(1),
-                    paymentCost = 249,
-                    paymentCurrency = Currency.getInstance("RUB")
-                ),
-
-                )
-            subscriptionsViewModel.insertNewSubscription(
-                dummySubscriptionsList[0]
-            )
+        binding.tvSubscriptionsTitle.setOnClickListener{
+            subscriptionsViewModel.deleteAllSubscriptions()
         }
 
     }

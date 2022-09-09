@@ -24,5 +24,8 @@ class SubscriptionsRepositoryImpl(
         subscriptionsLocalDataSource.insertSubscription(s)
     }
 
+    override fun deleteAllSubscriptions() {
+        subscriptionsLocalDataSource.deleteAllSubscriptions()
+    }
 
 }
