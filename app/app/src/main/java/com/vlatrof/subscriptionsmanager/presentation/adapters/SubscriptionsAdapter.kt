@@ -45,7 +45,7 @@ class SubscriptionsAdapter : RecyclerView.Adapter<SubscriptionsAdapter.Subscript
 
         val costStr = "${s.paymentCost} ${s.paymentCurrency.currencyCode} / ${s.renewalPeriod.toString().drop(1)}"
 
-        b.tvSubscriptionTitle.text = s.title
+        b.tvSubscriptionName.text = s.name
         b.tvSubscriptionCost.text = costStr
 
     }

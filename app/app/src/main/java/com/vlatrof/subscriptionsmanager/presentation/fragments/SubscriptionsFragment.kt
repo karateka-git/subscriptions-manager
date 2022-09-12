@@ -3,14 +3,15 @@ package com.vlatrof.subscriptionsmanager.presentation.fragments
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import com.vlatrof.subscriptionsmanager.R.layout.fragment_subscriptions
+import androidx.navigation.fragment.findNavController
+import com.vlatrof.subscriptionsmanager.R
 import com.vlatrof.subscriptionsmanager.app.dummySubscriptionsList
 import com.vlatrof.subscriptionsmanager.databinding.FragmentSubscriptionsBinding
 import com.vlatrof.subscriptionsmanager.presentation.adapters.SubscriptionsAdapter
 import com.vlatrof.subscriptionsmanager.presentation.viewmodels.SubscriptionsViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SubscriptionsFragment : Fragment(fragment_subscriptions) {
+class SubscriptionsFragment : Fragment(R.layout.fragment_subscriptions) {
 
     private lateinit var binding: FragmentSubscriptionsBinding
     private lateinit var subscriptionsAdapter: SubscriptionsAdapter
@@ -28,9 +29,16 @@ class SubscriptionsFragment : Fragment(fragment_subscriptions) {
         }
 
         binding.btnNewSubscription.setOnClickListener{
-            dummySubscriptionsList.forEach{
+
+            //for_debugging
+            dummySubscriptionsList.forEach {
                 subscriptionsViewModel.insertNewSubscription(it)
-            }
+            }//------------
+
+            findNavController().navigate(
+                R.id.action_subscriptions_fragment_to_new_subscription_fragment
+            )
+
         }
 
         binding.tvSubscriptionsTitle.setOnClickListener{

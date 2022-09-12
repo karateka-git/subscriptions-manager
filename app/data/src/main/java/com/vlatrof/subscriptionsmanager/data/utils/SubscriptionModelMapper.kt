@@ -13,7 +13,8 @@ object SubscriptionModelMapper {
 
         return DataSubscription(
             id = entitySubscription.id ?: -1,
-            title = entitySubscription.title,
+            name = entitySubscription.name,
+            description = entitySubscription.description,
             startDate = LocalDate.parse(entitySubscription.startDate),
             renewalPeriod = Period.parse(entitySubscription.renewalPeriod),
             paymentCost = entitySubscription.paymentCost,
@@ -25,7 +26,8 @@ object SubscriptionModelMapper {
     fun mapDataToEntity(dataSubscription: DataSubscription): EntitySubscription {
 
         return EntitySubscription(
-            title = dataSubscription.title,
+            name = dataSubscription.name,
+            description = dataSubscription.description,
             startDate = dataSubscription.startDate.toString(),
             renewalPeriod = dataSubscription.renewalPeriod.toString(),
             paymentCost = dataSubscription.paymentCost,
@@ -38,7 +40,8 @@ object SubscriptionModelMapper {
 
         return DomainSubscription(
             id = dataSubscription.id,
-            title = dataSubscription.title,
+            name = dataSubscription.name,
+            description = dataSubscription.description,
             startDate = dataSubscription.startDate,
             renewalPeriod = dataSubscription.renewalPeriod,
             paymentCost = dataSubscription.paymentCost,
@@ -51,7 +54,8 @@ object SubscriptionModelMapper {
 
         return DataSubscription(
             id = domainSubscription.id,
-            title = domainSubscription.title,
+            name = domainSubscription.name,
+            description = domainSubscription.description,
             startDate = domainSubscription.startDate,
             renewalPeriod = domainSubscription.renewalPeriod,
             paymentCost = domainSubscription.paymentCost,

@@ -10,8 +10,11 @@ data class SubscriptionEntity (
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
 
-    @ColumnInfo(name = "title", defaultValue = "")
-    val title: String = "",
+    @ColumnInfo(name = "name", defaultValue = "")
+    val name: String = "",
+
+    @ColumnInfo(name = "description", defaultValue = "")
+    val description: String = "",
 
     // Date in ISO Date format (example: 2020-07-25)
     @ColumnInfo(name = "start_date")

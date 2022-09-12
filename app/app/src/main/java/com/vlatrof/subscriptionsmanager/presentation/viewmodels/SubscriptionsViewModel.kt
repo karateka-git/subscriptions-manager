@@ -8,11 +8,13 @@ import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import com.vlatrof.subscriptionsmanager.domain.usecases.deleteallsubscriptions.DeleteAllSubscriptionsUseCase
 import com.vlatrof.subscriptionsmanager.domain.usecases.getallsubscriptions.GetAllSubscriptionsUseCase
 import com.vlatrof.subscriptionsmanager.domain.usecases.insertnewsubscription.InsertNewSubscriptionUseCase
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class SubscriptionsViewModel(
 
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
     private val getAllSubscriptionsUseCase: GetAllSubscriptionsUseCase,
     private val insertNewSubscriptionUseCase: InsertNewSubscriptionUseCase,
     private val deleteAllSubscriptionsUseCase: DeleteAllSubscriptionsUseCase
@@ -23,7 +25,7 @@ class SubscriptionsViewModel(
         getAllSubscriptionsUseCase().asLiveData()
 
     fun insertNewSubscription(subscription: Subscription) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(ioDispatcher) {
             insertNewSubscriptionUseCase(subscription)
         }
     }
