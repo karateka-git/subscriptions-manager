@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <resources>
 
-    <dimen name="screen_section_margin_top">30dp</dimen>
-    <dimen name="screen_title_text_size">24sp</dimen>
+    <!-- size -->
+    <dimen name="max_width_150dp">150dp</dimen>
+
+    <!-- text size -->
+    <dimen name="text_size_24sp">24sp</dimen>
+    <dimen name="text_size_18sp">18sp</dimen>
+
+    <!-- margin -->
+    <dimen name="margin_30dp">30dp</dimen>
+
+    <!-- padding -->
+    <dimen name="padding_30dp">30dp</dimen>
+    <dimen name="padding_10dp">10dp</dimen>
 
 </resources>

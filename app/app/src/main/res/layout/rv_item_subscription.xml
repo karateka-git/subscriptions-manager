@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="30dp"
-    android:paddingVertical="10dp">
+    android:paddingHorizontal="@dimen/padding_30dp"
+    android:paddingVertical="@dimen/padding_10dp">
 
     <TextView
         android:id="@+id/tv_subscription_title"
@@ -14,23 +15,21 @@
         android:ellipsize="end"
         android:fontFamily="@font/inter_regular"
         android:lines="1"
-        android:text="Some Useful Subscription"
         android:textColor="?android:textColorPrimary"
-        android:textSize="18sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/tv_subscription_cost"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="@dimen/text_size_18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tv_subscription_cost"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/tv_subscription_cost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/inter_semibold"
-        android:maxWidth="150dp"
-        android:text="249 RUB / 3 M"
+        android:maxWidth="@dimen/max_width_150dp"
         android:textColor="?android:textColorPrimary"
-        android:textSize="18sp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_subscription_title" />
+        android:textSize="@dimen/text_size_18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_subscription_title"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

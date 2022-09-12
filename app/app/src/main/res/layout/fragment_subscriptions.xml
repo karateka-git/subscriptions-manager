@@ -10,36 +10,35 @@
         android:id="@+id/tv_subscriptions_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/screen_section_margin_top"
+        android:layout_marginTop="@dimen/margin_30dp"
         android:fontFamily="@font/inter_semibold"
         android:text="@string/tv_subscriptions_title_text"
         android:textColor="?android:textColorPrimary"
-        android:textSize="@dimen/screen_title_text_size"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="@dimen/text_size_24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageButton
         android:id="@+id/btn_new_subscription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="30dp"
+        android:layout_marginEnd="@dimen/margin_30dp"
         android:background="?android:attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/btn_new_subscription_content_description"
         android:src="@drawable/ic_baseline_add"
         app:layout_constraintBottom_toBottomOf="@id/tv_subscriptions_title"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_subscriptions_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/screen_section_margin_top"
+        android:layout_marginTop="@dimen/margin_30dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_subscriptions_title" />
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_subscriptions_title"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
