@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <ImageButton
+        android:id="@+id/btn_go_back"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_20dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/btn_go_back_content_description"
+        android:padding="@dimen/padding_10dp"
+        android:src="@drawable/ic_baseline_arrow_back"
+        app:layout_constraintBottom_toBottomOf="@id/tv_new_subscription_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_new_subscription_title"
+        tools:ignore="RtlSymmetry" />
 
     <TextView
         android:id="@+id/tv_new_subscription_title"
@@ -42,11 +56,13 @@
 
     <EditText
         android:id="@+id/et_new_subscription_cost"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_30dp"
+        android:layout_marginStart="@dimen/margin_30dp"
+        android:autofillHints=""
         android:hint="@string/et_new_subscription_cost_hint"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toStartOf="@id/spinner_currency"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_new_subscription_description" />
 
@@ -54,9 +70,30 @@
         android:id="@+id/spinner_currency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_30dp"
+        app:layout_constraintBottom_toBottomOf="@id/et_new_subscription_cost"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/et_new_subscription_cost"
+        app:layout_constraintTop_toTopOf="@id/et_new_subscription_cost" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/renewal_period_container"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_30dp"
+        android:hint="Renewal Period"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_new_subscription_cost" />
+        app:layout_constraintTop_toBottomOf="@id/et_new_subscription_cost">
 
+        <AutoCompleteTextView
+            android:id="@+id/renewal_period_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/white"
+            android:inputType="none" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

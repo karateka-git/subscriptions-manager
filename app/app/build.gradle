@@ -50,7 +50,6 @@ dependencies {
     // Common dependencies
     implementation "androidx.core:core-ktx:$core_ktx_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
-    implementation "com.google.android.material:material:$material_version"
 
     // Lifecycle components
     // ViewModel
@@ -59,6 +58,9 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     // Annotation processor
     kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+
+    // Material Design
+    implementation "com.google.android.material:material:$material_version"
 
     // Navigation Component
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_component_version"

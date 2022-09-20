@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import com.vlatrof.subscriptionsmanager.R
 import com.vlatrof.subscriptionsmanager.databinding.FragmentNewSubscriptionBinding
+import java.time.Period
 
 class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
@@ -16,14 +17,15 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentNewSubscriptionBinding.bind(view)
-        initCurrenciesSpinner()
+        setupCurrenciesSpinner()
+        setupRenewalPeriodInput()
     }
 
-    private fun initCurrenciesSpinner() {
+    private fun setupCurrenciesSpinner() {
 
         val currencies = Currency.getAvailableCurrencies().toTypedArray()
 
-        val adapter = ArrayAdapter(
+        binding.spinnerCurrency.adapter = ArrayAdapter(
             activity as Context,
             android.R.layout.simple_spinner_item,
             currencies
@@ -31,11 +33,26 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
             setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         }
 
-        binding.spinnerCurrency.adapter = adapter
-
         binding.spinnerCurrency.setSelection(
             currencies.indexOf(Currency.getInstance("USD"))
         )
+
+    }
+
+    private fun setupRenewalPeriodInput() {
+
+        val availablePeriods = arrayListOf<Period>(
+            Period.ofMonths(1),
+            Period.ofMonths(2)
+        )
+
+        val periodsAdapter = ArrayAdapter(
+            activity as Context,
+            android.R.layout.simple_spinner_dropdown_item,
+            availablePeriods
+        )
+        
+        binding.renewalPeriodSpinner.setAdapter(periodsAdapter)
 
     }
 
