@@ -29,7 +29,7 @@ class SubscriptionsFragment : Fragment(R.layout.fragment_subscriptions) {
 
         binding.btnNewSubscription.setOnClickListener{
             findNavController().navigate(
-                R.id.action_subscriptions_fragment_to_new_subscription_fragment
+                R.id.action_fragment_subscriptions_list_to_fragment_new_subscription
             )
         }
 

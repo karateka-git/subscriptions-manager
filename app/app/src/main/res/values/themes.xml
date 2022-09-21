@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.SubscriptionsManager" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
@@ -10,8 +10,9 @@
         <item name="colorSecondaryVariant">@color/dark_gray</item>
         <item name="colorOnSecondary">@color/dark_gray</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/dark_gray</item>
+        <item name="android:statusBarColor">@color/darkest_gray</item>
         <!-- Customize your theme here. -->
+        <item name="android:background">@color/white</item>
         <item name="android:textColorPrimary">@color/dark_gray</item>
     </style>
 </resources>

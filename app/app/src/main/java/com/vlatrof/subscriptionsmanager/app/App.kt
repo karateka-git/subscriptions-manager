@@ -1,6 +1,9 @@
 package com.vlatrof.subscriptionsmanager.app
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import com.vlatrof.subscriptionsmanager.di.appModule
 import com.vlatrof.subscriptionsmanager.di.dataModule
 import com.vlatrof.subscriptionsmanager.di.domainModule
@@ -13,6 +16,9 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        // for testing
+        AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
 
         // koin configuration
         startKoin {

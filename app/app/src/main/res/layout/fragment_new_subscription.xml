@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -17,8 +17,7 @@
         android:src="@drawable/ic_baseline_arrow_back"
         app:layout_constraintBottom_toBottomOf="@id/tv_new_subscription_title"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_new_subscription_title"
-        tools:ignore="RtlSymmetry" />
+        app:layout_constraintTop_toTopOf="@id/tv_new_subscription_title" />
 
     <TextView
         android:id="@+id/tv_new_subscription_title"
@@ -39,6 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_30dp"
         android:layout_marginTop="@dimen/margin_30dp"
+        android:autofillHints=""
         android:hint="@string/et_new_subscription_name_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,6 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_30dp"
+        android:autofillHints=""
         android:hint="@string/et_new_subscription_description_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +83,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_30dp"
-        android:hint="Renewal Period"
+        android:hint="@string/spinner_renewal_period_hint_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_new_subscription_cost">
@@ -91,7 +92,7 @@
             android:id="@+id/renewal_period_spinner"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="?android:background"
             android:inputType="none" />
 
     </com.google.android.material.textfield.TextInputLayout>

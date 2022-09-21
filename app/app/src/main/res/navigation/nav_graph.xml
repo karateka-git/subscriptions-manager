@@ -12,7 +12,7 @@
         android:name="com.vlatrof.subscriptionsmanager.presentation.fragments.SubscriptionsFragment"
         tools:layout="@layout/fragment_subscriptions">
         <action
-            android:id="@+id/action_subscriptions_fragment_to_new_subscription_fragment"
+            android:id="@+id/action_fragment_subscriptions_list_to_fragment_new_subscription"
             app:destination="@id/fragment_new_subscription" />
     </fragment>
 

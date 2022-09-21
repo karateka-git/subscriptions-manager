@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.vlatrof.subscriptionsmanager.R
 import com.vlatrof.subscriptionsmanager.databinding.FragmentNewSubscriptionBinding
 import java.time.Period
@@ -19,6 +20,11 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         binding = FragmentNewSubscriptionBinding.bind(view)
         setupCurrenciesSpinner()
         setupRenewalPeriodInput()
+
+        binding.btnGoBack.setOnClickListener{
+            findNavController().popBackStack()
+        }
+
     }
 
     private fun setupCurrenciesSpinner() {
@@ -51,7 +57,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
             android.R.layout.simple_spinner_dropdown_item,
             availablePeriods
         )
-        
+
         binding.renewalPeriodSpinner.setAdapter(periodsAdapter)
 
     }
