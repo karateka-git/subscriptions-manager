@@ -19,12 +19,16 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentNewSubscriptionBinding.bind(view)
         setupCurrenciesSpinner()
-        setupRenewalPeriodInput()
 
         binding.btnGoBack.setOnClickListener{
             findNavController().popBackStack()
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setupRenewalPeriodInput()
     }
 
     private fun setupCurrenciesSpinner() {
