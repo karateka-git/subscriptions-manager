@@ -10,10 +10,10 @@
     <!-- New subscription fragment -->
     <string name="btn_go_back_content_description">Add new subscription</string>
     <string name="tv_new_subscription_screen_title">New subscription</string>
-    <string name="et_new_subscription_name_hint">Name</string>
-    <string name="et_new_subscription_description_hint">Description</string>
-    <string name="et_new_subscription_cost_hint">Cost</string>
-    <string name="et_new_subscription_currency_hint">Currency</string>
+    <string name="til_new_subscription_name_hint">Name</string>
+    <string name="til_new_subscription_description_hint">Description</string>
+    <string name="til_new_subscription_cost_hint">Cost</string>
+    <string name="til_new_subscription_currency_hint">Currency</string>
     <string name="spinner_renewal_period_hint_text">Renewal Period</string>
 
 </resources>
