@@ -89,7 +89,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_new_subscription_currency"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-        android:layout_width="140dp"
+        android:layout_width="@dimen/width_140dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_30dp"
         android:hint="@string/til_new_subscription_currency_hint"
@@ -99,7 +99,7 @@
         app:layout_constraintTop_toTopOf="@id/til_new_subscription_cost">
 
         <AutoCompleteTextView
-            android:id="@+id/currency_spinner"
+            android:id="@+id/currencies_spinner"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:backgroundTint="?android:background"
@@ -107,9 +107,8 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/renewal_period_container"
+        android:id="@+id/til_new_subscription_renewal_period"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -120,10 +119,31 @@
         app:layout_constraintTop_toBottomOf="@id/til_new_subscription_cost">
 
         <AutoCompleteTextView
-            android:id="@+id/renewal_period_spinner"
+            android:id="@+id/renewal_periods_spinner"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:backgroundTint="?android:background"
+            android:inputType="none" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_new_subscription_start_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_30dp"
+        android:hint="@string/til_new_subscription_start_date_hint"
+        app:layout_constraintTop_toBottomOf="@id/til_new_subscription_renewal_period">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/start_date_picker"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?android:background"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:inputType="none" />
 
     </com.google.android.material.textfield.TextInputLayout>

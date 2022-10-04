@@ -15,5 +15,6 @@
     <string name="til_new_subscription_cost_hint">Cost</string>
     <string name="til_new_subscription_currency_hint">Currency</string>
     <string name="spinner_renewal_period_hint_text">Renewal Period</string>
+    <string name="til_new_subscription_start_date_hint">Start date</string>
 
 </resources>

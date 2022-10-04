@@ -4,6 +4,7 @@
 
     <!-- size -->
     <dimen name="max_width_150dp">150dp</dimen>
+    <dimen name="width_140dp">140dp</dimen>
 
     <!-- text size -->
     <dimen name="text_size_24sp">24sp</dimen>

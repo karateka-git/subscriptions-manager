@@ -1,15 +1,21 @@
 package com.vlatrof.subscriptionsmanager.presentation.fragments
 
+import android.app.DatePickerDialog
+import android.app.Dialog
 import android.content.Context
-import java.util.Currency
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.DatePicker
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.textfield.TextInputEditText
 import com.vlatrof.subscriptionsmanager.R
 import com.vlatrof.subscriptionsmanager.databinding.FragmentNewSubscriptionBinding
 import java.time.Period
+import java.util.Currency
+import java.util.Calendar
 
 class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
@@ -19,11 +25,12 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentNewSubscriptionBinding.bind(view)
         setupGoBackButton()
-        setupCurrenciesSpinner()
+        setupStartDatePicker()
     }
 
     override fun onResume() {
         super.onResume()
+        setupCurrenciesSpinner()
         setupRenewalPeriodInput()
     }
 
@@ -31,21 +38,24 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         binding.btnGoBack.setOnClickListener{ findNavController().popBackStack() }
     }
 
+    private fun setupStartDatePicker() {
+        binding.startDatePicker.setOnClickListener{
+            val datePicker = DatePickerFragment(binding.startDatePicker)
+            datePicker.show(parentFragmentManager, "datePicker")
+        }
+    }
+
     private fun setupCurrenciesSpinner() {
 
-        val currencies = Currency.getAvailableCurrencies().toTypedArray()
+        val availableCurrencies = Currency.getAvailableCurrencies().toTypedArray()
 
-        binding.spinnerCurrency.adapter = ArrayAdapter(
+        val currenciesAdapter = ArrayAdapter(
             activity as Context,
-            android.R.layout.simple_spinner_item,
-            currencies
-        ).apply {
-            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        }
-
-        binding.spinnerCurrency.setSelection(
-            currencies.indexOf(Currency.getInstance("USD"))
+            android.R.layout.simple_spinner_dropdown_item,
+            availableCurrencies
         )
+
+        binding.currenciesSpinner.setAdapter(currenciesAdapter)
 
     }
 
@@ -62,7 +72,33 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
             availablePeriods
         )
 
-        binding.renewalPeriodSpinner.setAdapter(periodsAdapter)
+        binding.renewalPeriodsSpinner.setAdapter(periodsAdapter)
+
+    }
+
+    class DatePickerFragment(
+
+        private val input: TextInputEditText
+
+        ) : DialogFragment(), DatePickerDialog.OnDateSetListener {
+
+        override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+
+            // Use the current date as the default date in the picker
+            val c = Calendar.getInstance()
+            val year = c.get(Calendar.YEAR)
+            val month = c.get(Calendar.MONTH)
+            val day = c.get(Calendar.DAY_OF_MONTH)
+
+            // Create a new instance of DatePickerDialog and return it
+            return DatePickerDialog(requireContext(), this, year, month, day)
+
+        }
+
+        override fun onDateSet(view: DatePicker, year: Int, month: Int, day: Int) {
+            val newDateStr = "${day}/${month}/${year}"
+            input.setText(newDateStr)
+        }
 
     }
 
