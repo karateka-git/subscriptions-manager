@@ -13,6 +13,7 @@
     <!-- margin -->
     <dimen name="margin_30dp">30dp</dimen>
     <dimen name="margin_20dp">20dp</dimen>
+    <dimen name="margin_5dp">5dp</dimen>
 
     <!-- padding -->
     <dimen name="padding_30dp">30dp</dimen>
