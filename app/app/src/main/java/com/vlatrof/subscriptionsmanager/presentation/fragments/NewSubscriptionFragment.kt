@@ -3,12 +3,12 @@ package com.vlatrof.subscriptionsmanager.presentation.fragments
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.vlatrof.subscriptionsmanager.R
+import com.vlatrof.subscriptionsmanager.app.hideKeyboard
 import com.vlatrof.subscriptionsmanager.databinding.FragmentNewSubscriptionBinding
 import java.time.Period
 import java.util.Currency
@@ -32,13 +32,8 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
     private fun setupGoBackButton() {
         binding.btnGoBack.setOnClickListener{
-
-            // hide keyboard
-            val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(view?.windowToken, 0)
-
+            hideKeyboard()
             findNavController().popBackStack()
-
         }
     }
 
