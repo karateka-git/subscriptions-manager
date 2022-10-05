@@ -11,7 +11,7 @@ import com.vlatrof.subscriptionsmanager.R
 import com.vlatrof.subscriptionsmanager.app.hideKeyboard
 import com.vlatrof.subscriptionsmanager.databinding.FragmentNewSubscriptionBinding
 import java.time.Period
-import java.util.Currency
+import java.util.*
 
 class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
@@ -22,6 +22,8 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         binding = FragmentNewSubscriptionBinding.bind(view)
         setupGoBackButton()
         setupStartDateInput()
+        setupClearFocusOnBackgroundTouch()
+
     }
 
     override fun onResume() {
@@ -53,6 +55,13 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
             datePicker.show(parentFragmentManager, "datePicker")
 
+        }
+    }
+
+    private fun setupClearFocusOnBackgroundTouch() {
+        binding.mainConstraintLayout.setOnClickListener{
+            requireActivity().currentFocus?.clearFocus()
+            hideKeyboard()
         }
     }
 
