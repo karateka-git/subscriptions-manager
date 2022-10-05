@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<navigation
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
@@ -13,13 +12,16 @@
         tools:layout="@layout/fragment_subscriptions">
         <action
             android:id="@+id/action_fragment_subscriptions_list_to_fragment_new_subscription"
-            app:destination="@id/fragment_new_subscription" />
+            app:destination="@id/fragment_new_subscription"
+            app:enterAnim="@anim/screen_in_slide_nav_anim"
+            app:exitAnim="@anim/screen_out_slide_nav_anim"
+            app:popEnterAnim="@anim/screen_pop_in_slide_nav_anim"
+            app:popExitAnim="@anim/screen_pop_out_slide_nav_anim" />
     </fragment>
 
     <fragment
         android:id="@+id/fragment_new_subscription"
         android:name="com.vlatrof.subscriptionsmanager.presentation.fragments.NewSubscriptionFragment"
-        tools:layout="@layout/fragment_new_subscription">
-    </fragment>
+        tools:layout="@layout/fragment_new_subscription"/>
 
 </navigation>
