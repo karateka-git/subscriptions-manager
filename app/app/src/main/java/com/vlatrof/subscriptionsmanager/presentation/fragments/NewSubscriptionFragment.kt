@@ -13,7 +13,6 @@ import com.vlatrof.subscriptionsmanager.presentation.utils.hideKeyboard
 import java.time.Period
 import java.util.Currency
 
-
 class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
     private lateinit var binding: FragmentNewSubscriptionBinding
@@ -23,14 +22,14 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         binding = FragmentNewSubscriptionBinding.bind(view)
         setupGoBackButton()
         setupStartDateInput()
-
+        setupAlertsInput()
     }
 
     override fun onResume() {
         super.onResume()
         setupCurrencyInput()
         setupRenewalPeriodInput()
-        setupAlertsInput()
+
     }
 
     private fun setupGoBackButton() {
@@ -92,7 +91,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
     private fun setupAlertsInput() {
 
-        val availableAlerts = arrayListOf<String>(
+        val availableAlerts = arrayListOf(
             "None",
             "Same day (12:00 PM)",
             "One day before (12:00 PM)",
@@ -107,6 +106,10 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         )
 
         binding.alertsSpinner.setAdapter(alertsAdapter)
+
+        // set default selection to "none"
+        val defaultValue = "None"
+        binding.alertsSpinner.setText(defaultValue, false)
 
     }
 

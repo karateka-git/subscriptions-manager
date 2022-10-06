@@ -17,10 +17,8 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        // for testing
-        AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
+        AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO) // todo: for testing
 
-        // koin configuration
         startKoin {
             androidLogger(Level.ERROR)
             androidContext(this@App)

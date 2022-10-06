@@ -18,25 +18,37 @@ class SubscriptionsFragment : Fragment(R.layout.fragment_subscriptions) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding = FragmentSubscriptionsBinding.bind(view)
-        subscriptionsAdapter = SubscriptionsAdapter()
-        binding.rvSubscriptionsList.adapter = subscriptionsAdapter
+        setupSubscriptionsRVAdapter()
+        startToObserveSubscriptionsLiveData()
+        setupNewSubscriptionButton()
+        setupCleanByClickOnTitle() // todo: for testing
 
-        subscriptionsViewModel.subscriptionsLiveData.observe(viewLifecycleOwner) {
-            subscriptionsAdapter.setData(newSubscriptionsList = it)
+    }
+
+    private fun setupCleanByClickOnTitle() {
+        binding.tvSubscriptionsTitle.setOnClickListener{
+            subscriptionsViewModel.deleteAllSubscriptions()
         }
+    }
 
+    private fun setupNewSubscriptionButton() {
         binding.btnNewSubscription.setOnClickListener{
             findNavController().navigate(
                 R.id.action_fragment_subscriptions_list_to_fragment_new_subscription
             )
         }
-
-        binding.tvSubscriptionsTitle.setOnClickListener{
-            subscriptionsViewModel.deleteAllSubscriptions()
-        }
-
     }
-    
+
+    private fun startToObserveSubscriptionsLiveData() {
+        subscriptionsViewModel.subscriptionsLiveData.observe(viewLifecycleOwner) {
+            subscriptionsAdapter.setData(newSubscriptionsList = it)
+        }
+    }
+
+    private fun setupSubscriptionsRVAdapter() {
+        subscriptionsAdapter = SubscriptionsAdapter()
+        binding.rvSubscriptionsList.adapter = subscriptionsAdapter
+    }
+
 }
