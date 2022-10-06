@@ -3,8 +3,12 @@
 <resources>
 
     <!-- size -->
-    <dimen name="max_width_150dp">150dp</dimen>
+    <dimen name="width_1dp">1dp</dimen>
     <dimen name="width_140dp">140dp</dimen>
+    <dimen name="max_width_150dp">150dp</dimen>
+    <dimen name="height_20dp">20dp</dimen>
+    <dimen name="height_50dp">50dp</dimen>
+    <dimen name="height_85dp">85dp</dimen>
 
     <!-- text size -->
     <dimen name="text_size_24sp">24sp</dimen>
@@ -13,10 +17,12 @@
     <!-- margin -->
     <dimen name="margin_30dp">30dp</dimen>
     <dimen name="margin_20dp">20dp</dimen>
+    <dimen name="margin_10dp">10dp</dimen>
     <dimen name="margin_5dp">5dp</dimen>
 
     <!-- padding -->
     <dimen name="padding_30dp">30dp</dimen>
     <dimen name="padding_10dp">10dp</dimen>
+
 
 </resources>

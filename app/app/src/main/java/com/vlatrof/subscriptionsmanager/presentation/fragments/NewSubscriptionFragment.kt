@@ -8,10 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.vlatrof.subscriptionsmanager.R
-import com.vlatrof.subscriptionsmanager.app.hideKeyboard
 import com.vlatrof.subscriptionsmanager.databinding.FragmentNewSubscriptionBinding
+import com.vlatrof.subscriptionsmanager.presentation.utils.hideKeyboard
 import java.time.Period
-import java.util.*
+import java.util.Currency
+
 
 class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
@@ -22,7 +23,6 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         binding = FragmentNewSubscriptionBinding.bind(view)
         setupGoBackButton()
         setupStartDateInput()
-        setupClearFocusOnBackgroundTouch()
 
     }
 
@@ -30,6 +30,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         super.onResume()
         setupCurrencyInput()
         setupRenewalPeriodInput()
+        setupAlertsInput()
     }
 
     private fun setupGoBackButton() {
@@ -55,13 +56,6 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
             datePicker.show(parentFragmentManager, "datePicker")
 
-        }
-    }
-
-    private fun setupClearFocusOnBackgroundTouch() {
-        binding.mainConstraintLayout.setOnClickListener{
-            requireActivity().currentFocus?.clearFocus()
-            hideKeyboard()
         }
     }
 
@@ -93,6 +87,26 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         )
 
         binding.renewalPeriodsSpinner.setAdapter(periodsAdapter)
+
+    }
+
+    private fun setupAlertsInput() {
+
+        val availableAlerts = arrayListOf<String>(
+            "None",
+            "Same day (12:00 PM)",
+            "One day before (12:00 PM)",
+            "Two days before (12:00 PM)",
+            "One week before (12:00 PM)",
+        )
+
+        val alertsAdapter = ArrayAdapter(
+            activity as Context,
+            android.R.layout.simple_spinner_dropdown_item,
+            availableAlerts
+        )
+
+        binding.alertsSpinner.setAdapter(alertsAdapter)
 
     }
 

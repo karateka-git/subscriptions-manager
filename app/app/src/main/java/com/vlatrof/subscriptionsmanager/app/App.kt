@@ -18,7 +18,7 @@ class App : Application() {
         super.onCreate()
 
         // for testing
-        AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
+        AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
 
         // koin configuration
         startKoin {
