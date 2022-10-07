@@ -152,7 +152,7 @@
             app:layout_constraintTop_toBottomOf="@id/til_new_subscription_renewal_period">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/start_date_picker"
+                android:id="@+id/tiet_new_subscription_start_date"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clickable="false"
