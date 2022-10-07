@@ -29,7 +29,6 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         super.onResume()
         setupCurrencyInput()
         setupRenewalPeriodInput()
-
     }
 
     private fun setupGoBackButton() {
