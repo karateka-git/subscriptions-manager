@@ -6,8 +6,9 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doBeforeTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -27,16 +28,17 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentNewSubscriptionBinding.bind(view)
         setupGoBackButton()
-        setupCostInput()
-        setupStartDateInput()
-        setupAlertsInput()
+        setupNameInputField()
+        setupCostInputField()
+        setupStartDateInputField()
+        setupAlertsInputField()
         setupCreateButton()
     }
 
     override fun onResume() {
         super.onResume()
-        setupCurrencyInput()
-        setupRenewalPeriodInput()
+        setupCurrencyInputField()
+        setupRenewalPeriodInputField()
     }
 
     private fun setupGoBackButton() {
@@ -46,23 +48,45 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         }
     }
 
-    private fun setupCostInput() {
+    private fun setupNameInputField() {
 
-        val costField = binding.tietNewSubscriptionCost
+        val nameFieldContainer = binding.tilNewSubscriptionName
+        val nameField = binding.tietNewSubscriptionName
 
-        // setup default value
-        costField.setText("0.00")
+        nameField.doAfterTextChanged {
 
-        // setup default value if lose focus with no entered value
-        costField.setOnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus && costField.text!!.isEmpty()) {
-                binding.tietNewSubscriptionCost.setText("0.00")
+            if (it!!.isEmpty()) {
+                nameFieldContainer.error = getString(R.string.new_subscription_field_error_required_empty_string)
+                return@doAfterTextChanged
             }
+
+            nameFieldContainer.error = ""
+
         }
 
     }
 
-    private fun setupStartDateInput() {
+    private fun setupCostInputField() {
+
+        val costField = binding.tietNewSubscriptionCost
+        val defaultValue = getString(R.string.new_subscription_tiet_cost_default_value)
+
+        // setup default value on screen start
+        costField.setText(defaultValue)
+
+        // setup default value if field is empty
+        costField.doAfterTextChanged {
+
+            if (it!!.isEmpty()){
+                costField.setText(defaultValue)
+                costField.setSelection(defaultValue.length)
+            }
+
+        }
+
+    }
+
+    private fun setupStartDateInputField() {
 
         val dateField = binding.tietNewSubscriptionStartDate
 
@@ -89,7 +113,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
     }
 
-    private fun setupAlertsInput() {
+    private fun setupAlertsInputField() {
 
         val alertsField = binding.actvNewSubscriptionAlerts
 
@@ -124,7 +148,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         }
     }
 
-    private fun setupCurrencyInput() {
+    private fun setupCurrencyInputField() {
 
         val currencyFieldContainer = binding.tilNewSubscriptionCurrency
         val currencyField = binding.actvNewSubscriptionCurrency
@@ -157,42 +181,35 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
             }
         })
 
-        // setup input validation after lose focus
-        currencyField.setOnFocusChangeListener { v, hasFocus ->
+        // setup input validation
+        currencyField.doAfterTextChanged {
 
-            // skip if get focus
-            if (hasFocus) return@setOnFocusChangeListener
+            val newValue = it.toString()
 
-            // show error if entered currency is empty
-            if (currencyField.text.toString().isEmpty()) {
-                currencyFieldContainer.error =
-                    getString(R.string.til_new_subscription_currency_error_empty_currency)
-                return@setOnFocusChangeListener
+            if (newValue.isEmpty()) {
+                currencyFieldContainer.error = getString(R.string.new_subscription_field_error_required_empty_string)
+                return@doAfterTextChanged
             }
 
-            // show error if entered currency code don't available
             try {
-                if (!availableCurrencies.contains(
-                        Currency.getInstance(currencyField.text.toString()))
-                ) {
-                    currencyFieldContainer.error =
-                        getString(R.string.til_new_subscription_currency_error_wrong_currency)
-                    return@setOnFocusChangeListener
-                }
-            } catch (exception: IllegalArgumentException) {
-                currencyFieldContainer.error =
-                    getString(R.string.til_new_subscription_currency_error_wrong_currency)
-                return@setOnFocusChangeListener
-            }
 
-            // else clear error
-            currencyFieldContainer.error = ""
+                val validCurrency = availableCurrencies.contains(Currency.getInstance(newValue))
+
+                if (validCurrency) {
+                    currencyFieldContainer.error = ""
+                } else {
+                    currencyFieldContainer.error = getString(R.string.new_subscription_field_error_wrong_value)
+                }
+
+            } catch (exception: IllegalArgumentException) {
+                currencyFieldContainer.error = getString(R.string.new_subscription_field_error_wrong_value)
+            }
 
         }
 
     }
 
-    private fun setupRenewalPeriodInput() {
+    private fun setupRenewalPeriodInputField() {
 
         val renewalPeriodField = binding.actvNewSubscriptionRenewalPeriod
 

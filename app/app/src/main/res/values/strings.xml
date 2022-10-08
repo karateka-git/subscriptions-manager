@@ -4,22 +4,23 @@
     <string name="app_name">Subscriptions Manager</string>
 
     <!-- Subscriptions list screen (main) -->
-    <string name="tv_subscriptions_title_text">Subscriptions</string>
-    <string name="btn_new_subscription_content_description">Add new subscription</string>
+    <string name="subscriptions_tv_screen_title">Subscriptions</string>
+    <string name="subscriptions_btn_new_content_description">Add new subscription</string>
 
     <!-- New subscription screen -->
-    <string name="btn_go_back_content_description">Add new subscription</string>
-    <string name="tv_new_subscription_screen_title">New subscription</string>
-    <string name="til_new_subscription_name_hint">Name</string>
-    <string name="til_new_subscription_description_hint">Description (optional)</string>
-    <string name="til_new_subscription_cost_hint">Cost</string>
-    <string name="til_new_subscription_currency_hint">Currency</string>
-    <string name="til_new_subscription_currency_error_wrong_currency">Wrong currency</string>
-    <string name="til_new_subscription_currency_error_empty_currency">Empty currency</string>
-    <string name="spinner_renewal_period_hint">Renewal Period</string>
-    <string name="til_new_subscription_start_date_hint">Start date</string>
-    <string name="new_subscription_start_date_picker_content_description">Start date picker</string>
-    <string name="spinner_alerts_hint">Alert</string>
-    <string name="btn_create_new_subscription_text">CREATE</string>
+    <string name="new_subscription_field_error_required_empty_string">* Required</string>
+    <string name="new_subscription_field_error_wrong_value">* Wrong value</string>
+    <string name="new_subscription_btn_go_back_content_description">Add new subscription</string>
+    <string name="new_subscription_tv_screen_title">New subscription</string>
+    <string name="new_subscription_til_name_hint">Name</string>
+    <string name="new_subscription_til_description_hint">Description (optional)</string>
+    <string name="new_subscription_til_cost_hint">Cost</string>
+    <string name="new_subscription_tiet_cost_default_value">0.00</string>
+    <string name="new_subscription_til_currency_hint">Currency</string>
+    <string name="new_subscription_til_renewal_period_hint">Renewal Period</string>
+    <string name="new_subscription_til_start_date_hint">Start date</string>
+    <string name="new_subscription_til_start_date_end_icon_content_description">Start date picker</string>
+    <string name="new_subscription_til_alerts_hint">Alert</string>
+    <string name="new_subscription_btn_create_text">CREATE</string>
 
 </resources>

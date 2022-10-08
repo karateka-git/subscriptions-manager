@@ -15,9 +15,10 @@
     <dimen name="text_size_18sp">18sp</dimen>
 
     <!-- margin -->
-    <dimen name="margin_30dp">30dp</dimen>
-    <dimen name="margin_20dp">20dp</dimen>
     <dimen name="margin_10dp">10dp</dimen>
+    <dimen name="margin_18dp">18dp</dimen>
+    <dimen name="margin_20dp">20dp</dimen>
+    <dimen name="margin_30dp">30dp</dimen>
     <dimen name="margin_5dp">5dp</dimen>
 
     <!-- padding -->
