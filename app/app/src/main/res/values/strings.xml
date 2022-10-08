@@ -14,6 +14,8 @@
     <string name="til_new_subscription_description_hint">Description (optional)</string>
     <string name="til_new_subscription_cost_hint">Cost</string>
     <string name="til_new_subscription_currency_hint">Currency</string>
+    <string name="til_new_subscription_currency_error_wrong_currency">Wrong currency</string>
+    <string name="til_new_subscription_currency_error_empty_currency">Empty currency</string>
     <string name="spinner_renewal_period_hint">Renewal Period</string>
     <string name="til_new_subscription_start_date_hint">Start date</string>
     <string name="new_subscription_start_date_picker_content_description">Start date picker</string>

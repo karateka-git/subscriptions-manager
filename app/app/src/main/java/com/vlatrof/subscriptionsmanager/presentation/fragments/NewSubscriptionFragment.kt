@@ -2,6 +2,8 @@ package com.vlatrof.subscriptionsmanager.presentation.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -12,7 +14,6 @@ import com.vlatrof.subscriptionsmanager.R
 import com.vlatrof.subscriptionsmanager.databinding.FragmentNewSubscriptionBinding
 import com.vlatrof.subscriptionsmanager.presentation.utils.hideKeyboard
 import java.time.LocalDate
-import java.time.Period
 import java.time.format.DateTimeFormatter
 import java.util.*
 
@@ -75,7 +76,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
     private fun setupAlertsInput() {
 
-        val availableAlerts = arrayListOf(
+        val availableAlerts = arrayOf(
             "None",
             "Same day (12:00 PM)",
             "One day before (12:00 PM)",
@@ -118,6 +119,9 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
     private fun setupCurrencyInput() {
 
+        val input = binding.currenciesSpinner
+
+        // setup fill currencies spinner with values
         val availableCurrencies = Currency.getAvailableCurrencies().toTypedArray()
 
         val currenciesAdapter = ArrayAdapter(
@@ -125,20 +129,71 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
             android.R.layout.simple_spinner_dropdown_item,
             availableCurrencies
         )
+        input.setAdapter(currenciesAdapter)
 
-        binding.currenciesSpinner.setAdapter(currenciesAdapter)
-
-        // set default selection to "USD"
+        // setup default selection to "USD"
         val defaultValue = "USD"
-        binding.currenciesSpinner.setText(defaultValue, false)
+        input.setText(defaultValue, false)
+
+        // setup force only capital characters
+        input.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(arg0: CharSequence, arg1: Int, arg2: Int, arg3: Int) {}
+            override fun beforeTextChanged(arg0: CharSequence, arg1: Int, arg2: Int, arg3: Int) {}
+            override fun afterTextChanged(et: Editable) {
+                var s = et.toString()
+                if (s != s.uppercase(Locale.getDefault())) {
+                    s = s.uppercase(Locale.getDefault())
+                    input.setText(s)
+                    input.setSelection(input.length())
+                }
+            }
+        })
+
+        // setup input validation after lose focus
+        input.setOnFocusChangeListener { v, hasFocus ->
+
+            // skip if get focus
+            if (hasFocus) return@setOnFocusChangeListener
+
+            // show error if entered currency is empty
+            if (binding.currenciesSpinner.text.toString().isEmpty()) {
+                binding.tilNewSubscriptionCurrency.error =
+                    getString(R.string.til_new_subscription_currency_error_empty_currency)
+                return@setOnFocusChangeListener
+            }
+
+            // show error if entered currency code don't available
+            try {
+                if (!availableCurrencies.contains(
+                        Currency.getInstance(binding.currenciesSpinner.text.toString()))
+                ) {
+                    binding.tilNewSubscriptionCurrency.error =
+                        getString(R.string.til_new_subscription_currency_error_wrong_currency)
+                    return@setOnFocusChangeListener
+                }
+            } catch (exception: IllegalArgumentException) {
+                binding.tilNewSubscriptionCurrency.error =
+                    getString(R.string.til_new_subscription_currency_error_wrong_currency)
+                return@setOnFocusChangeListener
+            }
+
+            // else clear error
+            binding.tilNewSubscriptionCurrency.error = ""
+
+        }
 
     }
 
     private fun setupRenewalPeriodInput() {
 
-        val availablePeriods = arrayListOf<Period>(
-            Period.ofMonths(1),
-            Period.ofMonths(2)
+        val availablePeriods = arrayOf(
+            "Daily",
+            "Weekly",
+            "Every 2 weeks",
+            "Monthly",
+            "Every 3 months",
+            "Every 6 months",
+            "Yearly"
         )
 
         val periodsAdapter = ArrayAdapter(
@@ -150,7 +205,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         binding.renewalPeriodsSpinner.setAdapter(periodsAdapter)
 
         // set default selection to "monthly"
-        val defaultValue = availablePeriods[0].toString()
+        val defaultValue = "Monthly"
         binding.renewalPeriodsSpinner.setText(defaultValue, false)
 
     }

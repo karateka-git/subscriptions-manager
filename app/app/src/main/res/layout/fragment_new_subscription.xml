@@ -58,6 +58,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_new_subscription_description"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
@@ -65,6 +66,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_10dp"
             android:hint="@string/til_new_subscription_description_hint"
+            app:counterEnabled="true"
+            app:counterMaxLength="200"
             app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="@id/til_new_subscription_name"
             app:layout_constraintStart_toStartOf="@id/til_new_subscription_name"
@@ -74,7 +77,8 @@
                 android:id="@+id/tiet_new_subscription_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textMultiLine" />
+                android:inputType="textMultiLine"
+                android:maxLength="200" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -83,7 +87,6 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10dp"
             android:layout_marginEnd="@dimen/margin_20dp"
             android:hint="@string/til_new_subscription_cost_hint"
             app:endIconMode="clear_text"
@@ -103,18 +106,18 @@
             android:id="@+id/til_new_subscription_currency"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
             android:layout_width="@dimen/width_140dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:hint="@string/til_new_subscription_currency_hint"
-            app:layout_constraintBottom_toBottomOf="@id/til_new_subscription_cost"
+            app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="@id/til_new_subscription_name"
             app:layout_constraintStart_toEndOf="@id/til_new_subscription_cost"
-            app:layout_constraintTop_toTopOf="@id/til_new_subscription_cost">
+            app:layout_constraintTop_toBottomOf="@id/til_new_subscription_description">
 
             <AutoCompleteTextView
                 android:id="@+id/currencies_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="textAutoComplete" />
+                android:layout_height="wrap_content"
+                android:inputType="textAutoComplete|textCapCharacters" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -123,11 +126,10 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10dp"
             android:hint="@string/spinner_renewal_period_hint"
             app:layout_constraintEnd_toEndOf="@id/til_new_subscription_name"
             app:layout_constraintStart_toStartOf="@id/til_new_subscription_name"
-            app:layout_constraintTop_toBottomOf="@id/til_new_subscription_cost">
+            app:layout_constraintTop_toBottomOf="@id/til_new_subscription_currency">
 
             <AutoCompleteTextView
                 android:id="@+id/renewal_periods_spinner"
@@ -147,8 +149,8 @@
             app:endIconContentDescription="@string/new_subscription_start_date_picker_content_description"
             app:endIconDrawable="@drawable/ic_baseline_date_range_24"
             app:endIconMode="custom"
-            app:layout_constraintStart_toStartOf="@id/til_new_subscription_name"
             app:layout_constraintEnd_toEndOf="@id/til_new_subscription_name"
+            app:layout_constraintStart_toStartOf="@id/til_new_subscription_name"
             app:layout_constraintTop_toBottomOf="@id/til_new_subscription_renewal_period">
 
             <com.google.android.material.textfield.TextInputEditText
