@@ -6,12 +6,11 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main_constraint_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageButton
-            android:id="@+id/btn_go_back"
+            android:id="@+id/btn_new_subscription_go_back"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_20dp"
@@ -19,12 +18,12 @@
             android:contentDescription="@string/btn_go_back_content_description"
             android:padding="@dimen/padding_10dp"
             android:src="@drawable/ic_baseline_arrow_back"
-            app:layout_constraintBottom_toBottomOf="@id/tv_new_subscription_title"
+            app:layout_constraintBottom_toBottomOf="@id/tv_new_subscription_screen_title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_new_subscription_title" />
+            app:layout_constraintTop_toTopOf="@id/tv_new_subscription_screen_title" />
 
         <TextView
-            android:id="@+id/tv_new_subscription_title"
+            android:id="@+id/tv_new_subscription_screen_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_30dp"
@@ -47,7 +46,7 @@
             app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_new_subscription_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_new_subscription_screen_title"
             app:layout_constraintWidth_max="400dp">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -114,7 +113,7 @@
             app:layout_constraintTop_toBottomOf="@id/til_new_subscription_description">
 
             <AutoCompleteTextView
-                android:id="@+id/currencies_spinner"
+                android:id="@+id/actv_new_subscription_currency"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textAutoComplete|textCapCharacters" />
@@ -132,7 +131,7 @@
             app:layout_constraintTop_toBottomOf="@id/til_new_subscription_currency">
 
             <AutoCompleteTextView
-                android:id="@+id/renewal_periods_spinner"
+                android:id="@+id/actv_new_subscription_renewal_period"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="none" />
@@ -177,7 +176,7 @@
             app:layout_constraintTop_toBottomOf="@id/til_new_subscription_start_date">
 
             <AutoCompleteTextView
-                android:id="@+id/alerts_spinner"
+                android:id="@+id/actv_new_subscription_alerts"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="none" />
@@ -185,7 +184,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_create_new_subscription"
+            android:id="@+id/btn_new_subscription_submit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_10dp"
@@ -198,7 +197,7 @@
             android:layout_width="@dimen/width_1dp"
             android:layout_height="@dimen/height_20dp"
             app:layout_constraintStart_toStartOf="@id/til_new_subscription_name"
-            app:layout_constraintTop_toBottomOf="@+id/btn_create_new_subscription" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_new_subscription_submit" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
