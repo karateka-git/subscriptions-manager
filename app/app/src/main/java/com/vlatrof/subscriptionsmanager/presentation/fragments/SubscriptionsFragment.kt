@@ -26,9 +26,14 @@ class SubscriptionsFragment : Fragment(R.layout.fragment_subscriptions) {
 
     }
 
-    private fun setupCleanByClickOnTitle() {
-        binding.tvSubscriptionsTitle.setOnClickListener{
-            subscriptionsViewModel.deleteAllSubscriptions()
+    private fun setupSubscriptionsRVAdapter() {
+        subscriptionsAdapter = SubscriptionsAdapter()
+        binding.rvSubscriptionsList.adapter = subscriptionsAdapter
+    }
+
+    private fun startToObserveSubscriptionsLiveData() {
+        subscriptionsViewModel.subscriptionsLiveData.observe(viewLifecycleOwner) {
+            subscriptionsAdapter.setData(newSubscriptionsList = it)
         }
     }
 
@@ -40,15 +45,10 @@ class SubscriptionsFragment : Fragment(R.layout.fragment_subscriptions) {
         }
     }
 
-    private fun startToObserveSubscriptionsLiveData() {
-        subscriptionsViewModel.subscriptionsLiveData.observe(viewLifecycleOwner) {
-            subscriptionsAdapter.setData(newSubscriptionsList = it)
+    private fun setupCleanByClickOnTitle() {
+        binding.tvSubscriptionsTitle.setOnClickListener{
+            subscriptionsViewModel.deleteAllSubscriptions()
         }
-    }
-
-    private fun setupSubscriptionsRVAdapter() {
-        subscriptionsAdapter = SubscriptionsAdapter()
-        binding.rvSubscriptionsList.adapter = subscriptionsAdapter
     }
 
 }
