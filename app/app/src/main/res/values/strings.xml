@@ -3,11 +3,11 @@
     <!-- General -->
     <string name="app_name">Subscriptions Manager</string>
 
-    <!-- Subscriptions list screen (main) -->
+    <!-- UI: Subscriptions list screen (main) -->
     <string name="subscriptions_tv_screen_title">Subscriptions</string>
     <string name="subscriptions_btn_new_content_description">Add new subscription</string>
 
-    <!-- New subscription screen -->
+    <!-- UI: New subscription screen -->
     <string name="new_subscription_field_error_required_empty_string">* Required</string>
     <string name="new_subscription_field_error_wrong_value">* Wrong value</string>
     <string name="new_subscription_btn_go_back_content_description">Add new subscription</string>
@@ -15,12 +15,16 @@
     <string name="new_subscription_til_name_hint">Name</string>
     <string name="new_subscription_til_description_hint">Description (optional)</string>
     <string name="new_subscription_til_cost_hint">Cost</string>
-    <string name="new_subscription_tiet_cost_default_value">0.00</string>
     <string name="new_subscription_til_currency_hint">Currency</string>
     <string name="new_subscription_til_renewal_period_hint">Renewal Period</string>
     <string name="new_subscription_til_start_date_hint">Start date</string>
     <string name="new_subscription_til_start_date_end_icon_content_description">Start date picker</string>
     <string name="new_subscription_til_alert_hint">Alert</string>
     <string name="new_subscription_btn_create_text">CREATE</string>
+
+    <!-- Menus default values -->
+    <string name="new_subscription_tiet_cost_default_value">0.00</string>
+    <string name="new_subscription_tiet_renewal_period_default_value">Monthly</string>
+    <string name="new_subscription_tiet_alert_default_value">None</string>
 
 </resources>

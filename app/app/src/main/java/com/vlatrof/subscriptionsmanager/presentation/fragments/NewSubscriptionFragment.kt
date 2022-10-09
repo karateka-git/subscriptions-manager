@@ -13,8 +13,6 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.vlatrof.subscriptionsmanager.R
 import com.vlatrof.subscriptionsmanager.databinding.FragmentNewSubscriptionBinding
 import com.vlatrof.subscriptionsmanager.presentation.utils.hideKeyboard
-import java.text.DecimalFormat
-import java.text.NumberFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -31,7 +29,6 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         setupNameInputField()
         setupCostInputField()
         setupStartDateInputField()
-        setupAlertInputField()
         setupCreateButton()
     }
 
@@ -39,6 +36,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         super.onResume()
         setupCurrencyInputField()
         setupRenewalPeriodInputField()
+        setupAlertInputField()
     }
 
     private fun setupGoBackButton() {
@@ -117,27 +115,21 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
     private fun setupAlertInputField() {
 
-        val alertsField = binding.actvNewSubscriptionAlert
+        val alertField = binding.actvNewSubscriptionAlert
 
-        val availableAlerts = arrayOf(
-            "None",
-            "Same day (12:00 PM)",
-            "One day before (12:00 PM)",
-            "Two days before (12:00 PM)",
-            "One week before (12:00 PM)",
-        )
+        val availableValues = resources.getStringArray(R.array.alert_options)
 
-        val alertsAdapter = ArrayAdapter(
+        alertField.setAdapter(ArrayAdapter(
             activity as Context,
             android.R.layout.simple_spinner_dropdown_item,
-            availableAlerts
-        )
+            availableValues
+        ))
 
-        alertsField.setAdapter(alertsAdapter)
+        val defaultValue = getString(R.string.new_subscription_tiet_alert_default_value)
+        val defaultSelection =
+            if (availableValues.contains(defaultValue)) defaultValue else availableValues[0]
 
-        // setup default selection to "none"
-        val defaultValue = "None"
-        alertsField.setText(defaultValue, false)
+        alertField.setText(defaultSelection, false)
 
     }
 
@@ -215,27 +207,19 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
         val renewalPeriodField = binding.actvNewSubscriptionRenewalPeriod
 
-        val availablePeriods = arrayOf(
-            "Daily",
-            "Weekly",
-            "Every 2 weeks",
-            "Monthly",
-            "Every 3 months",
-            "Every 6 months",
-            "Yearly"
-        )
+        val availableValues = resources.getStringArray(R.array.renewal_period_options)
 
-        val periodsAdapter = ArrayAdapter(
+        renewalPeriodField.setAdapter(ArrayAdapter(
             activity as Context,
             android.R.layout.simple_spinner_dropdown_item,
-            availablePeriods
-        )
+            availableValues
+        ))
 
-        renewalPeriodField.setAdapter(periodsAdapter)
+        val defaultValue = getString(R.string.new_subscription_tiet_renewal_period_default_value)
+        val defaultSelection =
+            if (availableValues.contains(defaultValue)) defaultValue else availableValues[0]
 
-        // set default selection to "monthly"
-        val defaultValue = "Monthly"
-        renewalPeriodField.setText(defaultValue, false)
+        renewalPeriodField.setText(defaultSelection, false)
 
     }
 
