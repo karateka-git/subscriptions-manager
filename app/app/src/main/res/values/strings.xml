@@ -20,7 +20,7 @@
     <string name="new_subscription_til_renewal_period_hint">Renewal Period</string>
     <string name="new_subscription_til_start_date_hint">Start date</string>
     <string name="new_subscription_til_start_date_end_icon_content_description">Start date picker</string>
-    <string name="new_subscription_til_alerts_hint">Alert</string>
+    <string name="new_subscription_til_alert_hint">Alert</string>
     <string name="new_subscription_btn_create_text">CREATE</string>
 
 </resources>

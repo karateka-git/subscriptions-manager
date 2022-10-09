@@ -6,15 +6,15 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.ArrayAdapter
-import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doBeforeTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.vlatrof.subscriptionsmanager.R
 import com.vlatrof.subscriptionsmanager.databinding.FragmentNewSubscriptionBinding
 import com.vlatrof.subscriptionsmanager.presentation.utils.hideKeyboard
+import java.text.DecimalFormat
+import java.text.NumberFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -31,7 +31,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         setupNameInputField()
         setupCostInputField()
         setupStartDateInputField()
-        setupAlertsInputField()
+        setupAlertInputField()
         setupCreateButton()
     }
 
@@ -68,19 +68,21 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
     private fun setupCostInputField() {
 
+        val costFieldContainer = binding.tilNewSubscriptionCost
         val costField = binding.tietNewSubscriptionCost
-        val defaultValue = getString(R.string.new_subscription_tiet_cost_default_value)
 
         // setup default value on screen start
-        costField.setText(defaultValue)
+        costField.setText(getString(R.string.new_subscription_tiet_cost_default_value))
 
-        // setup default value if field is empty
+        // show error if field is empty
         costField.doAfterTextChanged {
 
-            if (it!!.isEmpty()){
-                costField.setText(defaultValue)
-                costField.setSelection(defaultValue.length)
+            if (it!!.isEmpty()) {
+                costFieldContainer.error = getString(R.string.new_subscription_field_error_required_empty_string)
+                return@doAfterTextChanged
             }
+
+            costFieldContainer.error = ""
 
         }
 
@@ -113,9 +115,9 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
     }
 
-    private fun setupAlertsInputField() {
+    private fun setupAlertInputField() {
 
-        val alertsField = binding.actvNewSubscriptionAlerts
+        val alertsField = binding.actvNewSubscriptionAlert
 
         val availableAlerts = arrayOf(
             "None",

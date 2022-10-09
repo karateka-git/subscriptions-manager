@@ -54,11 +54,10 @@
                 android:id="@+id/tiet_new_subscription_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLength="100"
-                android:inputType="text" />
+                android:inputType="text"
+                android:maxLength="100" />
 
         </com.google.android.material.textfield.TextInputLayout>
-
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_new_subscription_description"
@@ -98,7 +97,8 @@
                 android:id="@+id/tiet_new_subscription_cost"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:maxLength="10" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -166,18 +166,18 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_new_subscription_alerts"
+            android:id="@+id/til_new_subscription_alert"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_18dp"
-            android:hint="@string/new_subscription_til_alerts_hint"
+            android:hint="@string/new_subscription_til_alert_hint"
             app:layout_constraintEnd_toEndOf="@id/til_new_subscription_name"
             app:layout_constraintStart_toStartOf="@id/til_new_subscription_name"
             app:layout_constraintTop_toBottomOf="@id/til_new_subscription_start_date">
 
             <AutoCompleteTextView
-                android:id="@+id/actv_new_subscription_alerts"
+                android:id="@+id/actv_new_subscription_alert"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="none" />
@@ -192,7 +192,7 @@
             android:text="@string/new_subscription_btn_create_text"
             app:layout_constraintEnd_toEndOf="@id/til_new_subscription_name"
             app:layout_constraintStart_toStartOf="@id/til_new_subscription_name"
-            app:layout_constraintTop_toBottomOf="@+id/til_new_subscription_alerts" />
+            app:layout_constraintTop_toBottomOf="@+id/til_new_subscription_alert" />
 
         <Space
             android:layout_width="@dimen/width_1dp"
