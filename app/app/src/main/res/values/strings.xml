@@ -3,12 +3,12 @@
     <!-- General -->
     <string name="app_name">Subscriptions Manager</string>
 
-    <!-- UI: Subscriptions list screen (main) -->
+    <!-- UI: Subscriptions list screen -->
     <string name="subscriptions_tv_screen_title">Subscriptions</string>
     <string name="subscriptions_btn_new_content_description">Add new subscription</string>
 
     <!-- UI: New subscription screen -->
-    <string name="new_subscription_field_error_required_empty_string">* Required</string>
+    <string name="new_subscription_field_error_empty_value">* Required</string>
     <string name="new_subscription_field_error_wrong_value">* Wrong value</string>
     <string name="new_subscription_btn_go_back_content_description">Add new subscription</string>
     <string name="new_subscription_tv_screen_title">New subscription</string>
@@ -22,9 +22,10 @@
     <string name="new_subscription_til_alert_hint">Alert</string>
     <string name="new_subscription_btn_create_text">CREATE</string>
 
-    <!-- Menus default values -->
+    <!-- Default values -->
     <string name="new_subscription_tiet_cost_default_value">0.00</string>
-    <string name="new_subscription_tiet_renewal_period_default_value">Monthly</string>
-    <string name="new_subscription_tiet_alert_default_value">None</string>
+    <string name="new_subscription_tiet_currency_default_value">USD</string>
+    <string name="new_subscription_actv_renewal_period_default_value">Monthly</string>
+    <string name="new_subscription_actv_alert_default_value">None</string>
 
 </resources>

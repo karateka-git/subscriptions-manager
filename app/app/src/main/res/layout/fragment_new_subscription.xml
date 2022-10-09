@@ -185,7 +185,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_new_subscription_submit"
+            android:id="@+id/btn_new_subscription_create"
             android:layout_width="0dp"
             android:layout_height="@dimen/height_50dp"
             android:layout_marginTop="@dimen/margin_18dp"
@@ -198,7 +198,7 @@
             android:layout_width="@dimen/width_1dp"
             android:layout_height="@dimen/height_85dp"
             app:layout_constraintStart_toStartOf="@id/til_new_subscription_name"
-            app:layout_constraintTop_toBottomOf="@+id/btn_new_subscription_submit" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_new_subscription_create" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

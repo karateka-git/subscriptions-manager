@@ -13,6 +13,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.vlatrof.subscriptionsmanager.R
 import com.vlatrof.subscriptionsmanager.databinding.FragmentNewSubscriptionBinding
 import com.vlatrof.subscriptionsmanager.presentation.utils.hideKeyboard
+import java.lang.NumberFormatException
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -20,11 +21,33 @@ import java.util.*
 class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
     private lateinit var binding: FragmentNewSubscriptionBinding
-    private lateinit var datePicker: MaterialDatePicker<Long>
+    private lateinit var buttonCreateActivationTextWatcher: ButtonCreateActivationTextWatcher
+
+    inner class ButtonCreateActivationTextWatcher : TextWatcher {
+
+        private val nameInputField = binding.tietNewSubscriptionName
+        private val costInputField = binding.tietNewSubscriptionCost
+        private val currencyInputContainer = binding.tilNewSubscriptionCurrency
+        private val buttonCreate = binding.btnNewSubscriptionCreate
+
+        override fun afterTextChanged(s: Editable?) {
+
+            buttonCreate.isEnabled = (nameInputField.text!!.isNotEmpty()
+                    && costInputField.error.isNullOrEmpty()
+                    && currencyInputContainer.error.isNullOrEmpty())
+
+        }
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentNewSubscriptionBinding.bind(view)
+        buttonCreateActivationTextWatcher = ButtonCreateActivationTextWatcher()
         setupGoBackButton()
         setupNameInputField()
         setupCostInputField()
@@ -54,13 +77,15 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         nameField.doAfterTextChanged {
 
             if (it!!.isEmpty()) {
-                nameFieldContainer.error = getString(R.string.new_subscription_field_error_required_empty_string)
+                nameFieldContainer.error = getString(R.string.new_subscription_field_error_empty_value)
                 return@doAfterTextChanged
             }
 
             nameFieldContainer.error = ""
 
         }
+
+        nameField.addTextChangedListener(buttonCreateActivationTextWatcher)
 
     }
 
@@ -69,14 +94,19 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         val costFieldContainer = binding.tilNewSubscriptionCost
         val costField = binding.tietNewSubscriptionCost
 
-        // setup default value on screen start
         costField.setText(getString(R.string.new_subscription_tiet_cost_default_value))
 
-        // show error if field is empty
-        costField.doAfterTextChanged {
+        costField.doAfterTextChanged { value ->
 
-            if (it!!.isEmpty()) {
-                costFieldContainer.error = getString(R.string.new_subscription_field_error_required_empty_string)
+            if (value!!.isEmpty()) {
+                costFieldContainer.error = getString(R.string.new_subscription_field_error_empty_value)
+                return@doAfterTextChanged
+            }
+
+            try {
+                value.toString().toDouble()
+            } catch (nfe: NumberFormatException) {
+                costFieldContainer.error = getString(R.string.new_subscription_field_error_wrong_value)
                 return@doAfterTextChanged
             }
 
@@ -84,14 +114,15 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
         }
 
+        costField.addTextChangedListener(buttonCreateActivationTextWatcher)
+
     }
 
     private fun setupStartDateInputField() {
 
         val dateField = binding.tietNewSubscriptionStartDate
 
-        // init date picker instance
-        datePicker = MaterialDatePicker
+        val datePicker = MaterialDatePicker
             .Builder
             .datePicker()
             .setTitleText("Select start date")
@@ -113,33 +144,12 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
     }
 
-    private fun setupAlertInputField() {
-
-        val alertField = binding.actvNewSubscriptionAlert
-
-        val availableValues = resources.getStringArray(R.array.alert_options)
-
-        alertField.setAdapter(ArrayAdapter(
-            activity as Context,
-            android.R.layout.simple_spinner_dropdown_item,
-            availableValues
-        ))
-
-        val defaultValue = getString(R.string.new_subscription_tiet_alert_default_value)
-        val defaultSelection =
-            if (availableValues.contains(defaultValue)) defaultValue else availableValues[0]
-
-        alertField.setText(defaultSelection, false)
-
-    }
-
     private fun setupCreateButton() {
 
-        binding.btnNewSubscriptionSubmit.setOnClickListener{
+        val button = binding.btnNewSubscriptionCreate
 
-            // todo
+        button.isEnabled = false
 
-        }
     }
 
     private fun setupCurrencyInputField() {
@@ -147,18 +157,16 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         val currencyFieldContainer = binding.tilNewSubscriptionCurrency
         val currencyField = binding.actvNewSubscriptionCurrency
 
-        // setup fill currencies spinner with values
         val availableCurrencies = Currency.getAvailableCurrencies().toTypedArray()
 
-        val currenciesAdapter = ArrayAdapter(
+        currencyField.setAdapter(ArrayAdapter(
             activity as Context,
             android.R.layout.simple_spinner_dropdown_item,
             availableCurrencies
-        )
-        currencyField.setAdapter(currenciesAdapter)
+        ))
 
         // setup default selection to "USD"
-        val defaultValue = "USD"
+        val defaultValue = getString(R.string.new_subscription_tiet_currency_default_value)
         currencyField.setText(defaultValue, false)
 
         // setup force only capital characters
@@ -181,7 +189,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
             val newValue = it.toString()
 
             if (newValue.isEmpty()) {
-                currencyFieldContainer.error = getString(R.string.new_subscription_field_error_required_empty_string)
+                currencyFieldContainer.error = getString(R.string.new_subscription_field_error_empty_value)
                 return@doAfterTextChanged
             }
 
@@ -201,6 +209,8 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
         }
 
+        currencyField.addTextChangedListener(buttonCreateActivationTextWatcher)
+
     }
 
     private fun setupRenewalPeriodInputField() {
@@ -215,11 +225,31 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
             availableValues
         ))
 
-        val defaultValue = getString(R.string.new_subscription_tiet_renewal_period_default_value)
+        val defaultValue = getString(R.string.new_subscription_actv_renewal_period_default_value)
         val defaultSelection =
             if (availableValues.contains(defaultValue)) defaultValue else availableValues[0]
 
         renewalPeriodField.setText(defaultSelection, false)
+
+    }
+
+    private fun setupAlertInputField() {
+
+        val alertField = binding.actvNewSubscriptionAlert
+
+        val availableValues = resources.getStringArray(R.array.alert_options)
+
+        alertField.setAdapter(ArrayAdapter(
+            activity as Context,
+            android.R.layout.simple_spinner_dropdown_item,
+            availableValues
+        ))
+
+        val defaultValue = getString(R.string.new_subscription_actv_alert_default_value)
+        val defaultSelection =
+            if (availableValues.contains(defaultValue)) defaultValue else availableValues[0]
+
+        alertField.setText(defaultSelection, false)
 
     }
 
