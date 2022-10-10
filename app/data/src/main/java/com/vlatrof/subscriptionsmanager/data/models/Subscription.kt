@@ -8,8 +8,10 @@ data class Subscription (
     val id: Int = -1,
     val name: String = "",
     val description: String = "",
+    val paymentCost: Double = 0.0,
+    val paymentCurrency: Currency = Currency.getInstance("USD"),
     val startDate: LocalDate = LocalDate.MIN,
     val renewalPeriod: Period = Period.ZERO,
-    val paymentCost: Long = 0,
-    val paymentCurrency: Currency = Currency.getInstance("USD")
+    val alertEnabled: Boolean = false,
+    val alertPeriod: Period = Period.ZERO,
 )

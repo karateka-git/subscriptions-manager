@@ -12,7 +12,10 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.vlatrof.subscriptionsmanager.R
 import com.vlatrof.subscriptionsmanager.databinding.FragmentNewSubscriptionBinding
+import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import com.vlatrof.subscriptionsmanager.presentation.utils.hideKeyboard
+import com.vlatrof.subscriptionsmanager.presentation.utils.round
+import com.vlatrof.subscriptionsmanager.presentation.utils.showToast
 import java.lang.NumberFormatException
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -146,7 +149,8 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         }
 
         // set default value
-        val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("d MMM yyyy")
+        val pattern = getString(R.string.new_subscription_tiet_start_date_pattern)
+        val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern(pattern)
         val formattedString = LocalDate.now().format(formatter)
         dateField.setText(formattedString)
 
@@ -156,7 +160,13 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
         val button = binding.btnNewSubscriptionCreate
 
-        button.isEnabled = false
+        button.setOnClickListener{
+
+            val newSubscription = parseSubscription()
+
+            showToast(newSubscription.toString())
+
+        }
 
     }
 
@@ -251,4 +261,38 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
     }
 
+    private fun parseSubscription() : Subscription {
+
+        val name = binding.tietNewSubscriptionName.text.toString()
+
+        val description = binding.tietNewSubscriptionDescription.text.toString()
+
+        val paymentCost =
+            binding.tietNewSubscriptionCost.text.toString().toDouble().round(2)
+
+        val paymentCurrencyCodeStr = binding.actvNewSubscriptionCurrency.text.toString()
+        val paymentCurrency = Currency.getInstance(paymentCurrencyCodeStr)
+
+        val startDateStr = binding.tietNewSubscriptionStartDate.text.toString()
+        val startDatePattern = getString(R.string.new_subscription_tiet_start_date_pattern)
+        val dtf = DateTimeFormatter.ofPattern(startDatePattern)
+        val startDate = LocalDate.parse(startDateStr, dtf)
+
+        val renewalPeriods = resources.getStringArray(R.array.renewal_period_options)
+        val renewalPeriod = 0
+
+        val alert = 0
+
+        return Subscription(
+            name = name,
+            description = description,
+            paymentCost = paymentCost,
+            paymentCurrency = paymentCurrency,
+            startDate = startDate,
+            //renewalPeriod = renewalPeriod,
+            //alertEnabled = alertEnabled,
+            //alertPeriod = alertPeriod
+        )
+
+    }
 }

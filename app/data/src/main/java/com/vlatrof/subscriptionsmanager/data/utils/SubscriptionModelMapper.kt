@@ -15,10 +15,12 @@ object SubscriptionModelMapper {
             id = entitySubscription.id ?: -1,
             name = entitySubscription.name,
             description = entitySubscription.description,
+            paymentCost = entitySubscription.paymentCost,
+            paymentCurrency = Currency.getInstance(entitySubscription.paymentCurrencyCode),
             startDate = LocalDate.parse(entitySubscription.startDate),
             renewalPeriod = Period.parse(entitySubscription.renewalPeriod),
-            paymentCost = entitySubscription.paymentCost,
-            paymentCurrency = Currency.getInstance(entitySubscription.paymentCurrencyCode)
+            alertEnabled = entitySubscription.alertEnabled,
+            alertPeriod = Period.parse(entitySubscription.alertPeriod),
         )
 
     }
@@ -28,10 +30,11 @@ object SubscriptionModelMapper {
         return EntitySubscription(
             name = dataSubscription.name,
             description = dataSubscription.description,
-            startDate = dataSubscription.startDate.toString(),
-            renewalPeriod = dataSubscription.renewalPeriod.toString(),
             paymentCost = dataSubscription.paymentCost,
-            paymentCurrencyCode = dataSubscription.paymentCurrency.currencyCode
+            paymentCurrencyCode = dataSubscription.paymentCurrency.currencyCode,
+            renewalPeriod = dataSubscription.renewalPeriod.toString(),
+            startDate = dataSubscription.startDate.toString(),
+            alertPeriod = dataSubscription.alertPeriod.toString(),
         )
 
     }
@@ -42,10 +45,12 @@ object SubscriptionModelMapper {
             id = dataSubscription.id,
             name = dataSubscription.name,
             description = dataSubscription.description,
+            paymentCost = dataSubscription.paymentCost,
+            paymentCurrency = dataSubscription.paymentCurrency,
             startDate = dataSubscription.startDate,
             renewalPeriod = dataSubscription.renewalPeriod,
-            paymentCost = dataSubscription.paymentCost,
-            paymentCurrency = dataSubscription.paymentCurrency
+            alertEnabled = dataSubscription.alertEnabled,
+            alertPeriod = dataSubscription.alertPeriod,
         )
 
     }
@@ -56,10 +61,12 @@ object SubscriptionModelMapper {
             id = domainSubscription.id,
             name = domainSubscription.name,
             description = domainSubscription.description,
+            paymentCost = domainSubscription.paymentCost,
+            paymentCurrency = domainSubscription.paymentCurrency,
             startDate = domainSubscription.startDate,
             renewalPeriod = domainSubscription.renewalPeriod,
-            paymentCost = domainSubscription.paymentCost,
-            paymentCurrency = domainSubscription.paymentCurrency
+            alertEnabled = domainSubscription.alertEnabled,
+            alertPeriod = domainSubscription.alertPeriod,
         )
 
     }

@@ -123,37 +123,17 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_new_subscription_renewal_period"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/new_subscription_til_renewal_period_hint"
-            app:layout_constraintEnd_toEndOf="@id/til_new_subscription_name"
-            app:layout_constraintStart_toStartOf="@id/til_new_subscription_name"
-            app:layout_constraintTop_toBottomOf="@id/til_new_subscription_currency">
-
-            <AutoCompleteTextView
-                android:id="@+id/actv_new_subscription_renewal_period"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="none"
-                android:text="@string/new_subscription_actv_renewal_period_default_value" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_new_subscription_start_date"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_18dp"
             android:hint="@string/new_subscription_til_start_date_hint"
             app:endIconContentDescription="@string/new_subscription_til_start_date_end_icon_content_description"
             app:endIconDrawable="@drawable/ic_baseline_date_range_24"
             app:endIconMode="custom"
             app:layout_constraintEnd_toEndOf="@id/til_new_subscription_name"
             app:layout_constraintStart_toStartOf="@id/til_new_subscription_name"
-            app:layout_constraintTop_toBottomOf="@id/til_new_subscription_renewal_period">
+            app:layout_constraintTop_toBottomOf="@id/til_new_subscription_currency">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tiet_new_subscription_start_date"
@@ -168,6 +148,26 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_new_subscription_renewal_period"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_18dp"
+            android:hint="@string/new_subscription_til_renewal_period_hint"
+            app:layout_constraintEnd_toEndOf="@id/til_new_subscription_name"
+            app:layout_constraintStart_toStartOf="@id/til_new_subscription_name"
+            app:layout_constraintTop_toBottomOf="@id/til_new_subscription_start_date">
+
+            <AutoCompleteTextView
+                android:id="@+id/actv_new_subscription_renewal_period"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none"
+                android:text="@string/new_subscription_actv_renewal_period_default_value" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_new_subscription_alert"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="0dp"
@@ -176,7 +176,7 @@
             android:hint="@string/new_subscription_til_alert_hint"
             app:layout_constraintEnd_toEndOf="@id/til_new_subscription_name"
             app:layout_constraintStart_toStartOf="@id/til_new_subscription_name"
-            app:layout_constraintTop_toBottomOf="@id/til_new_subscription_start_date">
+            app:layout_constraintTop_toBottomOf="@id/til_new_subscription_renewal_period">
 
             <AutoCompleteTextView
                 android:id="@+id/actv_new_subscription_alert"
@@ -192,6 +192,7 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/height_50dp"
             android:layout_marginTop="@dimen/margin_18dp"
+            android:enabled="false"
             android:text="@string/new_subscription_btn_create_text"
             app:layout_constraintEnd_toEndOf="@id/til_new_subscription_name"
             app:layout_constraintStart_toStartOf="@id/til_new_subscription_name"

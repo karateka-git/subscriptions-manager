@@ -12,7 +12,7 @@ val dummySubscriptionsList = listOf(
         description = "Some useful subscription",
         startDate = LocalDate.of(2022, 8, 15),
         renewalPeriod = Period.ofMonths(1),
-        paymentCost = 249,
+        paymentCost = 249.0,
         paymentCurrency = Currency.getInstance("RUB")
     ),
 
@@ -21,7 +21,7 @@ val dummySubscriptionsList = listOf(
         description = "Some useful subscription",
         startDate = LocalDate.of(2012, 9, 25),
         renewalPeriod = Period.ofYears(1),
-        paymentCost = 5,
+        paymentCost = 5.0,
         paymentCurrency = Currency.getInstance("USD")
     ),
 
@@ -30,7 +30,7 @@ val dummySubscriptionsList = listOf(
         description = "Some useful subscription",
         startDate = LocalDate.of(2022, 8, 15),
         renewalPeriod = Period.ofMonths(1),
-        paymentCost = 149,
+        paymentCost = 149.0,
         paymentCurrency = Currency.getInstance("RUB")
     ),
 
@@ -39,7 +39,7 @@ val dummySubscriptionsList = listOf(
         description = "Some useful subscription",
         startDate = LocalDate.of(2022, 8, 15),
         renewalPeriod = Period.ofWeeks(2),
-        paymentCost = 199,
+        paymentCost = 199.0,
         paymentCurrency = Currency.getInstance("AUD")
     ),
 
@@ -48,7 +48,7 @@ val dummySubscriptionsList = listOf(
         description = "Some useful subscription",
         startDate = LocalDate.of(2022, 8, 15),
         renewalPeriod = Period.ofMonths(1),
-        paymentCost = 249,
+        paymentCost = 249.0,
         paymentCurrency = Currency.getInstance("RUB")
     ),
 
