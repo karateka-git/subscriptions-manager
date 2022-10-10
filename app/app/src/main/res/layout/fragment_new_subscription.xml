@@ -117,7 +117,8 @@
                 android:id="@+id/actv_new_subscription_currency"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textAutoComplete|textCapCharacters" />
+                android:inputType="textAutoComplete|textCapCharacters"
+                android:text="@string/new_subscription_tiet_currency_default_value" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -135,7 +136,8 @@
                 android:id="@+id/actv_new_subscription_renewal_period"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="none" />
+                android:inputType="none"
+                android:text="@string/new_subscription_actv_renewal_period_default_value" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -180,7 +182,8 @@
                 android:id="@+id/actv_new_subscription_alert"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="none" />
+                android:inputType="none"
+                android:text="@string/new_subscription_actv_alert_default_value" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

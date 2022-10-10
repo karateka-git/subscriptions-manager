@@ -1,1 +1,2 @@
-# 📝 Android applications for subscriptions management
+# 📝 Subscriptions manager (WIP)
+Offline-first Android application 

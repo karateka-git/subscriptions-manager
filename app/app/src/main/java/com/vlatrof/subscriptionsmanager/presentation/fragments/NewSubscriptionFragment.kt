@@ -26,17 +26,15 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
     inner class ButtonCreateActivationTextWatcher : TextWatcher {
 
         private val nameInputField = binding.tietNewSubscriptionName
-        private val costInputField = binding.tietNewSubscriptionCost
+        private val costInputContainer = binding.tilNewSubscriptionCost
         private val currencyInputContainer = binding.tilNewSubscriptionCurrency
         private val buttonCreate = binding.btnNewSubscriptionCreate
 
+        // validation to enable button
         override fun afterTextChanged(s: Editable?) {
-
-            // validation to enable button
             buttonCreate.isEnabled = (nameInputField.text!!.isNotEmpty()
-                    && costInputField.error.isNullOrEmpty()
+                    && costInputContainer.error.isNullOrEmpty()
                     && currencyInputContainer.error.isNullOrEmpty())
-
         }
 
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -178,10 +176,6 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
             )
         )
 
-        // set default value
-        val defaultValue = getString(R.string.new_subscription_tiet_currency_default_value)
-        currencyField.setText(defaultValue, false)
-
         // setup validation
         currencyField.doAfterTextChanged {
 
@@ -238,12 +232,6 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
             )
         )
 
-        // set default value
-        val defaultValue = getString(R.string.new_subscription_actv_renewal_period_default_value)
-        val defaultSelection =
-            if (availableValues.contains(defaultValue)) defaultValue else availableValues[0]
-        renewalPeriodField.setText(defaultSelection, false)
-
     }
 
     private fun setupAlertInputField() {
@@ -260,12 +248,6 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
                 availableValues
             )
         )
-
-        // set default value
-        val defaultValue = getString(R.string.new_subscription_actv_alert_default_value)
-        val defaultSelection =
-            if (availableValues.contains(defaultValue)) defaultValue else availableValues[0]
-        alertField.setText(defaultSelection, false)
 
     }
 
