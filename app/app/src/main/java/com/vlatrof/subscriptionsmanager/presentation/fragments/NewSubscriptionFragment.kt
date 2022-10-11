@@ -16,7 +16,8 @@ import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import com.vlatrof.subscriptionsmanager.presentation.utils.hideKeyboard
 import com.vlatrof.subscriptionsmanager.presentation.utils.parseXmlResourceMap
 import com.vlatrof.subscriptionsmanager.presentation.utils.round
-import com.vlatrof.subscriptionsmanager.presentation.utils.showToast
+import com.vlatrof.subscriptionsmanager.presentation.viewmodels.NewSubscriptionViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.lang.NumberFormatException
 import java.time.LocalDate
 import java.time.Period
@@ -25,6 +26,7 @@ import java.util.Currency
 
 class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
+    private val newSubscriptionViewModel by viewModel<NewSubscriptionViewModel>()
     private lateinit var binding: FragmentNewSubscriptionBinding
     private lateinit var buttonCreateActivationTextWatcher: ButtonCreateActivationTextWatcher
 
@@ -134,15 +136,26 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
         val dateField = binding.tietNewSubscriptionStartDate
 
-        // configure date picker
-        val datePicker = MaterialDatePicker
+        // date picker builder
+        val datePickerBuilder =
+            MaterialDatePicker
             .Builder
             .datePicker()
             .setTitleText("Select start date")
-            .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
-            .build()
 
-        datePicker.addOnPositiveButtonClickListener {
+        // restore date selection or set today
+        if (newSubscriptionViewModel.currentSelectionDate == 0L) {
+            val today = MaterialDatePicker.todayInUtcMilliseconds()
+            datePickerBuilder.setSelection(today)
+            newSubscriptionViewModel.currentSelectionDate = today
+        } else {
+            datePickerBuilder.setSelection(newSubscriptionViewModel.currentSelectionDate)
+        }
+
+        val datePicker = datePickerBuilder.build()
+
+        datePicker.addOnPositiveButtonClickListener { selection ->
+            newSubscriptionViewModel.currentSelectionDate = selection
             dateField.setText(datePicker.headerText)
         }
 
@@ -163,11 +176,9 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         val button = binding.btnNewSubscriptionCreate
 
         button.setOnClickListener{
-
             val newSubscription = parseSubscription()
-
-            showToast(newSubscription.toString())
-
+            newSubscriptionViewModel.insertNewSubscription(newSubscription)
+            findNavController().popBackStack()
         }
 
     }
@@ -233,7 +244,10 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
         val renewalPeriodField = binding.actvNewSubscriptionRenewalPeriod
 
-        val availableValues = resources.getStringArray(R.array.renewal_period_options)
+        val availableValues =
+            parseXmlResourceMap(requireActivity(), R.xml.map_subscription_renewal_period_options)
+                .values
+                .toTypedArray()
 
         // set menu items
         renewalPeriodField.setAdapter(
@@ -250,7 +264,10 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
         val alertField = binding.actvNewSubscriptionAlert
 
-        val availableValues = resources.getStringArray(R.array.alert_options)
+        val availableValues =
+            parseXmlResourceMap(requireActivity(), R.xml.map_subscription_alert_period_options)
+                .values
+                .toTypedArray()
 
         // set menu items
         alertField.setAdapter(
@@ -280,6 +297,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         val paymentCurrency = Currency.getInstance(paymentCurrencyCodeStr)
 
         // start date
+
         val startDateStr = binding.tietNewSubscriptionStartDate.text.toString()
         val startDatePattern = getString(R.string.new_subscription_tiet_start_date_pattern)
         val dtf = DateTimeFormatter.ofPattern(startDatePattern)

@@ -12,9 +12,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SubscriptionsFragment : Fragment(R.layout.fragment_subscriptions) {
 
+    private val subscriptionsViewModel by viewModel<SubscriptionsViewModel>()
     private lateinit var binding: FragmentSubscriptionsBinding
     private lateinit var subscriptionsAdapter: SubscriptionsAdapter
-    private val subscriptionsViewModel by viewModel<SubscriptionsViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
