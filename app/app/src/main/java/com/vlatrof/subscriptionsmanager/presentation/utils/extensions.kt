@@ -9,6 +9,9 @@ import androidx.fragment.app.Fragment
 import java.lang.IllegalArgumentException
 import java.math.BigDecimal
 import java.math.RoundingMode
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
 
 // Show Toast
 
@@ -33,7 +36,7 @@ fun Fragment.hideKeyboard() {
 
 // Round double value
 
-fun Double.round(places: Int): Double {
+fun Double.round(places: Int, mode: RoundingMode = RoundingMode.DOWN): Double {
 
     if (places < 0) {
         throw IllegalArgumentException()
@@ -41,7 +44,7 @@ fun Double.round(places: Int): Double {
 
     return BigDecimal
         .valueOf(this)
-        .setScale(places, RoundingMode.DOWN)
+        .setScale(places, mode)
         .toDouble()
 
 }

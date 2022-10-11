@@ -14,12 +14,12 @@ import com.vlatrof.subscriptionsmanager.R
 import com.vlatrof.subscriptionsmanager.databinding.FragmentNewSubscriptionBinding
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import com.vlatrof.subscriptionsmanager.presentation.utils.hideKeyboard
+import com.vlatrof.subscriptionsmanager.presentation.utils.parseLocalDateFromUTCMilliseconds
 import com.vlatrof.subscriptionsmanager.presentation.utils.parseXmlResourceMap
 import com.vlatrof.subscriptionsmanager.presentation.utils.round
 import com.vlatrof.subscriptionsmanager.presentation.viewmodels.NewSubscriptionViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.lang.NumberFormatException
-import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
 import java.util.Currency
@@ -29,6 +29,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
     private val newSubscriptionViewModel by viewModel<NewSubscriptionViewModel>()
     private lateinit var binding: FragmentNewSubscriptionBinding
     private lateinit var buttonCreateActivationTextWatcher: ButtonCreateActivationTextWatcher
+    private lateinit var datePicker: MaterialDatePicker<Long>
 
     inner class ButtonCreateActivationTextWatcher : TextWatcher {
 
@@ -141,33 +142,32 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
             MaterialDatePicker
             .Builder
             .datePicker()
-            .setTitleText("Select start date")
+            .setTitleText(getString(R.string.new_subscription_til_start_date_date_picker_title_text))
 
-        // restore date selection or set today
-        if (newSubscriptionViewModel.currentSelectionDate == 0L) {
+        // restore current date selection or set default
+        if (newSubscriptionViewModel.currentDateSelection == 0L) {
             val today = MaterialDatePicker.todayInUtcMilliseconds()
             datePickerBuilder.setSelection(today)
-            newSubscriptionViewModel.currentSelectionDate = today
+            newSubscriptionViewModel.currentDateSelection = today
         } else {
-            datePickerBuilder.setSelection(newSubscriptionViewModel.currentSelectionDate)
+            datePickerBuilder.setSelection(newSubscriptionViewModel.currentDateSelection)
         }
 
-        val datePicker = datePickerBuilder.build()
+        datePicker = datePickerBuilder.build()
 
         datePicker.addOnPositiveButtonClickListener { selection ->
-            newSubscriptionViewModel.currentSelectionDate = selection
-            dateField.setText(datePicker.headerText)
+            newSubscriptionViewModel.currentDateSelection = selection
+            updateDateFieldValue()
         }
 
         dateField.setOnClickListener {
-            datePicker.show(parentFragmentManager, "datePicker")
+            datePicker.show(
+                parentFragmentManager,
+                getString(R.string.new_subscription_til_start_date_date_picker_tag)
+            )
         }
 
-        // set default value
-        val pattern = getString(R.string.new_subscription_tiet_start_date_pattern)
-        val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern(pattern)
-        val formattedString = LocalDate.now().format(formatter)
-        dateField.setText(formattedString)
+        updateDateFieldValue()
 
     }
 
@@ -282,32 +282,28 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
     private fun parseSubscription() : Subscription {
 
-        // name
         val name = binding.tietNewSubscriptionName.text.toString()
 
-        // description
         val description = binding.tietNewSubscriptionDescription.text.toString()
 
-        // payment cost
         val paymentCost =
             binding.tietNewSubscriptionCost.text.toString().toDouble().round(2)
 
-        // payment currency
-        val paymentCurrencyCodeStr = binding.actvNewSubscriptionCurrency.text.toString()
-        val paymentCurrency = Currency.getInstance(paymentCurrencyCodeStr)
+        val paymentCurrency = Currency.getInstance(
+            binding.actvNewSubscriptionCurrency.text.toString()
+        )
 
         // start date
-
-        val startDateStr = binding.tietNewSubscriptionStartDate.text.toString()
-        val startDatePattern = getString(R.string.new_subscription_tiet_start_date_pattern)
-        val dtf = DateTimeFormatter.ofPattern(startDatePattern)
-        val startDate = LocalDate.parse(startDateStr, dtf)
+        val startDate =
+            parseLocalDateFromUTCMilliseconds(newSubscriptionViewModel.currentDateSelection)
 
         // renewal period
         val renewalPeriodStr = binding.actvNewSubscriptionRenewalPeriod.text.toString()
         val renewalPeriodKey =
             parseXmlResourceMap(requireActivity(), R.xml.map_subscription_renewal_period_options)
-            .filterValues{ it == renewalPeriodStr }.keys.toTypedArray()[0]
+                .filterValues{ it == renewalPeriodStr }
+                .keys
+                .toTypedArray()[0]
         val renewalPeriod = Period.parse(renewalPeriodKey)
 
         // alert flag and period
@@ -339,4 +335,21 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         )
 
     }
+
+    private fun updateDateFieldValue() {
+
+        val dateField = binding.tietNewSubscriptionStartDate
+
+        val formatter = DateTimeFormatter.ofPattern(
+            getString(R.string.new_subscription_tiet_start_date_pattern)
+        )
+
+        val formattedString = parseLocalDateFromUTCMilliseconds(
+            millis = newSubscriptionViewModel.currentDateSelection
+        ).format(formatter)
+
+        dateField.setText(formattedString)
+
+    }
+
 }

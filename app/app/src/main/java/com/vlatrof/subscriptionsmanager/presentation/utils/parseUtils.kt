@@ -3,6 +3,9 @@ package com.vlatrof.subscriptionsmanager.presentation.utils
 import android.content.Context
 import org.xmlpull.v1.XmlPullParser
 import java.lang.NullPointerException
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
 
 fun parseXmlResourceMap(context: Context, mapResId: Int): LinkedHashMap<String, String> {
 
@@ -37,4 +40,8 @@ fun parseXmlResourceMap(context: Context, mapResId: Int): LinkedHashMap<String, 
 
     return map
 
+}
+
+fun parseLocalDateFromUTCMilliseconds(millis: Long, zone: ZoneId = ZoneId.systemDefault()): LocalDate {
+    return Instant.ofEpochMilli(millis).atZone(zone).toLocalDate()
 }

@@ -15,7 +15,7 @@ class NewSubscriptionViewModel (
 
     ) : ViewModel() {
 
-    var currentSelectionDate: Long = 0
+    var currentDateSelection: Long = 0
 
     fun insertNewSubscription(subscription: Subscription) {
         viewModelScope.launch(ioDispatcher) {
