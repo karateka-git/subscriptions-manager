@@ -14,10 +14,12 @@ import com.vlatrof.subscriptionsmanager.R
 import com.vlatrof.subscriptionsmanager.databinding.FragmentNewSubscriptionBinding
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import com.vlatrof.subscriptionsmanager.presentation.utils.hideKeyboard
+import com.vlatrof.subscriptionsmanager.presentation.utils.parseXmlResourceMap
 import com.vlatrof.subscriptionsmanager.presentation.utils.round
 import com.vlatrof.subscriptionsmanager.presentation.utils.showToast
 import java.lang.NumberFormatException
 import java.time.LocalDate
+import java.time.Period
 import java.time.format.DateTimeFormatter
 import java.util.Currency
 
@@ -263,25 +265,49 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
     private fun parseSubscription() : Subscription {
 
+        // name
         val name = binding.tietNewSubscriptionName.text.toString()
 
+        // description
         val description = binding.tietNewSubscriptionDescription.text.toString()
 
+        // payment cost
         val paymentCost =
             binding.tietNewSubscriptionCost.text.toString().toDouble().round(2)
 
+        // payment currency
         val paymentCurrencyCodeStr = binding.actvNewSubscriptionCurrency.text.toString()
         val paymentCurrency = Currency.getInstance(paymentCurrencyCodeStr)
 
+        // start date
         val startDateStr = binding.tietNewSubscriptionStartDate.text.toString()
         val startDatePattern = getString(R.string.new_subscription_tiet_start_date_pattern)
         val dtf = DateTimeFormatter.ofPattern(startDatePattern)
         val startDate = LocalDate.parse(startDateStr, dtf)
 
-        val renewalPeriods = resources.getStringArray(R.array.renewal_period_options)
-        val renewalPeriod = 0
+        // renewal period
+        val renewalPeriodStr = binding.actvNewSubscriptionRenewalPeriod.text.toString()
+        val renewalPeriodKey =
+            parseXmlResourceMap(requireActivity(), R.xml.map_subscription_renewal_period_options)
+            .filterValues{ it == renewalPeriodStr }.keys.toTypedArray()[0]
+        val renewalPeriod = Period.parse(renewalPeriodKey)
 
-        val alert = 0
+        // alert flag and period
+        val alertEnabled: Boolean
+        val alertPeriod: Period
+        val alertPeriodStr = binding.actvNewSubscriptionAlert.text.toString()
+        val alertPeriodKey =
+            parseXmlResourceMap(requireActivity(), R.xml.map_subscription_alert_period_options)
+                .filterValues{ it == alertPeriodStr }
+                .keys
+                .toTypedArray()[0]
+        if (alertPeriodKey == getString(R.string.new_subscription_alert_disabled_key)) {
+            alertEnabled = false
+            alertPeriod = Period.ZERO
+        } else {
+            alertEnabled = true
+            alertPeriod = Period.parse(alertPeriodKey)
+        }
 
         return Subscription(
             name = name,
@@ -289,9 +315,9 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
             paymentCost = paymentCost,
             paymentCurrency = paymentCurrency,
             startDate = startDate,
-            //renewalPeriod = renewalPeriod,
-            //alertEnabled = alertEnabled,
-            //alertPeriod = alertPeriod
+            renewalPeriod = renewalPeriod,
+            alertEnabled = alertEnabled,
+            alertPeriod = alertPeriod
         )
 
     }

@@ -10,22 +10,28 @@ import java.lang.IllegalArgumentException
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-fun Fragment.hideKeyboard() {
-    view?.let { activity?.hideKeyboard(it) }
-}
+// Show Toast
 
 fun Fragment.showToast(message: String) {
     Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show()
+}
+
+// Hide Keyboard
+
+fun Context.hideKeyboard(view: View) {
+    val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
 }
 
 fun Activity.hideKeyboard() {
     hideKeyboard(currentFocus ?: View(this))
 }
 
-fun Context.hideKeyboard(view: View) {
-    val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-    inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+fun Fragment.hideKeyboard() {
+    view?.let { activity?.hideKeyboard(it) }
 }
+
+// Round double value
 
 fun Double.round(places: Int): Double {
 
