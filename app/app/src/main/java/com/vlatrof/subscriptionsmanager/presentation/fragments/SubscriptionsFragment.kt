@@ -22,7 +22,10 @@ class SubscriptionsFragment : Fragment(R.layout.fragment_subscriptions) {
         setupSubscriptionsRVAdapter()
         startToObserveSubscriptionsLiveData()
         setupNewSubscriptionButton()
-        setupCleanByClickOnTitle() // todo: for testing
+
+        binding.btnMenu.setOnClickListener{
+            subscriptionsViewModel.deleteAllSubscriptions()
+        }
 
     }
 
@@ -42,12 +45,6 @@ class SubscriptionsFragment : Fragment(R.layout.fragment_subscriptions) {
             findNavController().navigate(
                 R.id.action_fragment_subscriptions_list_to_fragment_new_subscription
             )
-        }
-    }
-
-    private fun setupCleanByClickOnTitle() {
-        binding.tvSubscriptionsTitle.setOnClickListener{
-            subscriptionsViewModel.deleteAllSubscriptions()
         }
     }
 

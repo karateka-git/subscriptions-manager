@@ -2,12 +2,12 @@ package com.vlatrof.subscriptionsmanager.presentation.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import android.widget.ArrayAdapter
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.vlatrof.subscriptionsmanager.R
@@ -17,6 +17,7 @@ import com.vlatrof.subscriptionsmanager.presentation.utils.hideKeyboard
 import com.vlatrof.subscriptionsmanager.presentation.utils.parseLocalDateFromUTCMilliseconds
 import com.vlatrof.subscriptionsmanager.presentation.utils.parseXmlResourceMap
 import com.vlatrof.subscriptionsmanager.presentation.utils.round
+import com.vlatrof.subscriptionsmanager.presentation.viewmodels.InputState
 import com.vlatrof.subscriptionsmanager.presentation.viewmodels.NewSubscriptionViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.lang.NumberFormatException
@@ -26,40 +27,19 @@ import java.util.Currency
 
 class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
-    private val newSubscriptionViewModel by viewModel<NewSubscriptionViewModel>()
     private lateinit var binding: FragmentNewSubscriptionBinding
-    private lateinit var buttonCreateActivationTextWatcher: ButtonCreateActivationTextWatcher
-    private lateinit var datePicker: MaterialDatePicker<Long>
-
-    inner class ButtonCreateActivationTextWatcher : TextWatcher {
-
-        private val nameInputField = binding.tietNewSubscriptionName
-        private val costInputContainer = binding.tilNewSubscriptionCost
-        private val currencyInputContainer = binding.tilNewSubscriptionCurrency
-        private val buttonCreate = binding.btnNewSubscriptionCreate
-
-        // validation to enable button
-        override fun afterTextChanged(s: Editable?) {
-            buttonCreate.isEnabled = (nameInputField.text!!.isNotEmpty()
-                    && costInputContainer.error.isNullOrEmpty()
-                    && currencyInputContainer.error.isNullOrEmpty())
-        }
-
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-
-    }
+    private val newSubscriptionViewModel by viewModel<NewSubscriptionViewModel>()
+    private val availableCurrencies = Currency.getAvailableCurrencies().toTypedArray()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentNewSubscriptionBinding.bind(view)
-        buttonCreateActivationTextWatcher = ButtonCreateActivationTextWatcher()
         setupGoBackButton()
         setupNameInputField()
         setupCostInputField()
         setupStartDateInputField()
         setupCreateButton()
+        startValidationObserve()
     }
 
     override fun onResume() {
@@ -84,15 +64,27 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         // setup validation
         nameField.doAfterTextChanged {
             if (it!!.isEmpty()) {
-                nameFieldContainer.error =
-                    getString(R.string.new_subscription_field_error_empty_value)
+                newSubscriptionViewModel.inputNameState.value = InputState.EMPTY
+//                nameFieldContainer.error =
+//                    getString(R.string.new_subscription_field_error_empty_value)
                 return@doAfterTextChanged
             }
-            nameFieldContainer.error = ""
+            newSubscriptionViewModel.inputNameState.value = InputState.CORRECT
+//            nameFieldContainer.error = ""
+        }
+
+        newSubscriptionViewModel.inputNameState.observe(requireActivity()) { state ->
+
+            nameFieldContainer.error =
+                if (state == InputState.EMPTY)
+                    getString(R.string.new_subscription_field_error_empty_value)
+                else
+                    ""
+
         }
 
         // setup validation to enable "create" button
-        nameField.addTextChangedListener(buttonCreateActivationTextWatcher)
+        //nameField.addTextChangedListener(buttonCreateActivationTextWatcher)
 
     }
 
@@ -101,35 +93,50 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         val costFieldContainer = binding.tilNewSubscriptionCost
         val costField = binding.tietNewSubscriptionCost
 
-        // set default value
         costField.setText(getString(R.string.new_subscription_tiet_cost_default_value))
+        newSubscriptionViewModel.inputCostState.value = InputState.CORRECT
 
-        // setup validation
         costField.doAfterTextChanged { value ->
 
-            // show error on empty value
             if (value!!.isEmpty()) {
-                costFieldContainer.error =
-                    getString(R.string.new_subscription_field_error_empty_value)
+                newSubscriptionViewModel.inputCostState.value = InputState.EMPTY
+//                costFieldContainer.error =
+//                    getString(R.string.new_subscription_field_error_empty_value)
                 return@doAfterTextChanged
             }
 
-            // show error on wrong value
             try {
                 value.toString().toDouble()
             } catch (nfe: NumberFormatException) {
-                costFieldContainer.error =
-                    getString(R.string.new_subscription_field_error_wrong_value)
+                newSubscriptionViewModel.inputCostState.value = InputState.WRONG
+//                costFieldContainer.error =
+//                    getString(R.string.new_subscription_field_error_wrong_value)
                 return@doAfterTextChanged
             }
 
-            // clear error
-            costFieldContainer.error = ""
+            newSubscriptionViewModel.inputCostState.value = InputState.CORRECT
+            //costFieldContainer.error = ""
+
+        }
+
+        newSubscriptionViewModel.inputCostState.observe(requireActivity()) { state ->
+
+            when (state) {
+                InputState.EMPTY -> {
+                    costFieldContainer.error = getString(R.string.new_subscription_field_error_empty_value)
+                }
+                InputState.WRONG -> {
+                    costFieldContainer.error = getString(R.string.new_subscription_field_error_wrong_value)
+                }
+                else -> {
+                    costFieldContainer.error = ""
+                }
+            }
 
         }
 
         // setup validation to enable "create" button
-        costField.addTextChangedListener(buttonCreateActivationTextWatcher)
+        //costField.addTextChangedListener(buttonCreateActivationTextWatcher)
 
     }
 
@@ -137,27 +144,19 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
         val dateField = binding.tietNewSubscriptionStartDate
 
-        // date picker builder
-        val datePickerBuilder =
-            MaterialDatePicker
-            .Builder
-            .datePicker()
+        // init DatePicker and restore selection
+        val datePicker = MaterialDatePicker.Builder.datePicker()
+            .setSelection(newSubscriptionViewModel.startDateSelectionLiveData.value)
             .setTitleText(getString(R.string.new_subscription_til_start_date_date_picker_title_text))
+            .build()
+            .apply {
+                addOnPositiveButtonClickListener {
+                    newSubscriptionViewModel.startDateSelectionLiveData.value = selection
+                }
+            }
 
-        // restore current date selection or set default
-        if (newSubscriptionViewModel.currentDateSelection == 0L) {
-            val today = MaterialDatePicker.todayInUtcMilliseconds()
-            datePickerBuilder.setSelection(today)
-            newSubscriptionViewModel.currentDateSelection = today
-        } else {
-            datePickerBuilder.setSelection(newSubscriptionViewModel.currentDateSelection)
-        }
-
-        datePicker = datePickerBuilder.build()
-
-        datePicker.addOnPositiveButtonClickListener { selection ->
-            newSubscriptionViewModel.currentDateSelection = selection
-            updateDateFieldValue()
+        newSubscriptionViewModel.startDateSelectionLiveData.observe(requireActivity()) {
+                selection -> updateDateFieldValue(selection)
         }
 
         dateField.setOnClickListener {
@@ -167,8 +166,6 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
             )
         }
 
-        updateDateFieldValue()
-
     }
 
     private fun setupCreateButton() {
@@ -176,9 +173,20 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         val button = binding.btnNewSubscriptionCreate
 
         button.setOnClickListener{
-            val newSubscription = parseSubscription()
-            newSubscriptionViewModel.insertNewSubscription(newSubscription)
+            newSubscriptionViewModel.insertNewSubscription(
+                parseSubscription()
+            )
             findNavController().popBackStack()
+        }
+
+        newSubscriptionViewModel.buttonCreateEnabledLiveData.observe(
+            requireActivity()) { enabled ->
+
+            button.isEnabled = enabled
+            button.setTextColor(
+                if (enabled) ResourcesCompat.getColor(resources, R.color.green, null)
+                else ResourcesCompat.getColor(resources, R.color.white_gray, null)
+            )
         }
 
     }
@@ -188,26 +196,31 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         val currencyFieldContainer = binding.tilNewSubscriptionCurrency
         val currencyField = binding.actvNewSubscriptionCurrency
 
-        val availableCurrencies = Currency.getAvailableCurrencies().toTypedArray()
+        // restore value or set default
+        if (newSubscriptionViewModel.inputCurrencySelection == "") {
+            newSubscriptionViewModel.inputCurrencySelection =
+                getString(R.string.new_subscription_tiet_currency_default_value)
+            newSubscriptionViewModel.inputCurrencyState.value = InputState.CORRECT
+        }
+        currencyField.setText(newSubscriptionViewModel.inputCurrencySelection)
 
         // set menu items
-        currencyField.setAdapter(
-            ArrayAdapter(
-                activity as Context,
-                android.R.layout.simple_spinner_dropdown_item,
-                availableCurrencies
-            )
-        )
+        currencyField.setAdapter(ArrayAdapter(
+            requireActivity(),
+            android.R.layout.simple_spinner_dropdown_item,
+            availableCurrencies
+        ))
 
         // setup validation
         currencyField.doAfterTextChanged {
 
             val newValue = it.toString()
 
-            // show error on empty value
+            // save value
+            newSubscriptionViewModel.inputCurrencySelection = newValue
+
             if (newValue.isEmpty()) {
-                currencyFieldContainer.error =
-                    getString(R.string.new_subscription_field_error_empty_value)
+                newSubscriptionViewModel.inputCurrencyState.value = InputState.EMPTY
                 return@doAfterTextChanged
             }
 
@@ -220,23 +233,34 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
             // show error on wrong value
             try {
                 if (!availableCurrencies.contains(Currency.getInstance(newValue))) {
-                    currencyFieldContainer.error =
-                        getString(R.string.new_subscription_field_error_wrong_value)
+                    newSubscriptionViewModel.inputCurrencyState.value = InputState.WRONG
                     return@doAfterTextChanged
                 }
             } catch (exception: IllegalArgumentException) {
-                currencyFieldContainer.error =
-                    getString(R.string.new_subscription_field_error_wrong_value)
+                newSubscriptionViewModel.inputCurrencyState.value = InputState.WRONG
                 return@doAfterTextChanged
             }
 
-            // clear error
-            currencyFieldContainer.error = ""
+            newSubscriptionViewModel.inputCurrencyState.value = InputState.CORRECT
 
         }
 
-        // setup validation to enable "create" button
-        currencyField.addTextChangedListener(buttonCreateActivationTextWatcher)
+        // setup state observe
+        newSubscriptionViewModel.inputCurrencyState.observe(requireActivity()) { state ->
+
+            when (state) {
+                InputState.EMPTY -> {
+                    currencyFieldContainer.error = getString(R.string.new_subscription_field_error_empty_value)
+                }
+                InputState.WRONG -> {
+                    currencyFieldContainer.error = getString(R.string.new_subscription_field_error_wrong_value)
+                }
+                else -> {
+                    currencyFieldContainer.error = ""
+                }
+            }
+
+        }
 
     }
 
@@ -244,19 +268,27 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
         val renewalPeriodField = binding.actvNewSubscriptionRenewalPeriod
 
-        val availableValues =
+        // restore value or set default
+        if (newSubscriptionViewModel.inputRenewalPeriodSelection == "") {
+            newSubscriptionViewModel.inputRenewalPeriodSelection =
+                getString(R.string.new_subscription_actv_renewal_period_default_value)
+        }
+        renewalPeriodField.setText(newSubscriptionViewModel.inputRenewalPeriodSelection)
+
+        // set menu items
+        renewalPeriodField.setAdapter(ArrayAdapter(
+            activity as Context,
+            android.R.layout.simple_spinner_dropdown_item,
             parseXmlResourceMap(requireActivity(), R.xml.map_subscription_renewal_period_options)
                 .values
                 .toTypedArray()
+        ))
 
-        // set menu items
-        renewalPeriodField.setAdapter(
-            ArrayAdapter(
-                activity as Context,
-                android.R.layout.simple_spinner_dropdown_item,
-                availableValues
-            )
-        )
+        // save value
+        renewalPeriodField.doAfterTextChanged {
+            newSubscriptionViewModel.inputRenewalPeriodSelection = it.toString()
+        }
+
 
     }
 
@@ -264,19 +296,26 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
         val alertField = binding.actvNewSubscriptionAlert
 
-        val availableValues =
+        // restore value or set default
+        if (newSubscriptionViewModel.inputAlertSelection == "") {
+            newSubscriptionViewModel.inputAlertSelection =
+                getString(R.string.new_subscription_actv_alert_default_value)
+        }
+        alertField.setText(newSubscriptionViewModel.inputAlertSelection)
+
+        // set menu items
+        alertField.setAdapter(ArrayAdapter(
+            activity as Context,
+            android.R.layout.simple_spinner_dropdown_item,
             parseXmlResourceMap(requireActivity(), R.xml.map_subscription_alert_period_options)
                 .values
                 .toTypedArray()
+        ))
 
-        // set menu items
-        alertField.setAdapter(
-            ArrayAdapter(
-                activity as Context,
-                android.R.layout.simple_spinner_dropdown_item,
-                availableValues
-            )
-        )
+        // save value
+        alertField.doAfterTextChanged {
+            newSubscriptionViewModel.inputAlertSelection = it.toString()
+        }
 
     }
 
@@ -294,8 +333,10 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         )
 
         // start date
-        val startDate =
-            parseLocalDateFromUTCMilliseconds(newSubscriptionViewModel.currentDateSelection)
+        val startDate = parseLocalDateFromUTCMilliseconds(
+            //newSubscriptionViewModel.currentDateSelection
+            newSubscriptionViewModel.startDateSelectionLiveData.value!!
+        )
 
         // renewal period
         val renewalPeriodStr = binding.actvNewSubscriptionRenewalPeriod.text.toString()
@@ -336,19 +377,38 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
     }
 
-    private fun updateDateFieldValue() {
-
-        val dateField = binding.tietNewSubscriptionStartDate
+    private fun updateDateFieldValue(dateInUTCMillis: Long) {
 
         val formatter = DateTimeFormatter.ofPattern(
             getString(R.string.new_subscription_tiet_start_date_pattern)
         )
 
         val formattedString = parseLocalDateFromUTCMilliseconds(
-            millis = newSubscriptionViewModel.currentDateSelection
+            millis = dateInUTCMillis
         ).format(formatter)
 
-        dateField.setText(formattedString)
+        binding.tietNewSubscriptionStartDate.setText(formattedString)
+
+    }
+
+    private fun startValidationObserve() {
+
+        val inputNameState = newSubscriptionViewModel.inputNameState
+        val inputCostState = newSubscriptionViewModel.inputCostState
+        val inputCurrencyState = newSubscriptionViewModel.inputCurrencyState
+        val buttonCreateState = newSubscriptionViewModel.buttonCreateEnabledLiveData
+
+        val observer = Observer<InputState> {
+            buttonCreateState.value = (
+                    inputNameState.value == InputState.CORRECT
+                            && inputCostState.value == InputState.CORRECT
+                            && inputCurrencyState.value == InputState.CORRECT
+                    )
+        }
+
+        inputNameState.observe(requireActivity(), observer)
+        inputCostState.observe(requireActivity(), observer)
+        inputCurrencyState.observe(requireActivity(), observer)
 
     }
 

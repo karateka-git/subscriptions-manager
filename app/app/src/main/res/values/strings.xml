@@ -6,9 +6,11 @@
 
     <!-- Subscriptions list screen -->
 
-    <string name="subscriptions_tv_screen_title">Subscriptions</string>
+    <string name="subscriptions_btn_settings_content_description">Open settings</string>
 
     <string name="subscriptions_btn_new_content_description">Add new subscription</string>
+
+    <string name="subscriptions_tv_screen_title">Subscriptions</string>
 
     <!-- New subscription screen -->
 
@@ -16,6 +18,7 @@
     <string name="new_subscription_field_error_wrong_value">* Wrong value</string>
 
     <string name="new_subscription_btn_go_back_content_description">Add new subscription</string>
+    <string name="new_subscription_btn_go_back_text">back</string>
 
     <string name="new_subscription_tv_screen_title">New subscription</string>
 
@@ -35,7 +38,7 @@
     <string name="new_subscription_til_start_date_end_icon_content_description">Start date picker</string>
     <string name="new_subscription_til_start_date_date_picker_title_text">Select start date</string>
     <string name="new_subscription_til_start_date_date_picker_tag">datePicker</string>
-    <string name="new_subscription_tiet_start_date_pattern">d MMM yyyy</string>
+    <string name="new_subscription_tiet_start_date_pattern">dd MMMM yyyy</string>
 
     <string name="new_subscription_actv_renewal_period_default_value">Monthly</string>
 

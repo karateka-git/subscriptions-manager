@@ -9,31 +9,44 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageButton
+        <Button
             android:id="@+id/btn_new_subscription_go_back"
-            android:layout_width="0dp"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_20dp"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="14dp"
             android:contentDescription="@string/new_subscription_btn_go_back_content_description"
-            android:padding="@dimen/padding_10dp"
-            android:src="@drawable/ic_baseline_arrow_back"
-            app:layout_constraintBottom_toBottomOf="@id/tv_new_subscription_screen_title"
+            android:fontFamily="@font/inter_semibold"
+            android:text="@string/new_subscription_btn_go_back_text"
+            app:icon="@drawable/ic_baseline_arrow_back"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_new_subscription_screen_title" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_new_subscription_create"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="13dp"
+            android:fontFamily="@font/inter_semibold"
+            android:text="@string/new_subscription_btn_create_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_new_subscription_screen_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_30dp"
+            android:layout_marginStart="@dimen/margin_30dp"
+            android:layout_marginTop="@dimen/margin_10dp"
             android:fontFamily="@font/inter_semibold"
             android:text="@string/new_subscription_tv_screen_title"
             android:textColor="?android:textColorPrimary"
-            android:textSize="@dimen/text_size_24sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="@dimen/text_size_35sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/btn_new_subscription_go_back" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_new_subscription_name"
@@ -41,14 +54,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_30dp"
-            android:layout_marginTop="@dimen/margin_30dp"
+            android:layout_marginTop="@dimen/margin_20dp"
             android:hint="@string/new_subscription_til_name_hint"
             app:endIconMode="clear_text"
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_new_subscription_screen_title"
-            app:layout_constraintWidth_max="400dp">
+            app:layout_constraintWidth_max="@dimen/max_width_500dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tiet_new_subscription_name"
@@ -117,8 +130,7 @@
                 android:id="@+id/actv_new_subscription_currency"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textAutoComplete|textCapCharacters"
-                android:text="@string/new_subscription_tiet_currency_default_value" />
+                android:inputType="textAutoComplete|textCapCharacters" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -162,8 +174,7 @@
                 android:id="@+id/actv_new_subscription_renewal_period"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="none"
-                android:text="@string/new_subscription_actv_renewal_period_default_value" />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -182,27 +193,15 @@
                 android:id="@+id/actv_new_subscription_alert"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="none"
-                android:text="@string/new_subscription_actv_alert_default_value" />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_new_subscription_create"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/height_50dp"
-            android:layout_marginTop="@dimen/margin_18dp"
-            android:enabled="false"
-            android:text="@string/new_subscription_btn_create_text"
-            app:layout_constraintEnd_toEndOf="@id/til_new_subscription_name"
-            app:layout_constraintStart_toStartOf="@id/til_new_subscription_name"
-            app:layout_constraintTop_toBottomOf="@+id/til_new_subscription_alert" />
-
         <Space
-            android:layout_width="@dimen/width_1dp"
+            android:layout_width="0dp"
             android:layout_height="@dimen/height_85dp"
             app:layout_constraintStart_toStartOf="@id/til_new_subscription_name"
-            app:layout_constraintTop_toBottomOf="@+id/btn_new_subscription_create" />
+            app:layout_constraintTop_toBottomOf="@+id/til_new_subscription_alert" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
