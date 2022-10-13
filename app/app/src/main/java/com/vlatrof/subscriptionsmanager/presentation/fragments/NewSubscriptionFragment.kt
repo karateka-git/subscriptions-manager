@@ -7,16 +7,17 @@ import android.widget.ArrayAdapter
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.vlatrof.subscriptionsmanager.R
 import com.vlatrof.subscriptionsmanager.databinding.FragmentNewSubscriptionBinding
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
-import com.vlatrof.subscriptionsmanager.presentation.utils.hideKeyboard
-import com.vlatrof.subscriptionsmanager.presentation.utils.parseLocalDateFromUTCMilliseconds
-import com.vlatrof.subscriptionsmanager.presentation.utils.parseXmlResourceMap
-import com.vlatrof.subscriptionsmanager.presentation.utils.round
+import com.vlatrof.subscriptionsmanager.utils.hideKeyboard
+import com.vlatrof.subscriptionsmanager.utils.parseLocalDateFromUTCMilliseconds
+import com.vlatrof.subscriptionsmanager.utils.parseXmlResourceMap
+import com.vlatrof.subscriptionsmanager.utils.round
 import com.vlatrof.subscriptionsmanager.presentation.viewmodels.InputState
 import com.vlatrof.subscriptionsmanager.presentation.viewmodels.NewSubscriptionViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -29,7 +30,6 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
     private lateinit var binding: FragmentNewSubscriptionBinding
     private val newSubscriptionViewModel by viewModel<NewSubscriptionViewModel>()
-    private val availableCurrencies = Currency.getAvailableCurrencies().toTypedArray()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,7 +39,6 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         setupCostInputField()
         setupStartDateInputField()
         setupCreateButton()
-        startValidationObserve()
     }
 
     override fun onResume() {
@@ -61,30 +60,27 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         val nameFieldContainer = binding.tilNewSubscriptionName
         val nameField = binding.tietNewSubscriptionName
 
-        // setup validation
-        nameField.doAfterTextChanged {
-            if (it!!.isEmpty()) {
+        // validate new value
+        nameField.doAfterTextChanged { newValue ->
+            if (newValue!!.isEmpty()) {
                 newSubscriptionViewModel.inputNameState.value = InputState.EMPTY
-//                nameFieldContainer.error =
-//                    getString(R.string.new_subscription_field_error_empty_value)
                 return@doAfterTextChanged
             }
             newSubscriptionViewModel.inputNameState.value = InputState.CORRECT
-//            nameFieldContainer.error = ""
         }
 
-        newSubscriptionViewModel.inputNameState.observe(requireActivity()) { state ->
-
-            nameFieldContainer.error =
-                if (state == InputState.EMPTY)
-                    getString(R.string.new_subscription_field_error_empty_value)
-                else
-                    ""
-
+        // handle input state
+        newSubscriptionViewModel.inputNameState.observe(requireActivity()) { newState ->
+            when (newState) {
+                InputState.EMPTY -> {
+                    nameFieldContainer.error =
+                        getString(R.string.new_subscription_field_error_empty_value)
+                }
+                else -> {
+                    nameFieldContainer.error = ""
+                }
+            }
         }
-
-        // setup validation to enable "create" button
-        //nameField.addTextChangedListener(buttonCreateActivationTextWatcher)
 
     }
 
@@ -93,15 +89,15 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         val costFieldContainer = binding.tilNewSubscriptionCost
         val costField = binding.tietNewSubscriptionCost
 
+        // set default value
         costField.setText(getString(R.string.new_subscription_tiet_cost_default_value))
         newSubscriptionViewModel.inputCostState.value = InputState.CORRECT
 
+        // handle new value
         costField.doAfterTextChanged { value ->
 
             if (value!!.isEmpty()) {
                 newSubscriptionViewModel.inputCostState.value = InputState.EMPTY
-//                costFieldContainer.error =
-//                    getString(R.string.new_subscription_field_error_empty_value)
                 return@doAfterTextChanged
             }
 
@@ -109,19 +105,16 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
                 value.toString().toDouble()
             } catch (nfe: NumberFormatException) {
                 newSubscriptionViewModel.inputCostState.value = InputState.WRONG
-//                costFieldContainer.error =
-//                    getString(R.string.new_subscription_field_error_wrong_value)
                 return@doAfterTextChanged
             }
 
             newSubscriptionViewModel.inputCostState.value = InputState.CORRECT
-            //costFieldContainer.error = ""
 
         }
 
-        newSubscriptionViewModel.inputCostState.observe(requireActivity()) { state ->
-
-            when (state) {
+        // handle new input state
+        newSubscriptionViewModel.inputCostState.observe(requireActivity()) { newState ->
+            when (newState) {
                 InputState.EMPTY -> {
                     costFieldContainer.error = getString(R.string.new_subscription_field_error_empty_value)
                 }
@@ -132,11 +125,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
                     costFieldContainer.error = ""
                 }
             }
-
         }
-
-        // setup validation to enable "create" button
-        //costField.addTextChangedListener(buttonCreateActivationTextWatcher)
 
     }
 
@@ -144,7 +133,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
         val dateField = binding.tietNewSubscriptionStartDate
 
-        // init DatePicker and restore selection
+        // init DatePicker with restoring selection
         val datePicker = MaterialDatePicker.Builder.datePicker()
             .setSelection(newSubscriptionViewModel.startDateSelectionLiveData.value)
             .setTitleText(getString(R.string.new_subscription_til_start_date_date_picker_title_text))
@@ -155,10 +144,22 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
                 }
             }
 
-        newSubscriptionViewModel.startDateSelectionLiveData.observe(requireActivity()) {
-                selection -> updateDateFieldValue(selection)
+        // handle new date selection
+        newSubscriptionViewModel.startDateSelectionLiveData.observe(requireActivity()) { newSelection ->
+
+            binding.tietNewSubscriptionStartDate.setText(
+                parseLocalDateFromUTCMilliseconds(
+                    millis = newSelection
+                ).format(
+                    DateTimeFormatter.ofPattern(
+                        getString(R.string.new_subscription_tiet_start_date_pattern)
+                    )
+                )
+            )
+
         }
 
+        // show DatePicker on field click
         dateField.setOnClickListener {
             datePicker.show(
                 parentFragmentManager,
@@ -172,22 +173,42 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
         val button = binding.btnNewSubscriptionCreate
 
+        // handle click
         button.setOnClickListener{
             newSubscriptionViewModel.insertNewSubscription(
                 parseSubscription()
             )
+            hideKeyboard()
             findNavController().popBackStack()
         }
 
-        newSubscriptionViewModel.buttonCreateEnabledLiveData.observe(
-            requireActivity()) { enabled ->
-
+        // handle new button state
+        newSubscriptionViewModel.buttonCreateEnabledLiveData.observe(requireActivity()) { enabled ->
             button.isEnabled = enabled
             button.setTextColor(
                 if (enabled) ResourcesCompat.getColor(resources, R.color.green, null)
                 else ResourcesCompat.getColor(resources, R.color.white_gray, null)
             )
         }
+
+        // handle inputs states for button activation
+        val inputNameState = newSubscriptionViewModel.inputNameState
+        val inputCostState = newSubscriptionViewModel.inputCostState
+        val inputCurrencyState = newSubscriptionViewModel.inputCurrencyState
+        val buttonCreateState = newSubscriptionViewModel.buttonCreateEnabledLiveData
+
+        val observer = Observer<InputState> {
+            buttonCreateState.value = (
+                    inputNameState.value == InputState.CORRECT
+                            && inputCostState.value == InputState.CORRECT
+                            && inputCurrencyState.value == InputState.CORRECT
+                    )
+        }
+
+        val parentActivity = requireActivity()
+        inputNameState.observe(parentActivity, observer)
+        inputCostState.observe(parentActivity, observer)
+        inputCurrencyState.observe(parentActivity, observer)
 
     }
 
@@ -196,8 +217,10 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         val currencyFieldContainer = binding.tilNewSubscriptionCurrency
         val currencyField = binding.actvNewSubscriptionCurrency
 
+        val availableCurrencies = Currency.getAvailableCurrencies().toTypedArray()
+
         // restore value or set default
-        if (newSubscriptionViewModel.inputCurrencySelection == "") {
+        if (newSubscriptionViewModel.inputCurrencyState.value == InputState.DEFAULT) {
             newSubscriptionViewModel.inputCurrencySelection =
                 getString(R.string.new_subscription_tiet_currency_default_value)
             newSubscriptionViewModel.inputCurrencyState.value = InputState.CORRECT
@@ -211,14 +234,15 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
             availableCurrencies
         ))
 
-        // setup validation
+        // handle new value
         currencyField.doAfterTextChanged {
 
             val newValue = it.toString()
 
-            // save value
+            // save new value
             newSubscriptionViewModel.inputCurrencySelection = newValue
 
+            // update state on empty value
             if (newValue.isEmpty()) {
                 newSubscriptionViewModel.inputCurrencyState.value = InputState.EMPTY
                 return@doAfterTextChanged
@@ -230,7 +254,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
                 currencyField.setSelection(currencyField.length())
             }
 
-            // show error on wrong value
+            // update state on wrong value
             try {
                 if (!availableCurrencies.contains(Currency.getInstance(newValue))) {
                     newSubscriptionViewModel.inputCurrencyState.value = InputState.WRONG
@@ -245,10 +269,9 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
         }
 
-        // setup state observe
-        newSubscriptionViewModel.inputCurrencyState.observe(requireActivity()) { state ->
-
-            when (state) {
+        // handle new input state
+        newSubscriptionViewModel.inputCurrencyState.observe(requireActivity()) { newState ->
+            when (newState) {
                 InputState.EMPTY -> {
                     currencyFieldContainer.error = getString(R.string.new_subscription_field_error_empty_value)
                 }
@@ -259,7 +282,6 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
                     currencyFieldContainer.error = ""
                 }
             }
-
         }
 
     }
@@ -284,9 +306,9 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
                 .toTypedArray()
         ))
 
-        // save value
-        renewalPeriodField.doAfterTextChanged {
-            newSubscriptionViewModel.inputRenewalPeriodSelection = it.toString()
+        // handle new value
+        renewalPeriodField.doAfterTextChanged { newValue ->
+            newSubscriptionViewModel.inputRenewalPeriodSelection = newValue.toString()
         }
 
 
@@ -312,9 +334,9 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
                 .toTypedArray()
         ))
 
-        // save value
-        alertField.doAfterTextChanged {
-            newSubscriptionViewModel.inputAlertSelection = it.toString()
+        // handle new value
+        alertField.doAfterTextChanged { newValue ->
+            newSubscriptionViewModel.inputAlertSelection = newValue.toString()
         }
 
     }
@@ -334,7 +356,6 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
         // start date
         val startDate = parseLocalDateFromUTCMilliseconds(
-            //newSubscriptionViewModel.currentDateSelection
             newSubscriptionViewModel.startDateSelectionLiveData.value!!
         )
 
@@ -374,41 +395,6 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
             alertEnabled = alertEnabled,
             alertPeriod = alertPeriod
         )
-
-    }
-
-    private fun updateDateFieldValue(dateInUTCMillis: Long) {
-
-        val formatter = DateTimeFormatter.ofPattern(
-            getString(R.string.new_subscription_tiet_start_date_pattern)
-        )
-
-        val formattedString = parseLocalDateFromUTCMilliseconds(
-            millis = dateInUTCMillis
-        ).format(formatter)
-
-        binding.tietNewSubscriptionStartDate.setText(formattedString)
-
-    }
-
-    private fun startValidationObserve() {
-
-        val inputNameState = newSubscriptionViewModel.inputNameState
-        val inputCostState = newSubscriptionViewModel.inputCostState
-        val inputCurrencyState = newSubscriptionViewModel.inputCurrencyState
-        val buttonCreateState = newSubscriptionViewModel.buttonCreateEnabledLiveData
-
-        val observer = Observer<InputState> {
-            buttonCreateState.value = (
-                    inputNameState.value == InputState.CORRECT
-                            && inputCostState.value == InputState.CORRECT
-                            && inputCurrencyState.value == InputState.CORRECT
-                    )
-        }
-
-        inputNameState.observe(requireActivity(), observer)
-        inputCostState.observe(requireActivity(), observer)
-        inputCurrencyState.observe(requireActivity(), observer)
 
     }
 

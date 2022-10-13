@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.DiffUtil
 import com.vlatrof.subscriptionsmanager.databinding.RvItemSubscriptionBinding
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
+import java.time.LocalDate
+import java.time.Period
 
 class SubscriptionsAdapter : RecyclerView.Adapter<SubscriptionsAdapter.SubscriptionViewHolder>() {
 
@@ -40,13 +42,25 @@ class SubscriptionsAdapter : RecyclerView.Adapter<SubscriptionsAdapter.Subscript
 
     override fun onBindViewHolder(holder: SubscriptionViewHolder, position: Int) {
 
-        val s = subscriptions[position]
-        val b = holder.binding
+        val subscription = subscriptions[position]
 
-        val costStr = "${s.paymentCost} ${s.paymentCurrency.currencyCode} / ${s.renewalPeriod.toString().drop(1)}"
+        holder.binding.tvSubscriptionName.text = subscription.name
 
-        b.tvSubscriptionName.text = s.name
-        b.tvSubscriptionCost.text = costStr
+        val costStr = "${subscription.paymentCost} ${subscription.paymentCurrency.currencyCode}"
+        holder.binding.tvSubscriptionCost.text = costStr
+
+        val currentDate = LocalDate.now()
+        val startDate = subscription.startDate
+        val renewalPeriod = subscription.renewalPeriod
+        var nextRenewalDate: LocalDate = LocalDate.from(startDate)
+
+        while (nextRenewalDate < currentDate) {
+            nextRenewalDate = renewalPeriod.addTo(startDate) as LocalDate
+        }
+
+        val leftToRenewal = Period.between(currentDate, nextRenewalDate).toString()
+
+        holder.binding.tvSubscriptionRenewalPeriodLeft.text = leftToRenewal
 
     }
 

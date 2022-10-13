@@ -2,6 +2,7 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingHorizontal="@dimen/padding_30dp"
@@ -13,22 +14,38 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:fontFamily="@font/inter_regular"
-        android:lines="1"
+        android:maxLines="2"
+        android:layout_marginEnd="@dimen/margin_20dp"
         android:textColor="?android:textColorPrimary"
         android:textSize="@dimen/text_size_18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tv_subscription_cost"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="RtlSymmetry"
+        tools:text="SomeService" />
 
     <TextView
         android:id="@+id/tv_subscription_cost"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/width_130dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/inter_semibold"
-        android:maxWidth="@dimen/max_width_150dp"
+        android:gravity="end"
         android:textColor="?android:textColorPrimary"
         android:textSize="@dimen/text_size_18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_subscription_name" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="249.00 RUB" />
+
+    <TextView
+        android:id="@+id/tv_subscription_renewal_period_left"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_regular"
+        android:gravity="end"
+        app:layout_constraintEnd_toEndOf="@id/tv_subscription_cost"
+        app:layout_constraintStart_toStartOf="@id/tv_subscription_cost"
+        app:layout_constraintTop_toBottomOf="@id/tv_subscription_cost"
+        tools:text="25 Days" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

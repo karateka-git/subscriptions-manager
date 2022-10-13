@@ -1,4 +1,4 @@
-package com.vlatrof.subscriptionsmanager.presentation.utils
+package com.vlatrof.subscriptionsmanager.utils
 
 import android.app.Activity
 import android.content.Context
@@ -9,9 +9,6 @@ import androidx.fragment.app.Fragment
 import java.lang.IllegalArgumentException
 import java.math.BigDecimal
 import java.math.RoundingMode
-import java.time.Instant
-import java.time.LocalDate
-import java.time.ZoneId
 
 // Show Toast
 

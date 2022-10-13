@@ -1,13 +1,13 @@
 package com.vlatrof.subscriptionsmanager.domain.repositories
 
 import kotlinx.coroutines.flow.Flow
-import com.vlatrof.subscriptionsmanager.domain.models.Subscription as DomainSubscription
+import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 
 interface SubscriptionsRepository {
 
-    val allSubscriptionsFlow: Flow<List<DomainSubscription>>
+    val allSubscriptionsFlow: Flow<List<Subscription>>
 
-    fun insertSubscription(subscription: DomainSubscription)
+    fun insertSubscription(subscription: Subscription)
 
     fun deleteAllSubscriptions()
 

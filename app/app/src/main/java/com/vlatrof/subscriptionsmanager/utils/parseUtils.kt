@@ -1,4 +1,4 @@
-package com.vlatrof.subscriptionsmanager.presentation.utils
+package com.vlatrof.subscriptionsmanager.utils
 
 import android.content.Context
 import org.xmlpull.v1.XmlPullParser
