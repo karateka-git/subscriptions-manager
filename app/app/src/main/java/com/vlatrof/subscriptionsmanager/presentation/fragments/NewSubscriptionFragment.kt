@@ -7,17 +7,16 @@ import android.widget.ArrayAdapter
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.vlatrof.subscriptionsmanager.R
 import com.vlatrof.subscriptionsmanager.databinding.FragmentNewSubscriptionBinding
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
-import com.vlatrof.subscriptionsmanager.utils.hideKeyboard
-import com.vlatrof.subscriptionsmanager.utils.parseLocalDateFromUTCMilliseconds
-import com.vlatrof.subscriptionsmanager.utils.parseXmlResourceMap
-import com.vlatrof.subscriptionsmanager.utils.round
+import com.vlatrof.subscriptionsmanager.presentation.utils.hideKeyboard
+import com.vlatrof.subscriptionsmanager.presentation.utils.parseLocalDateFromUTCMilliseconds
+import com.vlatrof.subscriptionsmanager.presentation.utils.parseXmlResourceMap
+import com.vlatrof.subscriptionsmanager.presentation.utils.round
 import com.vlatrof.subscriptionsmanager.presentation.viewmodels.InputState
 import com.vlatrof.subscriptionsmanager.presentation.viewmodels.NewSubscriptionViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -148,13 +147,10 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         newSubscriptionViewModel.startDateSelectionLiveData.observe(requireActivity()) { newSelection ->
 
             binding.tietNewSubscriptionStartDate.setText(
-                parseLocalDateFromUTCMilliseconds(
-                    millis = newSelection
-                ).format(
-                    DateTimeFormatter.ofPattern(
+                parseLocalDateFromUTCMilliseconds(newSelection)
+                    .format(DateTimeFormatter.ofPattern(
                         getString(R.string.new_subscription_tiet_start_date_pattern)
-                    )
-                )
+                    ))
             )
 
         }

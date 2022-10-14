@@ -1,15 +1,42 @@
 package com.vlatrof.subscriptionsmanager.presentation.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.DiffUtil
+import com.vlatrof.subscriptionsmanager.R
 import com.vlatrof.subscriptionsmanager.databinding.RvItemSubscriptionBinding
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import java.time.LocalDate
-import java.time.Period
+import java.time.format.DateTimeFormatter
 
-class SubscriptionsAdapter : RecyclerView.Adapter<SubscriptionsAdapter.SubscriptionViewHolder>() {
+class SubscriptionsDiffUtilCallback(
+
+    private val oldList: List<Subscription>,
+    private val newList: List<Subscription>
+
+) : DiffUtil.Callback() {
+
+    override fun getOldListSize(): Int = oldList.size
+
+    override fun getNewListSize(): Int = newList.size
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition].id == newList[newItemPosition].id
+    }
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition] == newList[newItemPosition]
+    }
+
+}
+
+class SubscriptionsAdapter(
+
+    private val context: Context
+
+    ) : RecyclerView.Adapter<SubscriptionsAdapter.SubscriptionViewHolder>() {
 
     var subscriptions: List<Subscription> = emptyList()
 
@@ -28,13 +55,18 @@ class SubscriptionsAdapter : RecyclerView.Adapter<SubscriptionsAdapter.Subscript
 
     override fun getItemCount(): Int = subscriptions.size
 
-    class SubscriptionViewHolder(val binding: RvItemSubscriptionBinding) : RecyclerView.ViewHolder(binding.root)
+    class SubscriptionViewHolder(val binding: RvItemSubscriptionBinding)
+        : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubscriptionViewHolder {
 
         val binding = RvItemSubscriptionBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
+
+        // todo: testing **************************************************************************
+        binding.root.setOnClickListener {}
+        // todo: testing **************************************************************************
 
         return SubscriptionViewHolder(binding)
 
@@ -49,40 +81,20 @@ class SubscriptionsAdapter : RecyclerView.Adapter<SubscriptionsAdapter.Subscript
         val costStr = "${subscription.paymentCost} ${subscription.paymentCurrency.currencyCode}"
         holder.binding.tvSubscriptionCost.text = costStr
 
-        val currentDate = LocalDate.now()
-        val startDate = subscription.startDate
-        val renewalPeriod = subscription.renewalPeriod
-        var nextRenewalDate: LocalDate = LocalDate.from(startDate)
-
-        while (nextRenewalDate < currentDate) {
-            nextRenewalDate = renewalPeriod.addTo(startDate) as LocalDate
+        holder.binding.tvSubscriptionNextRenewalDate.text = when (subscription.nextRenewalDate) {
+            LocalDate.now() -> {
+                context.getString(R.string.subscriptions_rv_tv_next_renewal_date_today)
+            }
+            LocalDate.now().plusDays(1) -> {
+                context.getString(R.string.subscriptions_rv_tv_next_renewal_date_tomorrow)
+            }
+            else -> {
+                subscription.nextRenewalDate.format(DateTimeFormatter.ofPattern(
+                    context.getString(R.string.subscriptions_rv_tv_next_renewal_date_pattern)
+                ))
+            }
         }
 
-        val leftToRenewal = Period.between(currentDate, nextRenewalDate).toString()
-
-        holder.binding.tvSubscriptionRenewalPeriodLeft.text = leftToRenewal
-
-    }
-
-}
-
-class SubscriptionsDiffUtilCallback(
-
-    private val oldList: List<Subscription>,
-    private val newList: List<Subscription>
-
-    ) : DiffUtil.Callback() {
-
-    override fun getOldListSize(): Int = oldList.size
-
-    override fun getNewListSize(): Int = newList.size
-
-    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition].id == newList[newItemPosition].id
-    }
-
-    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition] == newList[newItemPosition]
     }
 
 }

@@ -1,4 +1,4 @@
-package com.vlatrof.subscriptionsmanager.utils
+package com.vlatrof.subscriptionsmanager.presentation.utils
 
 import android.app.Activity
 import android.content.Context

@@ -12,6 +12,10 @@
 
     <string name="subscriptions_tv_screen_title">Subscriptions</string>
 
+    <string name="subscriptions_rv_tv_next_renewal_date_today">Today</string>
+    <string name="subscriptions_rv_tv_next_renewal_date_tomorrow">Tomorrow</string>
+    <string name="subscriptions_rv_tv_next_renewal_date_pattern">dd MMMM</string>
+
     <!-- New subscription screen -->
 
     <string name="new_subscription_field_error_empty_value">* Required</string>

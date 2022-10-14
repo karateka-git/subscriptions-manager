@@ -13,7 +13,6 @@ data class Subscription (
     val paymentCurrency: Currency = Currency.getInstance("USD"),
     val startDate: LocalDate = LocalDate.MIN,
     val renewalPeriod: Period = Period.ZERO,
-    val leftToRenewal: Period = Period.ZERO,
     val nextRenewalDate: LocalDate = LocalDate.MIN,
     val alertEnabled: Boolean = false,
     val alertPeriod: Period = Period.ZERO,

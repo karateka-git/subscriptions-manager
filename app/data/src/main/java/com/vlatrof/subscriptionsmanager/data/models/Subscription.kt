@@ -59,8 +59,6 @@ data class Subscription(
             nextRenewalDate = renewalPeriod.addTo(startDate) as LocalDate
         }
 
-        val leftToRenewal = Period.between(currentDate, nextRenewalDate)
-
         return DomainSubscription(
             id = this.id,
             name = this.name,
@@ -69,7 +67,6 @@ data class Subscription(
             paymentCurrency = this.paymentCurrency,
             startDate = this.startDate,
             renewalPeriod = this.renewalPeriod,
-            leftToRenewal = leftToRenewal,
             nextRenewalDate = nextRenewalDate,
             alertEnabled = this.alertEnabled,
             alertPeriod = this.alertPeriod,

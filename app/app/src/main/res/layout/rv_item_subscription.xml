@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
     android:paddingHorizontal="@dimen/padding_30dp"
     android:paddingVertical="@dimen/padding_10dp">
 
@@ -38,7 +39,7 @@
         tools:text="249.00 RUB" />
 
     <TextView
-        android:id="@+id/tv_subscription_renewal_period_left"
+        android:id="@+id/tv_subscription_next_renewal_date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/inter_regular"
@@ -46,6 +47,6 @@
         app:layout_constraintEnd_toEndOf="@id/tv_subscription_cost"
         app:layout_constraintStart_toStartOf="@id/tv_subscription_cost"
         app:layout_constraintTop_toBottomOf="@id/tv_subscription_cost"
-        tools:text="25 Days" />
+        tools:text="17 oct" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
