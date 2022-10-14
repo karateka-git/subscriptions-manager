@@ -1,4 +1,4 @@
-package com.vlatrof.subscriptionsmanager.domain.usecases.getallsubscriptions
+package com.vlatrof.subscriptionsmanager.domain.usecases.interfaces
 
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import kotlinx.coroutines.flow.Flow

@@ -1,4 +1,4 @@
-package com.vlatrof.subscriptionsmanager.domain.usecases.insertnewsubscription
+package com.vlatrof.subscriptionsmanager.domain.usecases.interfaces
 
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 

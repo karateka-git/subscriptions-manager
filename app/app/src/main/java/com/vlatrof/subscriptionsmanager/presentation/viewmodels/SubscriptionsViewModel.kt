@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
-import com.vlatrof.subscriptionsmanager.domain.usecases.deleteallsubscriptions.DeleteAllSubscriptionsUseCase
-import com.vlatrof.subscriptionsmanager.domain.usecases.getallsubscriptions.GetAllSubscriptionsUseCase
+import com.vlatrof.subscriptionsmanager.domain.usecases.interfaces.DeleteAllSubscriptionsUseCase
+import com.vlatrof.subscriptionsmanager.domain.usecases.interfaces.GetAllSubscriptionsUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

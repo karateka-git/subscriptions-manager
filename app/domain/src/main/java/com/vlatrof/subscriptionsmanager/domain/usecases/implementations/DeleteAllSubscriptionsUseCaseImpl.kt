@@ -1,6 +1,7 @@
-package com.vlatrof.subscriptionsmanager.domain.usecases.deleteallsubscriptions
+package com.vlatrof.subscriptionsmanager.domain.usecases.implementations
 
 import com.vlatrof.subscriptionsmanager.domain.repositories.SubscriptionsRepository
+import com.vlatrof.subscriptionsmanager.domain.usecases.interfaces.DeleteAllSubscriptionsUseCase
 
 class DeleteAllSubscriptionsUseCaseImpl(
 

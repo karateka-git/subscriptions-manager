@@ -1,7 +1,8 @@
-package com.vlatrof.subscriptionsmanager.domain.usecases.insertnewsubscription
+package com.vlatrof.subscriptionsmanager.domain.usecases.implementations
 
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import com.vlatrof.subscriptionsmanager.domain.repositories.SubscriptionsRepository
+import com.vlatrof.subscriptionsmanager.domain.usecases.interfaces.InsertNewSubscriptionUseCase
 
 class InsertNewSubscriptionUseCaseImpl(
 
