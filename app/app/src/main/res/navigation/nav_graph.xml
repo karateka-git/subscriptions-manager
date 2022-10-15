@@ -17,11 +17,28 @@
             app:exitAnim="@anim/screen_out_slide_nav_anim"
             app:popEnterAnim="@anim/screen_pop_in_slide_nav_anim"
             app:popExitAnim="@anim/screen_pop_out_slide_nav_anim" />
+        <action
+            android:id="@+id/action_fragment_subscriptions_list_to_fragment_subscription_details"
+            app:destination="@id/fragment_subscription_details"
+            app:enterAnim="@anim/screen_in_slide_nav_anim"
+            app:exitAnim="@anim/screen_out_slide_nav_anim"
+            app:popEnterAnim="@anim/screen_pop_in_slide_nav_anim"
+            app:popExitAnim="@anim/screen_pop_out_slide_nav_anim" />
     </fragment>
 
     <fragment
         android:id="@+id/fragment_new_subscription"
         android:name="com.vlatrof.subscriptionsmanager.presentation.fragments.NewSubscriptionFragment"
-        tools:layout="@layout/fragment_new_subscription"/>
+        tools:layout="@layout/fragment_new_subscription" />
+
+    <fragment
+        android:id="@+id/fragment_subscription_details"
+        android:name="com.vlatrof.subscriptionsmanager.presentation.fragments.SubscriptionDetailsFragment"
+        tools:layout="@layout/fragment_subscription_details">
+        <argument
+            android:name="subscriptionId"
+            android:defaultValue="-1"
+            app:argType="integer" />
+    </fragment>
 
 </navigation>

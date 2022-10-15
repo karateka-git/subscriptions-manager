@@ -11,6 +11,10 @@ import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
+interface SubscriptionsActionListener {
+    fun onUserDetails(subscriptionId: Int)
+}
+
 class SubscriptionsDiffUtilCallback(
 
     private val oldList: List<Subscription>,
@@ -34,7 +38,8 @@ class SubscriptionsDiffUtilCallback(
 
 class SubscriptionsAdapter(
 
-    private val context: Context
+    private val context: Context,
+    private val listener: SubscriptionsActionListener
 
     ) : RecyclerView.Adapter<SubscriptionsAdapter.SubscriptionViewHolder>() {
 
@@ -42,13 +47,11 @@ class SubscriptionsAdapter(
 
     fun setData(newSubscriptionsList: List<Subscription>) {
 
+        val newSortedList= newSubscriptionsList.sortedBy { it.nextRenewalDate }
         val subscriptionsDiffUtilCallback =
-            SubscriptionsDiffUtilCallback(subscriptions, newSubscriptionsList)
-
+            SubscriptionsDiffUtilCallback(subscriptions, newSortedList)
         val diffResult = DiffUtil.calculateDiff(subscriptionsDiffUtilCallback)
-
-        subscriptions = newSubscriptionsList
-
+        subscriptions = newSortedList
         diffResult.dispatchUpdatesTo(this@SubscriptionsAdapter)
 
     }
@@ -64,9 +67,9 @@ class SubscriptionsAdapter(
             LayoutInflater.from(parent.context), parent, false
         )
 
-        // todo: testing **************************************************************************
-        binding.root.setOnClickListener {}
-        // todo: testing **************************************************************************
+        binding.root.setOnClickListener { subscriptionItemView ->
+            listener.onUserDetails(subscriptionItemView.tag as Int)
+        }
 
         return SubscriptionViewHolder(binding)
 
@@ -75,6 +78,8 @@ class SubscriptionsAdapter(
     override fun onBindViewHolder(holder: SubscriptionViewHolder, position: Int) {
 
         val subscription = subscriptions[position]
+
+        holder.itemView.tag = subscription.id
 
         holder.binding.tvSubscriptionName.text = subscription.name
 
