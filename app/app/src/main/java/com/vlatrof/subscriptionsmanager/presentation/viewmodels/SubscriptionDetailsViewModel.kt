@@ -8,9 +8,8 @@ import kotlinx.coroutines.*
 class SubscriptionDetailsViewModel(
 
     private val getSubscriptionByIdUseCase: GetSubscriptionByIdUseCase,
-//    private val updateSubscriptionUseCase: UpdateSubscriptionUseCase,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
     private val mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 
     ) : ViewModel() {
 
@@ -18,19 +17,29 @@ class SubscriptionDetailsViewModel(
 
     fun loadSubscriptionById(id: Int) {
 
-        CoroutineScope(mainDispatcher).launch(mainDispatcher) {
-            subscriptionLiveData.value = asyncGetSubscriptionById(id).await()
+        viewModelScope.launch(mainDispatcher) {
+
+            delay(1000L)
+
+            val loadedSubscription = viewModelScope.async(ioDispatcher) {
+                return@async getSubscriptionByIdUseCase(id)
+            }
+
+            subscriptionLiveData.value = loadedSubscription .await()
+
         }
 
     }
 
-    private fun asyncGetSubscriptionById(id: Int): Deferred<Subscription> {
-
-        return CoroutineScope(mainDispatcher).async(ioDispatcher) {
-            return@async getSubscriptionByIdUseCase(id)
-        }
-
-    }
+//    private fun asyncGetSubscriptionById(id: Int): Deferred<Subscription> {
+//
+//        val jobWithResult = viewModelScope.async(ioDispatcher) {
+//            return@async getSubscriptionByIdUseCase(id)
+//        }
+//
+//        return jobWithResult
+//
+//    }
 
 
 }
