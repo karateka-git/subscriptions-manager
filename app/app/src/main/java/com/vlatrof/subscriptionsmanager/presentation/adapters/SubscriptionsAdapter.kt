@@ -12,7 +12,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 interface SubscriptionsActionListener {
-    fun onUserDetails(subscriptionId: Int)
+    fun onSubscriptionItemClick(subscriptionId: Int)
 }
 
 class SubscriptionsDiffUtilCallback(
@@ -68,7 +68,7 @@ class SubscriptionsAdapter(
         )
 
         binding.root.setOnClickListener { subscriptionItemView ->
-            listener.onUserDetails(subscriptionItemView.tag as Int)
+            listener.onSubscriptionItemClick(subscriptionItemView.tag as Int)
         }
 
         return SubscriptionViewHolder(binding)

@@ -35,7 +35,7 @@ class SubscriptionsFragment : Fragment(R.layout.fragment_subscriptions) {
     private fun setupSubscriptionsRVAdapter() {
 
         val listener = object: SubscriptionsActionListener {
-            override fun onUserDetails(subscriptionId: Int) {
+            override fun onSubscriptionItemClick(subscriptionId: Int) {
                 findNavController().navigate(
                     R.id.action_fragment_subscriptions_list_to_fragment_subscription_details,
                     Bundle().apply { putInt("id", subscriptionId) }
@@ -51,7 +51,8 @@ class SubscriptionsFragment : Fragment(R.layout.fragment_subscriptions) {
 
     private fun startToObserveSubscriptionsLiveData() {
         subscriptionsViewModel.subscriptionsLiveData.observe(viewLifecycleOwner) {
-            subscriptionsAdapter.setData(it)
+            updatedSubscriptionsList ->
+            subscriptionsAdapter.setData(updatedSubscriptionsList)
         }
     }
 

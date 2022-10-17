@@ -7,8 +7,11 @@ interface SubscriptionsRepository {
 
     val allSubscriptionsFlow: Flow<List<Subscription>>
 
-    fun insertSubscription(subscription: Subscription)
+//    suspend fun getSubscriptionById(id: Int): Flow<Subscription>
+    suspend fun getSubscriptionById(id: Int): Subscription
 
-    fun deleteAllSubscriptions()
+    suspend fun insertSubscription(subscription: Subscription)
+
+    suspend fun deleteAllSubscriptions()
 
 }

@@ -11,10 +11,14 @@ import kotlinx.coroutines.flow.Flow
 interface SubscriptionsDao {
 
     @Query("SELECT * FROM subscriptions")
-    fun getAllSubscriptions(): Flow<List<SubscriptionEntity>>
+    fun getAll(): Flow<List<SubscriptionEntity>>
+
+    @Query("SELECT * FROM subscriptions WHERE id=:id ")
+    fun getById(id: Int): SubscriptionEntity
+//    fun getById(id: Int): Flow<SubscriptionEntity>
 
     @Query("DELETE FROM subscriptions")
-    fun deleteAllSubscriptions()
+    fun deleteAll()
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(subscription: SubscriptionEntity)
