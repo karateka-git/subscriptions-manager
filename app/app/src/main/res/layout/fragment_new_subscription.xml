@@ -38,13 +38,12 @@
             android:id="@+id/tv_new_subscription_screen_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_30dp"
             android:layout_marginTop="@dimen/margin_10dp"
             android:fontFamily="@font/inter_semibold"
             android:text="@string/new_subscription_tv_screen_title"
             android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/text_size_35sp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/til_new_subscription_name"
             app:layout_constraintTop_toBottomOf="@id/btn_new_subscription_go_back" />
 
         <com.google.android.material.textfield.TextInputLayout
