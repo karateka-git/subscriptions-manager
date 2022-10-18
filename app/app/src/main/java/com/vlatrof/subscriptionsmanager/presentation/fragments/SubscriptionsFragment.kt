@@ -23,33 +23,21 @@ class SubscriptionsFragment : Fragment(R.layout.fragment_subscriptions) {
         setupSubscriptionsRVAdapter()
         startToObserveSubscriptionsLiveData()
         setupNewSubscriptionButton()
-
-        // todo: for testing ***********************************************************
-        binding.btnMenu.setOnClickListener{
-            subscriptionsViewModel.deleteAllSubscriptions()
-        }
-        // todo: for testing ***********************************************************
-
     }
 
     private fun setupSubscriptionsRVAdapter() {
 
         val listener = object: SubscriptionsActionListener {
             override fun onSubscriptionItemClick(subscriptionId: Int) {
-                findNavController().navigate(
-                    R.id.action_fragment_subscriptions_list_to_fragment_subscription_details,
-                    Bundle().apply { putInt("id", subscriptionId) }
-                )
+                openSubscriptionDetailsScreen(subscriptionId)
             }
         }
-
         subscriptionsAdapter = SubscriptionsAdapter(requireActivity(), listener)
-
         binding.rvSubscriptionsList.adapter = subscriptionsAdapter
-
     }
 
     private fun startToObserveSubscriptionsLiveData() {
+
         subscriptionsViewModel.subscriptionsLiveData.observe(viewLifecycleOwner) {
             updatedSubscriptionsList ->
             subscriptionsAdapter.setData(updatedSubscriptionsList)
@@ -57,11 +45,24 @@ class SubscriptionsFragment : Fragment(R.layout.fragment_subscriptions) {
     }
 
     private fun setupNewSubscriptionButton() {
+
         binding.btnNewSubscription.setOnClickListener{
             findNavController().navigate(
                 R.id.action_fragment_subscriptions_list_to_fragment_new_subscription
             )
         }
+    }
+
+    private fun openSubscriptionDetailsScreen(subscriptionId: Int) {
+
+        findNavController().navigate(
+            R.id.action_fragment_subscriptions_list_to_fragment_subscription_details,
+            Bundle().apply {
+                putInt(SubscriptionDetailsFragment.ARGUMENT_SUBSCRIPTION_ID_TAG,
+                    subscriptionId
+                )
+            }
+        )
     }
 
 }

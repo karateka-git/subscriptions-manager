@@ -19,24 +19,27 @@ class SubscriptionDetailsViewModel(
 
     fun loadSubscriptionById(id: Int) {
 
+        // return if already downloaded
+        if (subscriptionLiveData.value != null) return
+
         // Create and start new coroutine with Dispatchers.Main;
-        // We use Dispatchers.Main so that coroutine have access to save data into
-        // subscriptionLiveData.value (this can be performed only on main thread);
+        // We need coroutine to use await() suspend function and receive future value from db;
+        // We need Dispatchers.Main because only on main thread we have access to save data into
+        // LiveData.value
         viewModelScope.launch(mainDispatcher) {
 
             // Create and start new coroutine with Dispatchers.IO;
-            // We use Dispatchers.IO to load data from Room Database on the background thread;
-            // async() will create the coroutine and return its related DeferredJob
-            // that can be awaited to get completed value in future
+            // We use Dispatchers.IO to work on background thread to load data from Room Database;
+            // async() builder will create the coroutine and return its related DeferredJob;
             val deferredLoadingJob = viewModelScope.async(ioDispatcher) {
                 return@async getSubscriptionByIdUseCase(id)
             }
 
+            // we use await() on this deferred job to receive completed value in future
             subscriptionLiveData.value = deferredLoadingJob.await()
 
         }
 
     }
-
 
 }

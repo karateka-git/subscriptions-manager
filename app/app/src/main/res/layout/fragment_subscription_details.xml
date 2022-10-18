@@ -2,23 +2,55 @@
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/padding_30dp">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tv_test"
+        <Button
+            android:id="@+id/btn_subscription_details_go_back"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_13dp"
+            android:layout_marginTop="@dimen/margin_14dp"
             android:fontFamily="@font/inter_semibold"
-            android:text="LOADING..."
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/subscription_details_btn_go_back_text"
+            app:icon="@drawable/ic_baseline_arrow_back"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_subscription_details_save"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_14dp"
+            android:layout_marginEnd="@dimen/margin_13dp"
+            android:fontFamily="@font/inter_semibold"
+            android:text="@string/subscription_details_btn_save_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/btn_subscription_details_screen_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_30dp"
+            android:layout_marginTop="@dimen/margin_10dp"
+            android:layout_marginEnd="@dimen/margin_30dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/inter_semibold"
+            android:maxLines="2"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/text_size_35sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_subscription_details_go_back"
+            tools:text="Some Subscription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

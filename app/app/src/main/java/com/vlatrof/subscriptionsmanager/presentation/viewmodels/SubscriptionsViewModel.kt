@@ -16,19 +16,11 @@ import kotlinx.coroutines.launch
 
 class SubscriptionsViewModel(
 
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
-    private val getAllSubscriptionsUseCase: GetAllSubscriptionsUseCase,
-    private val deleteAllSubscriptionsUseCase: DeleteAllSubscriptionsUseCase
+    getAllSubscriptionsUseCase: GetAllSubscriptionsUseCase,
 
     ) : ViewModel() {
 
     val subscriptionsLiveData: LiveData<List<Subscription>> =
         getAllSubscriptionsUseCase().asLiveData()
-
-    fun deleteAllSubscriptions() {
-        viewModelScope.launch(ioDispatcher) {
-            deleteAllSubscriptionsUseCase()
-        }
-    }
 
 }

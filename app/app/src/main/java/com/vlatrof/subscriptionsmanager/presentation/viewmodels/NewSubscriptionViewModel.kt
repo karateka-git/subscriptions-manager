@@ -14,10 +14,10 @@ import java.lang.NumberFormatException
 import java.util.Currency
 
 enum class InputState(val stringResourceId: Int) {
-    INITIAL (stringResourceId = R.string.new_subscription_field_error_none),
-    CORRECT (stringResourceId = R.string.new_subscription_field_error_none),
-    WRONG (stringResourceId = R.string.new_subscription_field_error_wrong),
-    EMPTY (stringResourceId = R.string.new_subscription_field_error_empty)
+    INITIAL (stringResourceId = R.string.subscription_e_f_field_error_none),
+    CORRECT (stringResourceId = R.string.subscription_e_f_field_error_none),
+    WRONG (stringResourceId = R.string.subscription_e_f_field_error_wrong),
+    EMPTY (stringResourceId = R.string.subscription_e_f_field_error_empty)
 }
 
 class NewSubscriptionViewModel (
@@ -27,7 +27,7 @@ class NewSubscriptionViewModel (
 
     ) : ViewModel() {
 
-    // to restore menu values
+    // menus values holders
     var currencyInputSelection = ""
     var renewalPeriodInputSelection = ""
     var alertInputSelection = ""

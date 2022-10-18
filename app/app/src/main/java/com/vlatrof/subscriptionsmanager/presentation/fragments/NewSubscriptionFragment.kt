@@ -69,7 +69,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
     private fun setupCostInputField() {
 
         // set initial value
-        getString(R.string.new_subscription_tiet_cost_initial_value).let {
+        getString(R.string.subscription_e_f_tiet_cost_initial_value).let {
             binding.tietNewSubscriptionCost.setText(it)
             newSubscriptionViewModel.validateCostInput(it)
         }
@@ -94,7 +94,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         // init DatePicker and restore selection
         val datePicker = MaterialDatePicker.Builder.datePicker()
             .setSelection(newSubscriptionViewModel.startDateInputSelection.value)
-            .setTitleText(getString(R.string.new_subscription_til_start_date_date_picker_title_text))
+            .setTitleText(getString(R.string.subscription_e_f_til_start_date_date_picker_title_text))
             .build()
             .apply {
                 addOnPositiveButtonClickListener {
@@ -106,7 +106,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         dateField.setOnClickListener {
             datePicker.show(
                 parentFragmentManager,
-                getString(R.string.new_subscription_til_start_date_date_picker_tag)
+                getString(R.string.subscription_e_f_til_start_date_date_picker_tag)
             )
         }
 
@@ -115,7 +115,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
             binding.tietNewSubscriptionStartDate.setText(
                 parseLocalDateFromUTCMilliseconds(newSelection)
                     .format(DateTimeFormatter.ofPattern(
-                        getString(R.string.new_subscription_tiet_start_date_pattern)
+                        getString(R.string.subscription_e_f_tiet_start_date_pattern)
                     ))
             )
         }
@@ -157,7 +157,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
         // restore value or set initial
         if (newSubscriptionViewModel.currencyInputState.value == InputState.INITIAL) {
-            getString(R.string.new_subscription_tiet_currency_initial_value).let{
+            getString(R.string.subscription_e_f_tiet_currency_initial_value).let{
                 newSubscriptionViewModel.currencyInputSelection = it
                 newSubscriptionViewModel.validateCurrencyInput(it)
             }
@@ -205,7 +205,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         // restore value or set initial
         if (newSubscriptionViewModel.renewalPeriodInputSelection == "") {
             newSubscriptionViewModel.renewalPeriodInputSelection =
-                getString(R.string.new_subscription_actv_renewal_period_initial_value)
+                getString(R.string.subscription_e_f_actv_renewal_period_initial_value)
         }
         renewalPeriodField.setText(newSubscriptionViewModel.renewalPeriodInputSelection, false)
 
@@ -233,7 +233,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         // restore value or set default
         if (newSubscriptionViewModel.alertInputSelection == "") {
             newSubscriptionViewModel.alertInputSelection =
-                getString(R.string.new_subscription_actv_alert_default_value)
+                getString(R.string.subscription_e_f_actv_alert_default_value)
         }
         alertField.setText(newSubscriptionViewModel.alertInputSelection, false)
 
@@ -280,7 +280,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
                 .filterValues{ it == alertPeriodStr }
                 .keys
                 .toTypedArray()[0]
-        if (alertPeriodKey == getString(R.string.new_subscription_alert_disabled_key)) {
+        if (alertPeriodKey == getString(R.string.subscription_e_f_alert_disabled_key)) {
             alertEnabled = false
             alertPeriod = Period.ZERO
         } else {

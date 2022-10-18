@@ -1,56 +1,45 @@
 <resources>
 
     <!-- General -->
-
     <string name="app_name">Subscriptions Manager</string>
 
     <!-- Subscriptions list screen -->
-
     <string name="subscriptions_btn_settings_content_description">Open settings</string>
-
     <string name="subscriptions_btn_new_content_description">Add new subscription</string>
-
     <string name="subscriptions_tv_screen_title">Subscriptions</string>
-
     <string name="subscriptions_rv_tv_next_renewal_date_today">Today</string>
     <string name="subscriptions_rv_tv_next_renewal_date_tomorrow">Tomorrow</string>
     <string name="subscriptions_rv_tv_next_renewal_date_pattern">dd MMMM</string>
 
     <!-- New subscription screen -->
-
-    <string name="new_subscription_field_error_none"/>
-    <string name="new_subscription_field_error_empty">* Required</string>
-    <string name="new_subscription_field_error_wrong">* Wrong value</string>
-
-    <string name="new_subscription_btn_go_back_content_description">Add new subscription</string>
-    <string name="new_subscription_btn_go_back_text">back</string>
-
+    <string name="new_subscription_btn_go_back_text">Back</string>
+    <string name="new_subscription_btn_create_text">Create</string>
     <string name="new_subscription_tv_screen_title">New subscription</string>
 
-    <string name="new_subscription_til_name_hint">Name</string>
+    <!-- Subscription details screen -->
+    <string name="subscription_details_on_open_error_message">Something went wrong</string>
+    <string name="subscription_details_btn_go_back_text">Back</string>
+    <string name="subscription_details_btn_save_text">Save</string>
 
-    <string name="new_subscription_til_description_hint">Description (optional)</string>
-
-    <string name="new_subscription_til_cost_hint">Cost</string>
-    <string name="new_subscription_tiet_cost_initial_value">0.00</string>
-
-    <string name="new_subscription_til_currency_hint">Currency</string>
-    <string name="new_subscription_tiet_currency_initial_value">USD</string>
-
-    <string name="new_subscription_til_renewal_period_hint">Renewal Period</string>
-
-    <string name="new_subscription_til_start_date_hint">Start date</string>
-    <string name="new_subscription_til_start_date_end_icon_content_description">Start date picker</string>
-    <string name="new_subscription_til_start_date_date_picker_title_text">Select start date</string>
-    <string name="new_subscription_til_start_date_date_picker_tag">datePicker</string>
-    <string name="new_subscription_tiet_start_date_pattern">dd MMMM yyyy</string>
-
-    <string name="new_subscription_actv_renewal_period_initial_value">Monthly</string>
-
-    <string name="new_subscription_til_alert_hint">Alert</string>
-    <string name="new_subscription_actv_alert_default_value">None</string>
-    <string name="new_subscription_alert_disabled_key">NONE</string>
-
-    <string name="new_subscription_btn_create_text">CREATE</string>
+    <!-- Subscription editing form -->
+    <string name="subscription_e_f_field_error_none"/>
+    <string name="subscription_e_f_field_error_empty">* Required</string>
+    <string name="subscription_e_f_field_error_wrong">* Wrong value</string>
+    <string name="subscription_e_f_til_name_hint">Name</string>
+    <string name="subscription_e_f_til_description_hint">Description (optional)</string>
+    <string name="subscription_e_f_til_cost_hint">Cost</string>
+    <string name="subscription_e_f_tiet_cost_initial_value">0.00</string>
+    <string name="subscription_e_f_til_currency_hint">Currency</string>
+    <string name="subscription_e_f_tiet_currency_initial_value">USD</string>
+    <string name="subscription_e_f_til_renewal_period_hint">Renewal Period</string>
+    <string name="subscription_e_f_til_start_date_hint">Start date</string>
+    <string name="subscription_e_f_til_start_date_end_icon_content_description">Start date picker</string>
+    <string name="subscription_e_f_til_start_date_date_picker_title_text">Select start date</string>
+    <string name="subscription_e_f_til_start_date_date_picker_tag">datePicker</string>
+    <string name="subscription_e_f_tiet_start_date_pattern">dd MMMM yyyy</string>
+    <string name="subscription_e_f_actv_renewal_period_initial_value">Monthly</string>
+    <string name="subscription_e_f_til_alert_hint">Alert</string>
+    <string name="subscription_e_f_actv_alert_default_value">None</string>
+    <string name="subscription_e_f_alert_disabled_key">NONE</string>
 
 </resources>
