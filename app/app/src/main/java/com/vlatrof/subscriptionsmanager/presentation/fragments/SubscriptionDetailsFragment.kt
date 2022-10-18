@@ -1,6 +1,5 @@
 package com.vlatrof.subscriptionsmanager.presentation.fragments
 
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -19,10 +18,13 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         binding = FragmentSubscriptionDetailsBinding.bind(view)
 
         val subscriptionId = arguments?.getInt("id") ?: return
-        subscriptionDetailsViewModel.loadSubscriptionById(subscriptionId)
+
         subscriptionDetailsViewModel.subscriptionLiveData.observe(viewLifecycleOwner) {
             binding.tvTest.text = it.toString()
         }
+
+        subscriptionDetailsViewModel.loadSubscriptionById(subscriptionId)
+
     }
 
 }

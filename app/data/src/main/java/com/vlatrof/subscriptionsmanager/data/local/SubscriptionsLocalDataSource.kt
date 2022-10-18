@@ -4,7 +4,6 @@ import com.vlatrof.subscriptionsmanager.data.local.room.dao.SubscriptionsDao
 import com.vlatrof.subscriptionsmanager.data.models.Subscription as DataSubscription
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.transform
 
 class SubscriptionsLocalDataSource(private val subscriptionsDao: SubscriptionsDao) {
 
@@ -16,12 +15,6 @@ class SubscriptionsLocalDataSource(private val subscriptionsDao: SubscriptionsDa
                 }
             }
         }
-
-//    fun getSubscriptionById(id: Int): Flow<DataSubscription> {
-//        return subscriptionsDao.getById(id).transform { subscriptionEntity ->
-//            DataSubscription(subscriptionEntity)
-//        }
-//    }
 
     fun getSubscriptionById(id: Int): DataSubscription {
         return DataSubscription(subscriptionsDao.getById(id))
