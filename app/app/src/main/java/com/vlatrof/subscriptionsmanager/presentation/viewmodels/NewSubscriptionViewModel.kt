@@ -1,10 +1,8 @@
 package com.vlatrof.subscriptionsmanager.presentation.viewmodels
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.vlatrof.subscriptionsmanager.R
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import com.vlatrof.subscriptionsmanager.domain.usecases.interfaces.InsertNewSubscriptionUseCase
 import kotlinx.coroutines.CoroutineDispatcher
@@ -13,21 +11,14 @@ import kotlinx.coroutines.launch
 import java.lang.NumberFormatException
 import java.util.Currency
 
-enum class InputState(val stringResourceId: Int) {
-    INITIAL (stringResourceId = R.string.subscription_e_f_field_error_none),
-    CORRECT (stringResourceId = R.string.subscription_e_f_field_error_none),
-    WRONG (stringResourceId = R.string.subscription_e_f_field_error_wrong),
-    EMPTY (stringResourceId = R.string.subscription_e_f_field_error_empty)
-}
-
 class NewSubscriptionViewModel (
 
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
     private val insertNewSubscriptionUseCase: InsertNewSubscriptionUseCase,
 
-    ) : ViewModel() {
+    ) : BaseViewModel() {
 
-    // menus values holders
+    // value holders
     var currencyInputSelection = ""
     var renewalPeriodInputSelection = ""
     var alertInputSelection = ""
@@ -35,11 +26,10 @@ class NewSubscriptionViewModel (
         MaterialDatePicker.todayInUtcMilliseconds()
     )
 
-    // validating inputs states
+    // state holders
     val nameInputState = MutableLiveData(InputState.INITIAL)
     val costInputState = MutableLiveData(InputState.INITIAL)
     val currencyInputState = MutableLiveData(InputState.INITIAL)
-
     val buttonCreateState = MutableLiveData(false)
 
     private val availableCurrencies = Currency.getAvailableCurrencies()
@@ -89,7 +79,7 @@ class NewSubscriptionViewModel (
 
     }
 
-    fun validateCreateButton() {
+    fun updateCreateButtonState() {
         buttonCreateState.value =
             nameInputState.value == InputState.CORRECT
             && costInputState.value == InputState.CORRECT

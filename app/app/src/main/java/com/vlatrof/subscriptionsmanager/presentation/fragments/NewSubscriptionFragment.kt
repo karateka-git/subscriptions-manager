@@ -13,7 +13,7 @@ import com.vlatrof.subscriptionsmanager.R
 import com.vlatrof.subscriptionsmanager.databinding.FragmentNewSubscriptionBinding
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import com.vlatrof.subscriptionsmanager.presentation.utils.*
-import com.vlatrof.subscriptionsmanager.presentation.viewmodels.InputState
+import com.vlatrof.subscriptionsmanager.presentation.viewmodels.BaseViewModel
 import com.vlatrof.subscriptionsmanager.presentation.viewmodels.NewSubscriptionViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.time.Period
@@ -56,12 +56,12 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         // validate new value
         binding.tietNewSubscriptionName.doAfterTextChanged {
             newSubscriptionViewModel.validateNameInput(it.toString())
-            newSubscriptionViewModel.validateCreateButton()
+            newSubscriptionViewModel.updateCreateButtonState()
         }
 
         // handle new state
         newSubscriptionViewModel.nameInputState.observe(viewLifecycleOwner) {
-            binding.tilNewSubscriptionName.error = getString(it.stringResourceId)
+            binding.tilNewSubscriptionName.error = getString(it.errorStringResourceId)
         }
 
     }
@@ -77,12 +77,12 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         // validate new value
         binding.tietNewSubscriptionCost.doAfterTextChanged {
             newSubscriptionViewModel.validateCostInput(it.toString())
-            newSubscriptionViewModel.validateCreateButton()
+            newSubscriptionViewModel.updateCreateButtonState()
         }
 
         // handle new state
         newSubscriptionViewModel.costInputState.observe(viewLifecycleOwner) {
-            binding.tilNewSubscriptionCost.error = getString(it.stringResourceId)
+            binding.tilNewSubscriptionCost.error = getString(it.errorStringResourceId)
         }
 
     }
@@ -156,7 +156,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         ))
 
         // restore value or set initial
-        if (newSubscriptionViewModel.currencyInputState.value == InputState.INITIAL) {
+        if (newSubscriptionViewModel.currencyInputState.value == BaseViewModel.InputState.INITIAL) {
             getString(R.string.subscription_e_f_tiet_currency_initial_value).let{
                 newSubscriptionViewModel.currencyInputSelection = it
                 newSubscriptionViewModel.validateCurrencyInput(it)
@@ -178,13 +178,13 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
             newSubscriptionViewModel.currencyInputSelection = newValue
             newSubscriptionViewModel.validateCurrencyInput(newValue)
-            newSubscriptionViewModel.validateCreateButton()
+            newSubscriptionViewModel.updateCreateButtonState()
 
         }
 
         // handle new input state
         newSubscriptionViewModel.currencyInputState.observe(viewLifecycleOwner) { newState ->
-            binding.tilNewSubscriptionCurrency.error = getString(newState.stringResourceId)
+            binding.tilNewSubscriptionCurrency.error = getString(newState.errorStringResourceId)
         }
 
     }

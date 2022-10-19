@@ -43,12 +43,12 @@
             android:ellipsize="end"
             android:fontFamily="@font/inter_semibold"
             android:maxLines="2"
-            android:text="Yandex Plus"
             android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/text_size_35sp"
             app:layout_constraintEnd_toEndOf="@id/til_subscription_details_name"
             app:layout_constraintStart_toStartOf="@id/til_subscription_details_name"
-            app:layout_constraintTop_toBottomOf="@id/btn_subscription_details_go_back" />
+            app:layout_constraintTop_toBottomOf="@id/btn_subscription_details_go_back"
+            tools:text="Yandex Plus" />
 
         <TextView
             android:id="@+id/tv_subscription_details_next_renewal_date"
@@ -59,11 +59,11 @@
             android:fontFamily="@font/inter_regular"
             android:maxLines="2"
             android:textColor="?android:textColorPrimary"
-            android:text="Next renewal: 23 oct 2022"
             android:textSize="@dimen/text_size_18sp"
             app:layout_constraintEnd_toEndOf="@id/til_subscription_details_name"
             app:layout_constraintStart_toStartOf="@id/til_subscription_details_name"
-            app:layout_constraintTop_toBottomOf="@id/tv_subscription_details_screen_title" />
+            app:layout_constraintTop_toBottomOf="@id/tv_subscription_details_screen_title"
+            tools:text="Next renewal: 23 oct 2022" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_subscription_details_name"
@@ -72,7 +72,6 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_30dp"
             android:layout_marginTop="@dimen/margin_20dp"
-            android:hint="@string/subscription_e_f_til_name_hint"
             app:endIconMode="clear_text"
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
@@ -84,6 +83,7 @@
                 android:id="@+id/tiet_subscription_details_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/subscription_e_f_til_name_hint"
                 android:inputType="text"
                 android:maxLength="100" />
 
@@ -94,7 +94,6 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/subscription_e_f_til_description_hint"
             app:counterEnabled="true"
             app:counterMaxLength="200"
             app:endIconMode="clear_text"
@@ -106,6 +105,7 @@
                 android:id="@+id/tiet_subscription_details_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/subscription_e_f_til_description_hint"
                 android:inputType="textMultiLine"
                 android:maxLength="200" />
 
@@ -117,7 +117,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_20dp"
-            android:hint="@string/subscription_e_f_til_cost_hint"
             app:endIconMode="clear_text"
             app:layout_constraintEnd_toStartOf="@id/til_subscription_details_currency"
             app:layout_constraintStart_toStartOf="@id/til_subscription_details_name"
@@ -127,6 +126,7 @@
                 android:id="@+id/tiet_subscription_details_cost"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/subscription_e_f_til_cost_hint"
                 android:inputType="numberDecimal"
                 android:maxLength="15" />
 
@@ -137,7 +137,6 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="@dimen/width_140dp"
             android:layout_height="wrap_content"
-            android:hint="@string/subscription_e_f_til_currency_hint"
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="@id/til_subscription_details_name"
             app:layout_constraintStart_toEndOf="@id/til_subscription_details_cost"
@@ -147,6 +146,7 @@
                 android:id="@+id/actv_subscription_details_currency"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/subscription_e_f_til_currency_hint"
                 android:inputType="textAutoComplete|textCapCharacters" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -156,7 +156,6 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/subscription_e_f_til_start_date_hint"
             app:endIconContentDescription="@string/subscription_e_f_til_start_date_end_icon_content_description"
             app:endIconDrawable="@drawable/ic_baseline_date_range_24"
             app:endIconMode="custom"
@@ -172,6 +171,7 @@
                 android:cursorVisible="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
+                android:hint="@string/subscription_e_f_til_start_date_hint"
                 android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -182,15 +182,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_18dp"
-            android:hint="@string/subscription_e_f_til_renewal_period_hint"
             app:layout_constraintEnd_toEndOf="@id/til_subscription_details_name"
             app:layout_constraintStart_toStartOf="@id/til_subscription_details_name"
             app:layout_constraintTop_toBottomOf="@id/til_subscription_details_start_date">
 
             <AutoCompleteTextView
-                android:id="@+id/tiet_subscription_details_renewal_period"
+                android:id="@+id/actv_subscription_details_renewal_period"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:hint="@string/subscription_e_f_til_renewal_period_hint"
                 android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -201,7 +201,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_18dp"
-            android:hint="@string/subscription_e_f_til_alert_hint"
             app:layout_constraintEnd_toEndOf="@id/til_subscription_details_name"
             app:layout_constraintStart_toStartOf="@id/til_subscription_details_name"
             app:layout_constraintTop_toBottomOf="@id/til_subscription_details_renewal_period">
@@ -210,6 +209,7 @@
                 android:id="@+id/actv_subscription_details_alert"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:hint="@string/subscription_e_f_til_alert_hint"
                 android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -221,7 +221,5 @@
             app:layout_constraintTop_toBottomOf="@+id/til_subscription_details_alert" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 </ScrollView>
