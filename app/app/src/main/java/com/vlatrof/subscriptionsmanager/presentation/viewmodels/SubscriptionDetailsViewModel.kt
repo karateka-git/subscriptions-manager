@@ -4,14 +4,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
+import com.vlatrof.subscriptionsmanager.domain.usecases.interfaces.DeleteSubscriptionByIdUseCase
 import com.vlatrof.subscriptionsmanager.domain.usecases.interfaces.GetSubscriptionByIdUseCase
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import java.lang.NumberFormatException
 import java.util.Currency
 
 class SubscriptionDetailsViewModel(
 
     private val getSubscriptionByIdUseCase: GetSubscriptionByIdUseCase,
+    private val deleteSubscriptionByIdUseCase: DeleteSubscriptionByIdUseCase,
     private val mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 
@@ -135,6 +140,14 @@ class SubscriptionDetailsViewModel(
             // we use await() on this deferred job to receive completed value in future
             subscriptionLiveData.value = deferredLoadingJob.await()
 
+        }
+
+    }
+
+    fun deleteSubscriptionById(id: Int) {
+
+        viewModelScope.launch(ioDispatcher) {
+            deleteSubscriptionByIdUseCase(id)
         }
 
     }

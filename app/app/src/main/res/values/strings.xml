@@ -12,7 +12,7 @@
     <string name="subscriptions_rv_tv_next_renewal_date_pattern">dd MMMM</string>
 
     <!-- New subscription screen -->
-    <string name="new_subscription_btn_go_back_text">Back</string>
+    <string name="new_subscription_btn_go_back_text">Cancel</string>
     <string name="new_subscription_btn_create_text">Create</string>
     <string name="new_subscription_tv_screen_title">New subscription</string>
 
@@ -22,6 +22,11 @@
     <string name="subscription_details_btn_save_text">Save</string>
     <string name="subscription_details_tv_next_renewal_title">Next renewal: </string>
     <string name="subscription_details_tv_next_renewal_date_pattern">dd MMMM yyyy</string>
+    <string name="subscription_details_btn_delete_text">Delete subscription</string>
+    <string name="subscription_details_delete_dialog_title">Delete Subscription</string>
+    <string name="subscription_details_delete_dialog_message">This action cannot be undone</string>
+    <string name="subscription_details_delete_dialog_btn_positive">Delete</string>
+    <string name="subscription_details_delete_dialog_btn_negative">Cancel</string>
 
     <!-- Subscription editing form -->
     <string name="subscription_e_f_field_error_none"/>

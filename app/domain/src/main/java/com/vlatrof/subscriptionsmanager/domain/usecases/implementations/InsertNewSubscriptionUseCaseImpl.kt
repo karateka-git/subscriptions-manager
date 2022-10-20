@@ -10,7 +10,7 @@ class InsertNewSubscriptionUseCaseImpl(
 
     ) : InsertNewSubscriptionUseCase {
 
-    override suspend operator fun invoke(subscription: Subscription) {
+    override operator fun invoke(subscription: Subscription) {
 
         subscriptionsRepository.insertSubscription(subscription)
 

@@ -54,7 +54,6 @@ data class Subscription(
         val startDate = this.startDate
         val renewalPeriod = this.renewalPeriod
         var nextRenewalDate: LocalDate = LocalDate.from(startDate)
-
         while (nextRenewalDate < currentDate) {
             nextRenewalDate = renewalPeriod.addTo(startDate) as LocalDate
         }

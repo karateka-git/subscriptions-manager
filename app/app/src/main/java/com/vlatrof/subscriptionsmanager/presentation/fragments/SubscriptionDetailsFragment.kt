@@ -9,6 +9,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.vlatrof.subscriptionsmanager.R
 import com.vlatrof.subscriptionsmanager.databinding.FragmentSubscriptionDetailsBinding
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
@@ -18,7 +19,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
-import java.util.Currency
+import java.util.*
+
 
 class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_details) {
 
@@ -46,6 +48,7 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         setupCostInput()
         setupStartDateInput()
         setupSaveButton()
+        setupDeleteButton()
     }
 
     override fun onResume() {
@@ -102,6 +105,7 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
             subscriptionDetailsViewModel.handleNewNameInputValue(newValue)
             binding.tvSubscriptionDetailsNameTitle.text = newValue
             subscriptionDetailsViewModel.handleNewNameTitleValue(newValue)
+
         }
 
         // handle new state
@@ -135,8 +139,8 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
             .setTitleText(getString(R.string.subscription_e_f_til_start_date_date_picker_title_text))
             .build()
             .apply {
-                addOnPositiveButtonClickListener {
-                    subscriptionDetailsViewModel.handleNewStartDateValue(selection!!)
+                addOnPositiveButtonClickListener { selection ->
+                    subscriptionDetailsViewModel.handleNewStartDateValue(selection)
                 }
             }
 
@@ -150,13 +154,15 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
 
         // handle new date selection
         subscriptionDetailsViewModel.startDateInputSelection.observe(viewLifecycleOwner) { newSelection ->
+
+            val newSelectedDate = parseLocalDateFromUTCMilliseconds(newSelection)
+
             binding.tietSubscriptionDetailsStartDate.setText(
-                parseLocalDateFromUTCMilliseconds(newSelection)
-                    .format(
-                        DateTimeFormatter.ofPattern(
-                            getString(R.string.subscription_e_f_tiet_start_date_pattern)
-                    ))
+                newSelectedDate.format(DateTimeFormatter.ofPattern(
+                    getString(R.string.subscription_e_f_tiet_start_date_pattern)
+                ))
             )
+
         }
 
     }
@@ -179,6 +185,23 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
                     else ResourcesCompat.getColor(resources, R.color.white_gray, null)
                 )
             }
+        }
+
+    }
+
+    private fun setupDeleteButton() {
+
+        binding.btnSubscriptionDetailsDelete.setOnClickListener {
+
+            MaterialAlertDialogBuilder(requireActivity())
+                .setTitle(R.string.subscription_details_delete_dialog_title)
+                .setMessage(R.string.subscription_details_delete_dialog_message)
+                .setPositiveButton(R.string.subscription_details_delete_dialog_btn_positive) {
+                        _, _ -> onPositiveActionDialogDelete() }
+                .setNegativeButton(R.string.subscription_details_delete_dialog_btn_negative) {
+                        _, _ -> }
+                .show()
+
         }
 
     }
@@ -276,21 +299,7 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         subscriptionDetailsViewModel.handleNewNameTitleValue(subscription.name)
 
         // next renewal title
-        val nextRenewalTitle = getString(R.string.subscription_details_tv_next_renewal_title)
-        val formattedNextRenewalDate = when (subscription.nextRenewalDate) {
-            LocalDate.now() -> {
-                getString(R.string.subscriptions_rv_tv_next_renewal_date_today)
-            }
-            LocalDate.now().plusDays(1) -> {
-                getString(R.string.subscriptions_rv_tv_next_renewal_date_tomorrow)
-            }
-            else -> {
-                subscription.nextRenewalDate.format(DateTimeFormatter.ofPattern(
-                    getString(R.string.subscription_details_tv_next_renewal_date_pattern))
-                )
-            }
-        }
-        val nextRenewalStr = "$nextRenewalTitle $formattedNextRenewalDate"
+        val nextRenewalStr = generateNextRenewalStr(subscription.nextRenewalDate)
         binding.tvSubscriptionDetailsNextRenewalTitle.text = nextRenewalStr
         subscriptionDetailsViewModel.handleNewNextRenewalTitleValue(nextRenewalStr)
 
@@ -312,8 +321,9 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         subscriptionDetailsViewModel.handleNewCurrencyValue(currencyStr)
 
         // start date input
-        val startDateValue = subscription.startDate.toUTCMilliseconds()
-        subscriptionDetailsViewModel.handleNewStartDateValue(startDateValue)
+        subscriptionDetailsViewModel.handleNewStartDateValue(
+            subscription.startDate.toUTCMilliseconds()
+        )
 
         // renewal period input
         val renewalPeriodStr = parseXmlResourceMap(requireActivity(),
@@ -387,6 +397,41 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
             alertEnabled = alertEnabled,
             alertPeriod = alertPeriod
         )
+
+    }
+
+    private fun generateNextRenewalStr(nextRenewalDate: LocalDate): String {
+
+        val nextRenewalTitle = getString(R.string.subscription_details_tv_next_renewal_title)
+        val formattedNextRenewalDate = when (nextRenewalDate) {
+            LocalDate.now() -> {
+                getString(R.string.subscriptions_rv_tv_next_renewal_date_today)
+            }
+            LocalDate.now().plusDays(1) -> {
+                getString(R.string.subscriptions_rv_tv_next_renewal_date_tomorrow)
+            }
+            else -> {
+                nextRenewalDate.format(
+                    DateTimeFormatter.ofPattern(
+                        getString(R.string.subscription_details_tv_next_renewal_date_pattern)
+                    )
+                )
+            }
+        }
+
+        return "$nextRenewalTitle $formattedNextRenewalDate"
+
+    }
+
+    private fun onPositiveActionDialogDelete() {
+
+        val subscriptionId = requireArguments().getInt(
+            ARGUMENT_SUBSCRIPTION_ID_TAG, ARGUMENT_SUBSCRIPTION_ID_DEFAULT_VALUE
+        )
+
+        subscriptionDetailsViewModel.deleteSubscriptionById(subscriptionId)
+        hideKeyboard()
+        findNavController().popBackStack()
 
     }
 

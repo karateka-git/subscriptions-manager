@@ -6,6 +6,7 @@
     <dimen name="width_130dp">130dp</dimen>
     <dimen name="width_140dp">140dp</dimen>
     <dimen name="height_20dp">20dp</dimen>
+    <dimen name="height_25dp">25dp</dimen>
     <dimen name="height_50dp">50dp</dimen>
     <dimen name="height_85dp">85dp</dimen>
     <dimen name="max_width_150dp">150dp</dimen>

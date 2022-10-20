@@ -23,6 +23,7 @@ val appModule = module {
     viewModel<SubscriptionDetailsViewModel> {
         SubscriptionDetailsViewModel(
             getSubscriptionByIdUseCase = get(),
+            deleteSubscriptionByIdUseCase = get()
         )
     }
 

@@ -9,7 +9,7 @@ class DeleteAllSubscriptionsUseCaseImpl(
 
 ) : DeleteAllSubscriptionsUseCase {
 
-    override suspend operator fun invoke() {
+    override operator fun invoke() {
 
         subscriptionsRepository.deleteAllSubscriptions()
 

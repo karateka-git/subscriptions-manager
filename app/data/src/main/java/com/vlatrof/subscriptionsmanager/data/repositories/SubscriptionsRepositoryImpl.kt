@@ -34,4 +34,8 @@ class SubscriptionsRepositoryImpl(
         subscriptionsLocalDataSource.deleteAllSubscriptions()
     }
 
+    override fun deleteSubscriptionById(id: Int) {
+        subscriptionsLocalDataSource.deleteSubscriptionById(id)
+    }
+
 }

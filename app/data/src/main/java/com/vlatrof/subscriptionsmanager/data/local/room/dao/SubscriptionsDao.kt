@@ -1,9 +1,6 @@
 package com.vlatrof.subscriptionsmanager.data.local.room.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.vlatrof.subscriptionsmanager.data.local.room.entities.SubscriptionEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -21,5 +18,8 @@ interface SubscriptionsDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(subscription: SubscriptionEntity)
+
+    @Query("DELETE FROM subscriptions WHERE id = :id")
+    fun deleteById(id: Int)
 
 }

@@ -28,4 +28,8 @@ class SubscriptionsLocalDataSource(private val subscriptionsDao: SubscriptionsDa
         subscriptionsDao.deleteAll()
     }
 
+    fun deleteSubscriptionById(id: Int) {
+        subscriptionsDao.deleteById(id)
+    }
+
 }
