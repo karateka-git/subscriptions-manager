@@ -154,7 +154,7 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
                 parseLocalDateFromUTCMilliseconds(newSelection)
                     .format(
                         DateTimeFormatter.ofPattern(
-                        getString(R.string.subscription_e_f_tiet_start_date_pattern)
+                            getString(R.string.subscription_e_f_tiet_start_date_pattern)
                     ))
             )
         }
@@ -312,9 +312,6 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         subscriptionDetailsViewModel.handleNewCurrencyValue(currencyStr)
 
         // start date input
-        val formattedStartDate = subscription.startDate.format(DateTimeFormatter.ofPattern(
-            getString(R.string.subscription_e_f_tiet_start_date_pattern)))
-        binding.tietSubscriptionDetailsStartDate.setText(formattedStartDate)
         val startDateValue = subscription.startDate.toUTCMilliseconds()
         subscriptionDetailsViewModel.handleNewStartDateValue(startDateValue)
 

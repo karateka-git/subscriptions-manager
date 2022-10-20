@@ -30,7 +30,7 @@
     <string name="subscription_e_f_til_name_hint">Name</string>
     <string name="subscription_e_f_til_description_hint">Description (optional)</string>
     <string name="subscription_e_f_til_cost_hint">Cost</string>
-    <string name="subscription_e_f_tiet_cost_initial_value">0.00</string>
+    <string name="subscription_e_f_tiet_cost_initial_value">0.0</string>
     <string name="subscription_e_f_til_currency_hint">Currency</string>
     <string name="subscription_e_f_tiet_currency_initial_value">USD</string>
     <string name="subscription_e_f_til_renewal_period_hint">Renewal Period</string>

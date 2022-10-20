@@ -1,8 +1,10 @@
 package com.vlatrof.subscriptionsmanager.presentation.adapters
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.DiffUtil
 import com.vlatrof.subscriptionsmanager.R
@@ -86,7 +88,9 @@ class SubscriptionsAdapter(
         val costStr = "${subscription.paymentCost} ${subscription.paymentCurrency.currencyCode}"
         holder.binding.tvSubscriptionCost.text = costStr
 
-        holder.binding.tvSubscriptionNextRenewalDate.text = when (subscription.nextRenewalDate) {
+        val nextRenewalDateTextView = holder.binding.tvSubscriptionNextRenewalDate
+
+        nextRenewalDateTextView.text = when (subscription.nextRenewalDate) {
             LocalDate.now() -> {
                 context.getString(R.string.subscriptions_rv_tv_next_renewal_date_today)
             }

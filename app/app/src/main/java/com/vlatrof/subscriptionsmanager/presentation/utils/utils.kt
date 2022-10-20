@@ -1,11 +1,12 @@
 package com.vlatrof.subscriptionsmanager.presentation.utils
 
+import android.R
 import android.content.Context
 import org.xmlpull.v1.XmlPullParser
-import java.lang.NullPointerException
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
+
 
 fun parseXmlResourceMap(context: Context, mapResId: Int): LinkedHashMap<String, String> {
 
