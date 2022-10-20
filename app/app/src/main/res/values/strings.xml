@@ -20,6 +20,8 @@
     <string name="subscription_details_on_open_error_message">Something went wrong</string>
     <string name="subscription_details_btn_go_back_text">Back</string>
     <string name="subscription_details_btn_save_text">Save</string>
+    <string name="subscription_details_tv_next_renewal_title">Next renewal: </string>
+    <string name="subscription_details_tv_next_renewal_date_pattern">dd MMMM yyyy</string>
 
     <!-- Subscription editing form -->
     <string name="subscription_e_f_field_error_none"/>

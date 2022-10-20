@@ -22,9 +22,8 @@ class SubscriptionDetailsViewModel(
     private val availableCurrencies = Currency.getAvailableCurrencies()
 
     // value holders
-    var nameInputValueLiveData = MutableLiveData("")
-    var descriptionInputValue   = ""
-    var costInputValue          = ""
+    var nameTitleValue          = ""
+    var nextRenewalTitleValue   = ""
     var currencyInputValue      = ""
     var renewalPeriodInputValue = ""
     var alertInputValue         = ""
@@ -38,18 +37,20 @@ class SubscriptionDetailsViewModel(
     val currencyInputState = MutableLiveData(InputState.INITIAL)
     val buttonSaveState = MutableLiveData(false)
 
+    fun handleNewNameTitleValue(newValue: String) {
+        nameTitleValue = newValue
+    }
+
+    fun handleNewNextRenewalTitleValue(newValue: String) {
+        nextRenewalTitleValue = newValue
+    }
+
     fun handleNewNameInputValue(newValue: String) {
-        nameInputValueLiveData.value = newValue
         nameInputState.value = validateNameValue(newValue)
         buttonSaveState.value = validateSaveButtonState()
     }
 
-    fun handleNewDescriptionInputValue(newValue: String) {
-        descriptionInputValue = newValue
-    }
-
     fun handleNewCostInputValue(newValue: String) {
-        costInputValue = newValue
         costInputState.value = validateCostValue(newValue)
         buttonSaveState.value = validateSaveButtonState()
     }
@@ -117,8 +118,6 @@ class SubscriptionDetailsViewModel(
     }
 
     fun loadSubscriptionById(id: Int) {
-
-        if (subscriptionLiveData.value != null) return
 
         // Create and start new coroutine with Dispatchers.Main;
         // We need coroutine to use await() suspend function and receive future value from db;

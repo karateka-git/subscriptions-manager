@@ -36,7 +36,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_subscription_details_screen_title"
+            android:id="@+id/tv_subscription_details_name_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_10dp"
@@ -51,7 +51,7 @@
             tools:text="Yandex Plus" />
 
         <TextView
-            android:id="@+id/tv_subscription_details_next_renewal_date"
+            android:id="@+id/tv_subscription_details_next_renewal_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_10dp"
@@ -62,8 +62,8 @@
             android:textSize="@dimen/text_size_18sp"
             app:layout_constraintEnd_toEndOf="@id/til_subscription_details_name"
             app:layout_constraintStart_toStartOf="@id/til_subscription_details_name"
-            app:layout_constraintTop_toBottomOf="@id/tv_subscription_details_screen_title"
-            tools:text="Next renewal: 23 oct 2022" />
+            app:layout_constraintTop_toBottomOf="@id/tv_subscription_details_name_title"
+            tools:text="Next renewal: 23 November 2022" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_subscription_details_name"
@@ -76,7 +76,7 @@
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_subscription_details_next_renewal_date"
+            app:layout_constraintTop_toBottomOf="@id/tv_subscription_details_next_renewal_title"
             app:layout_constraintWidth_max="@dimen/max_width_500dp">
 
             <com.google.android.material.textfield.TextInputEditText

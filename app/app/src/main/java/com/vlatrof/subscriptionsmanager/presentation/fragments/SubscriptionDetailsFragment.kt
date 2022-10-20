@@ -1,7 +1,6 @@
 package com.vlatrof.subscriptionsmanager.presentation.fragments
 
 import android.content.Context
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
@@ -16,9 +15,10 @@ import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import com.vlatrof.subscriptionsmanager.presentation.utils.*
 import com.vlatrof.subscriptionsmanager.presentation.viewmodels.SubscriptionDetailsViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
-import java.util.*
+import java.util.Currency
 
 class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_details) {
 
@@ -34,13 +34,15 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentSubscriptionDetailsBinding.bind(view)
 
-        loadSubscription()
-        observeSubscriptionLiveData()
+        if (subscriptionDetailsViewModel.subscriptionLiveData.value == null) {
+            loadSubscription()
+            observeSubscriptionLiveData()
+        }
 
         setupGoBackButton()
-        setupTitleUpdating()
+        setupNameTitle()
+        setupNextRenewalTitle()
         setupNameInput()
-        setupDescriptionInput()
         setupCostInput()
         setupStartDateInput()
         setupSaveButton()
@@ -70,9 +72,7 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
 
     private fun observeSubscriptionLiveData() {
         subscriptionDetailsViewModel.subscriptionLiveData.observe(viewLifecycleOwner) {
-
-            showToast(it.toString())
-
+            populateUi(subscription = it)
         }
     }
 
@@ -83,25 +83,25 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         }
     }
 
-    private fun setupTitleUpdating() {
+    private fun setupNameTitle() {
+        // restore value from viewmodel
+        binding.tvSubscriptionDetailsNameTitle.text = subscriptionDetailsViewModel.nameTitleValue
+    }
 
-        // handle new name input state
-        subscriptionDetailsViewModel.nameInputValueLiveData.observe(viewLifecycleOwner) {
-            binding.tvSubscriptionDetailsScreenTitle.text = it
-        }
-
+    private fun setupNextRenewalTitle() {
+        // restore value from viewmodel
+        binding.tvSubscriptionDetailsNextRenewalTitle.text =
+            subscriptionDetailsViewModel.nextRenewalTitleValue
     }
 
     private fun setupNameInput() {
 
-        // restore value from viewmodel
-        binding.tietSubscriptionDetailsName.setText(
-            subscriptionDetailsViewModel.nameInputValueLiveData.value
-        )
-
         // handle new value after text changed
         binding.tietSubscriptionDetailsName.doAfterTextChanged {
-            subscriptionDetailsViewModel.handleNewNameInputValue(it.toString())
+            val newValue = it.toString()
+            subscriptionDetailsViewModel.handleNewNameInputValue(newValue)
+            binding.tvSubscriptionDetailsNameTitle.text = newValue
+            subscriptionDetailsViewModel.handleNewNameTitleValue(newValue)
         }
 
         // handle new state
@@ -111,24 +111,7 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
 
     }
 
-    private fun setupDescriptionInput() {
-
-        // restore value from viewmodel
-        binding.tietSubscriptionDetailsDescription.setText(
-            subscriptionDetailsViewModel.descriptionInputValue
-        )
-
-        // handle new value after text changed
-        binding.tietSubscriptionDetailsName.doAfterTextChanged {
-            subscriptionDetailsViewModel.handleNewDescriptionInputValue(it.toString())
-        }
-
-    }
-
     private fun setupCostInput() {
-
-        // restore value from viewmodel
-        binding.tietSubscriptionDetailsName.setText(subscriptionDetailsViewModel.costInputValue)
 
         // handle new value after text changed
         binding.tietSubscriptionDetailsCost.doAfterTextChanged {
@@ -157,7 +140,7 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
                 }
             }
 
-        // handle input click
+        // handle click on field
         dateField.setOnClickListener {
             datePicker.show(
                 parentFragmentManager,
@@ -286,6 +269,74 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
 
     }
 
+    private fun populateUi(subscription: Subscription) {
+
+        // name title
+        binding.tvSubscriptionDetailsNameTitle.text = subscription.name
+        subscriptionDetailsViewModel.handleNewNameTitleValue(subscription.name)
+
+        // next renewal title
+        val nextRenewalTitle = getString(R.string.subscription_details_tv_next_renewal_title)
+        val formattedNextRenewalDate = when (subscription.nextRenewalDate) {
+            LocalDate.now() -> {
+                getString(R.string.subscriptions_rv_tv_next_renewal_date_today)
+            }
+            LocalDate.now().plusDays(1) -> {
+                getString(R.string.subscriptions_rv_tv_next_renewal_date_tomorrow)
+            }
+            else -> {
+                subscription.nextRenewalDate.format(DateTimeFormatter.ofPattern(
+                    getString(R.string.subscription_details_tv_next_renewal_date_pattern))
+                )
+            }
+        }
+        val nextRenewalStr = "$nextRenewalTitle $formattedNextRenewalDate"
+        binding.tvSubscriptionDetailsNextRenewalTitle.text = nextRenewalStr
+        subscriptionDetailsViewModel.handleNewNextRenewalTitleValue(nextRenewalStr)
+
+        // name input
+        binding.tietSubscriptionDetailsName.setText(subscription.name)
+        subscriptionDetailsViewModel.handleNewNameInputValue(subscription.name)
+
+        // description input
+        binding.tietSubscriptionDetailsDescription.setText(subscription.description)
+
+        // cost input
+        val costStr = subscription.paymentCost.toString()
+        binding.tietSubscriptionDetailsCost.setText(costStr)
+        subscriptionDetailsViewModel.handleNewCostInputValue(costStr)
+
+        // currency input
+        val currencyStr = subscription.paymentCurrency.currencyCode
+        binding.actvSubscriptionDetailsCurrency.setText(currencyStr)
+        subscriptionDetailsViewModel.handleNewCurrencyValue(currencyStr)
+
+        // start date input
+        val formattedStartDate = subscription.startDate.format(DateTimeFormatter.ofPattern(
+            getString(R.string.subscription_e_f_tiet_start_date_pattern)))
+        binding.tietSubscriptionDetailsStartDate.setText(formattedStartDate)
+        val startDateValue = subscription.startDate.toUTCMilliseconds()
+        subscriptionDetailsViewModel.handleNewStartDateValue(startDateValue)
+
+        // renewal period input
+        val renewalPeriodStr = parseXmlResourceMap(requireActivity(),
+            R.xml.map_subscription_renewal_period_options)[subscription.renewalPeriod.toString()]
+        binding.actvSubscriptionDetailsRenewalPeriod.setText(renewalPeriodStr, false)
+        subscriptionDetailsViewModel.handleNewRenewalPeriodValue(renewalPeriodStr!!)
+
+        // alert period input
+        val alertPeriodStr = if (subscription.alertEnabled) {
+            parseXmlResourceMap(requireActivity(),
+                R.xml.map_subscription_alert_period_options)[subscription.alertPeriod.toString()]!!
+        } else {
+            getString(R.string.subscription_e_f_actv_alert_default_value)
+        }
+
+        binding.actvSubscriptionDetailsAlert.setText(alertPeriodStr, false)
+        subscriptionDetailsViewModel.handleNewAlertValue(alertPeriodStr)
+
+    }
+
     private fun parseSubscription() : Subscription {
 
         val name = binding.tietSubscriptionDetailsName.text.toString()
@@ -299,7 +350,6 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
             binding.actvSubscriptionDetailsCurrency.text.toString()
         )
 
-        // start date
         val startDate = parseLocalDateFromUTCMilliseconds(
             subscriptionDetailsViewModel.startDateInputSelection.value!!
         )

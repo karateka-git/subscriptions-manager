@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import java.lang.IllegalArgumentException
 import java.math.BigDecimal
 import java.math.RoundingMode
+import java.time.LocalDate
+import java.time.ZoneOffset
 
 // Show Toast
 
@@ -44,4 +46,10 @@ fun Double.round(places: Int, mode: RoundingMode = RoundingMode.DOWN): Double {
         .setScale(places, mode)
         .toDouble()
 
+}
+
+// LocalDate to UTC milliseconds
+
+fun LocalDate.toUTCMilliseconds() : Long {
+    return this.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli()
 }

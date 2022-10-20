@@ -5,10 +5,10 @@
     <!-- Alert period options -->
     <map>
         <entry key="NONE">None</entry>
-        <entry key="-P0D">Same day (12.00 PM)</entry>
-        <entry key="-P1D">One day before (12.00 PM)</entry>
-        <entry key="-P2D">Two days before (12.00 PM)</entry>
-        <entry key="-P1W">One week before (12.00 PM)</entry>
+        <entry key="P0D">Same day (12.00 PM)</entry>
+        <entry key="P-1D">One day before (12.00 PM)</entry>
+        <entry key="P-2D">Two days before (12.00 PM)</entry>
+        <entry key="P-1W">One week before (12.00 PM)</entry>
     </map>
 
 </resources>

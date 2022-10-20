@@ -5,8 +5,8 @@
     <!-- Renewal period options -->
     <map>
         <entry key="P1D">Daily</entry>
-        <entry key="P1W">Weekly</entry>
-        <entry key="P2W">Every 2 weeks</entry>
+        <entry key="P7D">Weekly</entry>
+        <entry key="P14D">Every 2 weeks</entry>
         <entry key="P1M">Monthly</entry>
         <entry key="P3M">Every 3 months</entry>
         <entry key="P6M">Every 6 months</entry>
