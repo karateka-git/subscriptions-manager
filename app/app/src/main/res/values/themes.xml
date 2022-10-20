@@ -14,4 +14,20 @@
         <!-- Customize your theme here. -->
         <item name="android:textColorPrimary">@color/dark_gray</item>
     </style>
+
+    <style name="AlertDialogTheme">
+        <item name="buttonBarPositiveButtonStyle">@style/Alert.Button.Positive</item>
+        <item name="buttonBarNeutralButtonStyle">@style/Alert.Button.Neutral</item>
+    </style>
+
+    <style name="Alert.Button.Positive" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/red</item>
+        <item name="android:fontFamily">@font/inter_semibold</item>
+    </style>
+
+    <style name="Alert.Button.Neutral" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/inter_regular</item>
+    </style>
+
 </resources>

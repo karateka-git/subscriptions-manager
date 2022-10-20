@@ -246,9 +246,9 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
     private fun parseSubscription() : Subscription {
 
-        val name = binding.tietNewSubscriptionName.text.toString()
+        val name = binding.tietNewSubscriptionName.text.toString().trim()
 
-        val description = binding.tietNewSubscriptionDescription.text.toString()
+        val description = binding.tietNewSubscriptionDescription.text.toString().trim()
 
         val paymentCost =
             binding.tietNewSubscriptionCost.text.toString().toDouble().round(2)
