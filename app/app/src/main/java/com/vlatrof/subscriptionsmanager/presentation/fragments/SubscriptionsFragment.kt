@@ -21,8 +21,19 @@ class SubscriptionsFragment : Fragment(R.layout.fragment_subscriptions) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentSubscriptionsBinding.bind(view)
         setupSubscriptionsRVAdapter()
-        startToObserveSubscriptionsLiveData()
+        observeSubscriptionsLiveData()
         setupNewSubscriptionButton()
+        setupNotFoundLayoutNewSubscriptionButton()
+    }
+
+    private fun setupNotFoundLayoutNewSubscriptionButton() {
+
+        binding.btnLlSubscriptionsNotFoundAddNew.setOnClickListener{
+            findNavController().navigate(
+                R.id.action_fragment_subscriptions_list_to_fragment_new_subscription
+            )
+        }
+
     }
 
     private fun setupSubscriptionsRVAdapter() {
@@ -36,17 +47,26 @@ class SubscriptionsFragment : Fragment(R.layout.fragment_subscriptions) {
         binding.rvSubscriptionsList.adapter = subscriptionsAdapter
     }
 
-    private fun startToObserveSubscriptionsLiveData() {
+    private fun observeSubscriptionsLiveData() {
 
         subscriptionsViewModel.subscriptionsLiveData.observe(viewLifecycleOwner) {
             updatedSubscriptionsList ->
+
+            if (updatedSubscriptionsList.isEmpty()) {
+                binding.rvSubscriptionsList.visibility = View.GONE
+                binding.llSubscriptionsNotFound.visibility = View.VISIBLE
+            } else {
+                binding.llSubscriptionsNotFound.visibility = View.GONE
+                binding.rvSubscriptionsList.visibility = View.VISIBLE
+            }
+
             subscriptionsAdapter.setData(updatedSubscriptionsList)
         }
     }
 
     private fun setupNewSubscriptionButton() {
 
-        binding.btnNewSubscription.setOnClickListener{
+        binding.btnSubscriptionsAddNew.setOnClickListener{
             findNavController().navigate(
                 R.id.action_fragment_subscriptions_list_to_fragment_new_subscription
             )

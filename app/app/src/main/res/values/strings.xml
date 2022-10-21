@@ -10,6 +10,9 @@
     <string name="subscriptions_rv_tv_next_renewal_date_today">Today</string>
     <string name="subscriptions_rv_tv_next_renewal_date_tomorrow">Tomorrow</string>
     <string name="subscriptions_rv_tv_next_renewal_date_pattern">dd MMMM</string>
+    <string name="subscriptions_ll_not_found_tv_title">No subscriptions found</string>
+    <string name="subscriptions_ll_not_found_tv_description">Add your first subscription to see it here</string>
+    <string name="subscriptions_ll_not_found_btn_add_new_text">Add subscription</string>
 
     <!-- New subscription screen -->
     <string name="new_subscription_btn_go_back_text">Cancel</string>
