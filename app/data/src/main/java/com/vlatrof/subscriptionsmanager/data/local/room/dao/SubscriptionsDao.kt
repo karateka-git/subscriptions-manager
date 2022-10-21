@@ -22,4 +22,7 @@ interface SubscriptionsDao {
     @Query("DELETE FROM subscriptions WHERE id = :id")
     fun deleteById(id: Int)
 
+    @Update
+    fun update(subscription: SubscriptionEntity)
+
 }

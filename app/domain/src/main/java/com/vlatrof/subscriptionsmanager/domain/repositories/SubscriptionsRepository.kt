@@ -15,4 +15,6 @@ interface SubscriptionsRepository {
 
     fun deleteSubscriptionById(id: Int)
 
+    fun updateSubscription(subscription: Subscription)
+
 }

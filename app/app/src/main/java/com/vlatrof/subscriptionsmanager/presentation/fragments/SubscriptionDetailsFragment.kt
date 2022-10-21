@@ -19,8 +19,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
-import java.util.*
-
+import java.util.Currency
 
 class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_details) {
 
@@ -171,9 +170,9 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
 
         // handle click
         binding.btnSubscriptionDetailsSave.setOnClickListener{
-            // todo: not implemented yet
-            // hideKeyboard()
-            // findNavController().popBackStack()
+            subscriptionDetailsViewModel.updateSubscription(parseSubscription())
+            hideKeyboard()
+            findNavController().popBackStack()
         }
 
         // handle new state
@@ -346,6 +345,10 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
 
     private fun parseSubscription() : Subscription {
 
+        val id = requireArguments().getInt(
+            ARGUMENT_SUBSCRIPTION_ID_TAG, ARGUMENT_SUBSCRIPTION_ID_DEFAULT_VALUE
+        )
+
         val name = binding.tietSubscriptionDetailsName.text.toString()
 
         val description = binding.tietSubscriptionDetailsDescription.text.toString()
@@ -388,6 +391,7 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         }
 
         return Subscription(
+            id = id,
             name = name,
             description = description,
             paymentCost = paymentCost,

@@ -32,4 +32,8 @@ class SubscriptionsLocalDataSource(private val subscriptionsDao: SubscriptionsDa
         subscriptionsDao.deleteById(id)
     }
 
+    fun updateSubscription(subscription: DataSubscription) {
+        subscriptionsDao.update(subscription.toSubscriptionEntity())
+    }
+
 }

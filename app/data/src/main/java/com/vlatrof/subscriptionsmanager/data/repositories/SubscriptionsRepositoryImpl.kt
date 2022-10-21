@@ -38,4 +38,8 @@ class SubscriptionsRepositoryImpl(
         subscriptionsLocalDataSource.deleteSubscriptionById(id)
     }
 
+    override fun updateSubscription(subscription: DomainSubscription) {
+        subscriptionsLocalDataSource.updateSubscription(DataSubscription(subscription))
+    }
+
 }

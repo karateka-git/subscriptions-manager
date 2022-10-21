@@ -6,6 +6,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import com.vlatrof.subscriptionsmanager.domain.usecases.interfaces.DeleteSubscriptionByIdUseCase
 import com.vlatrof.subscriptionsmanager.domain.usecases.interfaces.GetSubscriptionByIdUseCase
+import com.vlatrof.subscriptionsmanager.domain.usecases.interfaces.UpdateSubscriptionUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -16,6 +17,7 @@ import java.util.Currency
 class SubscriptionDetailsViewModel(
 
     private val getSubscriptionByIdUseCase: GetSubscriptionByIdUseCase,
+    private val updateSubscriptionUseCase: UpdateSubscriptionUseCase,
     private val deleteSubscriptionByIdUseCase: DeleteSubscriptionByIdUseCase,
     private val mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
@@ -148,6 +150,14 @@ class SubscriptionDetailsViewModel(
 
         viewModelScope.launch(ioDispatcher) {
             deleteSubscriptionByIdUseCase(id)
+        }
+
+    }
+
+    fun updateSubscription(subscription: Subscription) {
+
+        viewModelScope.launch(ioDispatcher) {
+            updateSubscriptionUseCase(subscription)
         }
 
     }
