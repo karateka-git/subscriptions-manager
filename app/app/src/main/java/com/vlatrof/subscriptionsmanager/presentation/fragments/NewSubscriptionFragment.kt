@@ -22,8 +22,8 @@ import java.util.Currency
 
 class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
-    private lateinit var binding: FragmentNewSubscriptionBinding
     private val newSubscriptionViewModel by viewModel<NewSubscriptionViewModel>()
+    private lateinit var binding: FragmentNewSubscriptionBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

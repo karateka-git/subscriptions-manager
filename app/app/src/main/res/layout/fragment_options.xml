@@ -37,9 +37,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_30dp"
         android:fontFamily="@font/inter_regular"
-        android:textSize="@dimen/text_size_18sp"
         android:text="@string/options_tv_night_mode"
         android:textColor="?android:textColorPrimary"
+        android:textSize="@dimen/text_size_18sp"
         app:layout_constraintStart_toStartOf="@id/tv_options_title"
         app:layout_constraintTop_toBottomOf="@id/tv_options_title" />
 
@@ -47,9 +47,9 @@
         android:id="@+id/sw_options_night_mode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:trackTint="@color/green"
         android:layout_marginEnd="@dimen/margin_30dp"
-        app:layout_constraintBottom_toBottomOf="@id/tv_options_night_mode"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_options_night_mode"/>
+        app:layout_constraintBaseline_toBaselineOf="@id/tv_options_night_mode"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

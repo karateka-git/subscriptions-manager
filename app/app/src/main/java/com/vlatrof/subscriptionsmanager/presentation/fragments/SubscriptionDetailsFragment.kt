@@ -27,9 +27,9 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         const val ARGUMENT_SUBSCRIPTION_ID_TAG = "ARGUMENT_SUBSCRIPTION_ID_TAG"
         const val ARGUMENT_SUBSCRIPTION_ID_DEFAULT_VALUE = -1
     }
-    
-    private lateinit var binding: FragmentSubscriptionDetailsBinding
+
     private val subscriptionDetailsViewModel by viewModel<SubscriptionDetailsViewModel>()
+    private lateinit var binding: FragmentSubscriptionDetailsBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -192,7 +192,7 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
 
         binding.btnSubscriptionDetailsDelete.setOnClickListener {
 
-            MaterialAlertDialogBuilder(requireActivity(), R.style.AlertDialogDeleteSubscriptionTheme)
+            MaterialAlertDialogBuilder(requireActivity(), R.style.Alert_dialog_delete_subscription)
                 .setTitle(R.string.subscription_details_delete_dialog_title)
                 .setMessage(R.string.subscription_details_delete_dialog_message)
                 .setPositiveButton(R.string.subscription_details_delete_dialog_btn_positive) {

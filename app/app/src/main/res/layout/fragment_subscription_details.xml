@@ -10,14 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_subscription_details_go_back"
-            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+            style="@style/Navigation_button_material_text_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_13dp"
             android:layout_marginTop="@dimen/margin_14dp"
-            android:fontFamily="@font/inter_semibold"
             android:text="@string/subscription_details_btn_go_back_text"
             app:icon="@drawable/ic_baseline_arrow_back"
             app:layout_constraintStart_toStartOf="parent"

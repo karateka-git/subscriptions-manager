@@ -1,4 +1,5 @@
 <resources>
+
     <!-- Base application theme. -->
     <style name="Theme.SubscriptionsManager" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
@@ -15,19 +16,41 @@
         <item name="android:textColorPrimary">@color/dark_gray</item>
     </style>
 
-    <style name="AlertDialogDeleteSubscriptionTheme">
-        <item name="buttonBarPositiveButtonStyle">@style/Alert.Button.Positive</item>
-        <item name="buttonBarNeutralButtonStyle">@style/Alert.Button.Neutral</item>
-    </style>
 
-    <style name="Alert.Button.Positive" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="android:textColor">@color/red</item>
+
+
+    <!-- Button material text icon theme. -->
+    <style
+        name="Navigation_button_material_text_icon"
+        parent="Widget.MaterialComponents.Button.TextButton.Icon">
+        <item name="iconTint">@color/green</item>
+        <item name="android:textColor">@color/green</item>
         <item name="android:fontFamily">@font/inter_semibold</item>
     </style>
 
-    <style name="Alert.Button.Neutral" parent="Widget.MaterialComponents.Button.TextButton">
+    <!-- Alert dialog delete subscription theme. -->
+    <style name="Alert_dialog_delete_subscription">
+        <item name="buttonBarPositiveButtonStyle">@style/Alert_delete_button_positive</item>
+        <item name="buttonBarNeutralButtonStyle">@style/Alert_delete_button_neutral</item>
+    </style>
+    <style name="Alert_delete_button_positive" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/red</item>
+        <item name="android:fontFamily">@font/inter_semibold</item>
+    </style>
+    <style name="Alert_delete_button_neutral" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/inter_regular</item>
     </style>
+
+    <!-- Alert dialog info theme. -->
+    <style name="Alert_dialog_info">
+        <item name="buttonBarPositiveButtonStyle">@style/Alert_info_button_positive</item>
+    </style>
+    <style name="Alert_info_button_positive" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/green</item>
+        <item name="android:fontFamily">@font/inter_semibold</item>
+    </style>
+
+
 
 </resources>
