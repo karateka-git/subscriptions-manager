@@ -15,7 +15,7 @@
         <item name="android:textColorPrimary">@color/dark_gray</item>
     </style>
 
-    <style name="AlertDialogTheme">
+    <style name="AlertDialogDeleteSubscriptionTheme">
         <item name="buttonBarPositiveButtonStyle">@style/Alert.Button.Positive</item>
         <item name="buttonBarNeutralButtonStyle">@style/Alert.Button.Neutral</item>
     </style>

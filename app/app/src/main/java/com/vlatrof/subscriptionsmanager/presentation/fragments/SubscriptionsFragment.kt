@@ -22,6 +22,7 @@ class SubscriptionsFragment : Fragment(R.layout.fragment_subscriptions) {
         binding = FragmentSubscriptionsBinding.bind(view)
         setupSubscriptionsRVAdapter()
         observeSubscriptionsLiveData()
+        setupOpenOptionsButton()
         setupNewSubscriptionButton()
         setupNotFoundLayoutNewSubscriptionButton()
     }
@@ -61,7 +62,9 @@ class SubscriptionsFragment : Fragment(R.layout.fragment_subscriptions) {
             }
 
             subscriptionsAdapter.setData(updatedSubscriptionsList)
+
         }
+
     }
 
     private fun setupNewSubscriptionButton() {
@@ -83,6 +86,15 @@ class SubscriptionsFragment : Fragment(R.layout.fragment_subscriptions) {
                 )
             }
         )
+    }
+
+    private fun setupOpenOptionsButton() {
+
+        binding.btnOpenOptions.setOnClickListener{
+            findNavController().navigate(
+                R.id.action_fragment_subscriptions_list_to_fragment_options
+            )
+        }
     }
 
 }

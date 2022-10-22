@@ -192,7 +192,7 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
 
         binding.btnSubscriptionDetailsDelete.setOnClickListener {
 
-            MaterialAlertDialogBuilder(requireActivity(), R.style.AlertDialogTheme)
+            MaterialAlertDialogBuilder(requireActivity(), R.style.AlertDialogDeleteSubscriptionTheme)
                 .setTitle(R.string.subscription_details_delete_dialog_title)
                 .setMessage(R.string.subscription_details_delete_dialog_message)
                 .setPositiveButton(R.string.subscription_details_delete_dialog_btn_positive) {

@@ -4,7 +4,7 @@
     <string name="app_name">Subscriptions Manager</string>
 
     <!-- Subscriptions list screen -->
-    <string name="subscriptions_btn_settings_content_description">Open settings</string>
+    <string name="subscriptions_btn_open_options_content_description">Open options</string>
     <string name="subscriptions_btn_new_content_description">Add new subscription</string>
     <string name="subscriptions_tv_screen_title">Subscriptions</string>
     <string name="subscriptions_rv_tv_next_renewal_date_today">Today</string>
@@ -30,6 +30,13 @@
     <string name="subscription_details_delete_dialog_message">This action cannot be undone</string>
     <string name="subscription_details_delete_dialog_btn_positive">Delete</string>
     <string name="subscription_details_delete_dialog_btn_negative">Cancel</string>
+
+    <!-- Options screen -->
+    <string name="options_title">Options</string>
+    <string name="options_btn_close_options_content_description">Close options</string>
+    <string name="options_tv_night_mode">Night Mode</string>
+    <string name="options_alert_dialog_night_mode_title">Night mode has been changed</string>
+    <string name="options_alert_dialog_night_mode_message">Changes will appear after reboot of the application</string>
 
     <!-- Subscription editing form -->
     <string name="subscription_e_f_field_error_none"/>

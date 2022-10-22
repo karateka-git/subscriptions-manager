@@ -1,6 +1,7 @@
 package com.vlatrof.subscriptionsmanager.app
 
 import android.app.Application
+import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
@@ -17,13 +18,17 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO) // for testing
+        // apply current night mode
+        AppCompatDelegate.setDefaultNightMode(
+            getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE)
+                .getInt(NIGHT_MODE, MODE_NIGHT_NO)
+        )
 
+        // init Koin DI
         startKoin {
             androidLogger(Level.ERROR)
             androidContext(this@App)
-            modules(
-                listOf(
+            modules(listOf(
                     dataModule,
                     domainModule,
                     appModule,
@@ -31,6 +36,12 @@ class App : Application() {
             )
         }
 
+    }
+
+    companion object {
+        // shared preferences keys
+        const val APP_PREFERENCES = "APP_PREFERENCES"
+        const val NIGHT_MODE = "NIGHT_MODE"
     }
 
 }

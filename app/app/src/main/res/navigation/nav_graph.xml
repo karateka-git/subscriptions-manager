@@ -13,17 +13,24 @@
         <action
             android:id="@+id/action_fragment_subscriptions_list_to_fragment_new_subscription"
             app:destination="@id/fragment_new_subscription"
-            app:enterAnim="@anim/screen_in_slide_nav_anim"
-            app:exitAnim="@anim/screen_out_slide_nav_anim"
-            app:popEnterAnim="@anim/screen_pop_in_slide_nav_anim"
-            app:popExitAnim="@anim/screen_pop_out_slide_nav_anim" />
+            app:enterAnim="@anim/nav_screen_slide_in_from_right"
+            app:exitAnim="@anim/nav_screen_slide_out_to_right"
+            app:popEnterAnim="@anim/nav_screen_slide_in_from_left"
+            app:popExitAnim="@anim/nav_screen_slide_out_to_right" />
         <action
             android:id="@+id/action_fragment_subscriptions_list_to_fragment_subscription_details"
             app:destination="@id/fragment_subscription_details"
-            app:enterAnim="@anim/screen_in_slide_nav_anim"
-            app:exitAnim="@anim/screen_out_slide_nav_anim"
-            app:popEnterAnim="@anim/screen_pop_in_slide_nav_anim"
-            app:popExitAnim="@anim/screen_pop_out_slide_nav_anim" />
+            app:enterAnim="@anim/nav_screen_slide_in_from_right"
+            app:exitAnim="@anim/nav_screen_slide_out_to_right"
+            app:popEnterAnim="@anim/nav_screen_slide_in_from_left"
+            app:popExitAnim="@anim/nav_screen_slide_out_to_right" />
+        <action
+            android:id="@+id/action_fragment_subscriptions_list_to_fragment_options"
+            app:destination="@id/optionsFragment"
+            app:enterAnim="@anim/nav_screen_slide_in_from_left"
+            app:exitAnim="@anim/nav_screen_slide_out_to_right"
+            app:popEnterAnim="@anim/nav_screen_slide_in_from_right"
+            app:popExitAnim="@anim/nav_screen_slide_out_to_left"/>
     </fragment>
 
     <fragment
@@ -40,5 +47,10 @@
             android:defaultValue="-1"
             app:argType="integer" />
     </fragment>
+
+    <fragment
+        android:id="@+id/optionsFragment"
+        android:name="com.vlatrof.subscriptionsmanager.presentation.fragments.OptionsFragment"
+        tools:layout="@layout/fragment_options" />
 
 </navigation>
