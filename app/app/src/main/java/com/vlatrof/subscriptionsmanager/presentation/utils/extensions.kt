@@ -53,3 +53,12 @@ fun Double.round(places: Int, mode: RoundingMode = RoundingMode.DOWN): Double {
 fun LocalDate.toUTCMilliseconds() : Long {
     return this.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli()
 }
+
+// get key of first entry of Map with given value
+
+fun <K, V> Map<K, V>.getFirstKey(value: V): K? {
+    for (key in this.keys)
+        if (this[key] == value)
+            return key
+    return null
+}

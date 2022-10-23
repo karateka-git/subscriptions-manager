@@ -16,9 +16,6 @@
         <item name="android:textColorPrimary">@color/dark_gray</item>
     </style>
 
-
-
-
     <!-- Button material text icon theme. -->
     <style
         name="Navigation_button_material_text_icon"

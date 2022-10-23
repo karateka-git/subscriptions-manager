@@ -35,8 +35,9 @@
     <string name="options_title">Options</string>
     <string name="options_btn_close_options_content_description">Close options</string>
     <string name="options_tv_night_mode">Night Mode</string>
-    <string name="options_alert_dialog_night_mode_title">Night mode has been changed</string>
-    <string name="options_alert_dialog_night_mode_message">Changes will appear after reboot of the application</string>
+    <string name="options_rb_day">Day</string>
+    <string name="options_rb_night">Night</string>
+    <string name="options_rb_system">System</string>
 
     <!-- Subscription editing form -->
     <string name="subscription_e_f_field_error_none"/>

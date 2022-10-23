@@ -2,13 +2,12 @@ package com.vlatrof.subscriptionsmanager.presentation.fragments
 
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
+import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.vlatrof.subscriptionsmanager.R
 import com.vlatrof.subscriptionsmanager.databinding.FragmentOptionsBinding
+import com.vlatrof.subscriptionsmanager.presentation.utils.getFirstKey
 import com.vlatrof.subscriptionsmanager.presentation.viewmodels.OptionsViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -21,7 +20,7 @@ class OptionsFragment : Fragment(R.layout.fragment_options) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentOptionsBinding.bind(view)
         setupCloseOptionsButton()
-        setupNightModeSwitcher()
+        setupNightModeRadioGroup()
     }
 
     private fun setupCloseOptionsButton() {
@@ -30,34 +29,24 @@ class OptionsFragment : Fragment(R.layout.fragment_options) {
         }
     }
 
-    private fun setupNightModeSwitcher() {
+    private fun setupNightModeRadioGroup() {
 
-        binding.swOptionsNightMode.isChecked =
-            (optionsViewModel.getCurrentNightMode() == MODE_NIGHT_YES)
+        val rgNightModeMap = mapOf (
+            MODE_NIGHT_NO to binding.rbDay.id,
+            MODE_NIGHT_YES to binding.rbNight.id,
+            MODE_NIGHT_FOLLOW_SYSTEM to binding.rbSystem.id,
+        )
 
-        binding.swOptionsNightMode.setOnCheckedChangeListener { _, isChecked ->
+        binding.rgOptionsNightMode.check(
+            rgNightModeMap[optionsViewModel.getCurrentNightMode()]!!
+        )
 
-            val newNightMode = if (isChecked) MODE_NIGHT_YES else MODE_NIGHT_NO
-
-            optionsViewModel.saveNewNightMode(newNightMode)
-
-            if (!optionsViewModel.alertNightModeWasShown) {
-                showAlertDialogNightModeChanged()
-                optionsViewModel.alertNightModeWasShown = true
-            }
-
+        binding.rgOptionsNightMode.setOnCheckedChangeListener { _, checkedId ->
+            optionsViewModel.applyNightMode(rgNightModeMap.getFirstKey(checkedId)!!)
         }
 
     }
 
-    private fun showAlertDialogNightModeChanged() {
-
-        MaterialAlertDialogBuilder(requireActivity(), R.style.Alert_dialog_info)
-            .setTitle(getString(R.string.options_alert_dialog_night_mode_title))
-            .setMessage(getString(R.string.options_alert_dialog_night_mode_message))
-            .setPositiveButton("Ok" ) {_,_ ->}
-            .show()
-
-    }
-
 }
+
+

@@ -5,16 +5,17 @@ import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import com.vlatrof.subscriptionsmanager.app.App
 
-class OptionsViewModel(application: Application) : AndroidViewModel(application) {
+class OptionsViewModel(application: App) : AndroidViewModel(application) {
 
     private val sharedPreferences =
         getApplication<Application>()
             .getSharedPreferences(App.APP_PREFERENCES, Context.MODE_PRIVATE)
 
-    var alertNightModeWasShown = false
-
-    fun saveNewNightMode(newNightModeValue: Int) {
-        sharedPreferences.edit().putInt(App.NIGHT_MODE, newNightModeValue).apply()
+    fun applyNightMode(nightMode: Int) {
+        getApplication<App>().let { app ->
+            app.saveNightMode(nightMode)
+            app.applyNightMode(nightMode)
+        }
     }
 
     fun getCurrentNightMode(): Int {

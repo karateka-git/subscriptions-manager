@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import com.vlatrof.subscriptionsmanager.di.appModule
 import com.vlatrof.subscriptionsmanager.di.dataModule
 import com.vlatrof.subscriptionsmanager.di.domainModule
@@ -18,8 +17,8 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        // apply current night mode
-        AppCompatDelegate.setDefaultNightMode(
+        // apply current night mode on app start
+        applyNightMode(
             getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE)
                 .getInt(NIGHT_MODE, MODE_NIGHT_NO)
         )
@@ -36,6 +35,17 @@ class App : Application() {
             )
         }
 
+    }
+
+    fun applyNightMode(nightMode: Int) {
+        AppCompatDelegate.setDefaultNightMode(nightMode)
+    }
+
+    fun saveNightMode(nightMode: Int) {
+        getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE)
+            .edit()
+            .putInt(NIGHT_MODE, nightMode)
+            .apply()
     }
 
     companion object {
