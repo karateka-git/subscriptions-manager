@@ -14,14 +14,14 @@
             android:id="@+id/action_fragment_subscriptions_list_to_fragment_new_subscription"
             app:destination="@id/fragment_new_subscription"
             app:enterAnim="@anim/nav_screen_slide_in_from_right"
-            app:exitAnim="@anim/nav_screen_slide_out_to_right"
+            app:exitAnim="@anim/nav_screen_slide_out_to_left"
             app:popEnterAnim="@anim/nav_screen_slide_in_from_left"
             app:popExitAnim="@anim/nav_screen_slide_out_to_right" />
         <action
             android:id="@+id/action_fragment_subscriptions_list_to_fragment_subscription_details"
             app:destination="@id/fragment_subscription_details"
             app:enterAnim="@anim/nav_screen_slide_in_from_right"
-            app:exitAnim="@anim/nav_screen_slide_out_to_right"
+            app:exitAnim="@anim/nav_screen_slide_out_to_left"
             app:popEnterAnim="@anim/nav_screen_slide_in_from_left"
             app:popExitAnim="@anim/nav_screen_slide_out_to_right" />
         <action
