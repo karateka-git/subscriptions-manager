@@ -113,7 +113,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         // handle new date selection
         newSubscriptionViewModel.startDateInputSelection.observe(viewLifecycleOwner) { newSelection ->
             binding.tietNewSubscriptionStartDate.setText(
-                parseLocalDateFromUTCMilliseconds(newSelection)
+                Parser.parseLocalDateFromUTCMilliseconds(newSelection)
                     .format(DateTimeFormatter.ofPattern(
                         getString(R.string.subscription_e_f_tiet_start_date_pattern)
                     ))
@@ -197,7 +197,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         renewalPeriodField.setAdapter(ArrayAdapter(
             activity as Context,
             android.R.layout.simple_spinner_dropdown_item,
-            parseXmlResourceMap(requireActivity(), R.xml.map_subscription_renewal_period_options)
+            Parser.parseXmlResourceMap(requireActivity(), R.xml.map_subscription_renewal_period_options)
                 .values
                 .toTypedArray()
         ))
@@ -225,7 +225,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         alertField.setAdapter(ArrayAdapter(
             activity as Context,
             android.R.layout.simple_spinner_dropdown_item,
-            parseXmlResourceMap(requireActivity(), R.xml.map_subscription_alert_period_options)
+            Parser.parseXmlResourceMap(requireActivity(), R.xml.map_subscription_alert_period_options)
                 .values
                 .toTypedArray()
         ))
@@ -258,14 +258,14 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         )
 
         // start date
-        val startDate = parseLocalDateFromUTCMilliseconds(
+        val startDate = Parser.parseLocalDateFromUTCMilliseconds(
             newSubscriptionViewModel.startDateInputSelection.value!!
         )
 
         // renewal period
         val renewalPeriodStr = binding.actvNewSubscriptionRenewalPeriod.text.toString()
         val renewalPeriodKey =
-            parseXmlResourceMap(requireActivity(), R.xml.map_subscription_renewal_period_options)
+            Parser.parseXmlResourceMap(requireActivity(), R.xml.map_subscription_renewal_period_options)
                 .filterValues{ it == renewalPeriodStr }
                 .keys
                 .toTypedArray()[0]
@@ -276,7 +276,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         val alertPeriod: Period
         val alertPeriodStr = binding.actvNewSubscriptionAlert.text.toString()
         val alertPeriodKey =
-            parseXmlResourceMap(requireActivity(), R.xml.map_subscription_alert_period_options)
+            Parser.parseXmlResourceMap(requireActivity(), R.xml.map_subscription_alert_period_options)
                 .filterValues{ it == alertPeriodStr }
                 .keys
                 .toTypedArray()[0]

@@ -39,6 +39,9 @@ ext {
     // Material Design
     material_version = '1.6.1'
 
+    // WorkManager
+    work_manager_version = '2.7.1'
+
     // Navigation Component
     nav_component_version = '2.5.2'
 
