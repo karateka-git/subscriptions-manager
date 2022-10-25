@@ -8,6 +8,9 @@ import kotlinx.coroutines.flow.Flow
 interface SubscriptionsDao {
 
     @Query("SELECT * FROM subscriptions")
+    fun getAlls(): List<SubscriptionEntity>
+
+    @Query("SELECT * FROM subscriptions")
     fun getAll(): Flow<List<SubscriptionEntity>>
 
     @Query("SELECT * FROM subscriptions WHERE id=:id ")

@@ -18,10 +18,13 @@ class NotificationHelper(private val context: Context) {
     private val channelName = "Subscription renewal alerts"
     private var notificationId = 1
 
-    fun showRenewalNotification(subscription: Subscription) {
+//    fun showRenewalNotification(subscription: Subscription) {
+    fun showRenewalNotification(title: String, message: String) {
 
-        val title = subscription.name
-        val message = subscription.paymentCost.toString() + " " + subscription.paymentCurrency.currencyCode
+//        val title = subscription.name
+        val title = title
+//        val message = subscription.paymentCost.toString() + " " + subscription.paymentCurrency.currencyCode
+        val message = message
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
