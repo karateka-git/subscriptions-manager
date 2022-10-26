@@ -19,8 +19,7 @@ class SubscriptionsAlertsHelper(private val context: Context) {
 
         // initial delay in seconds (to the next time point 12.00)
         val currentTime = LocalTime.now().toSecondOfDay()
-//        val alertTime = LocalTime.of(12, 0).toSecondOfDay() todo !!!
-        val alertTime = LocalTime.of(2, 25).toSecondOfDay()
+        val alertTime = LocalTime.of(12, 0).toSecondOfDay()
         val initialDelay = if (currentTime < alertTime) {
             alertTime - currentTime
         } else {
