@@ -1,4 +1,4 @@
-package com.vlatrof.subscriptionsmanager.presentation.utils.wip
+package com.vlatrof.subscriptionsmanager.presentation.utils
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -33,7 +33,7 @@ class NotificationHelper(private val context: Context) {
     private fun createRenewalNotification(subscription: Subscription) : Notification {
 
         // title str
-        val title = context.getString(R.string.app_name)
+        val title = context.getString(R.string.renewal_notification_title, subscription.name)
 
         // message date str
         val dateStr = when(subscription.nextRenewalDate) {
@@ -46,13 +46,13 @@ class NotificationHelper(private val context: Context) {
             }
         }
 
-        // completed message
+        // completed message str
         val message = context.getString(
             R.string.renewal_notification_message,
             subscription.name,
             dateStr,
             subscription.paymentCost.toString(),
-            subscription.paymentCurrency.currencyCode
+            subscription.paymentCurrency.currencyCode,
         )
 
         // submit notification channel if needed by version

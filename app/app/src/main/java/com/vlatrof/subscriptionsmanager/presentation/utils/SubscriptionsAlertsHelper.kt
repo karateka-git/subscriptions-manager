@@ -1,4 +1,4 @@
-package com.vlatrof.subscriptionsmanager.presentation.utils.wip
+package com.vlatrof.subscriptionsmanager.presentation.utils
 
 import android.content.Context
 import androidx.work.*
@@ -19,7 +19,7 @@ class SubscriptionsAlertsHelper(private val context: Context) {
 
         // initial delay in seconds (to the next time point 12.00)
         val currentTime = LocalTime.now().toSecondOfDay()
-        val alertTime = LocalTime.of(20, 50).toSecondOfDay()
+        val alertTime = LocalTime.of(21, 3).toSecondOfDay()
         val initialDelay = if (currentTime < alertTime) {
             alertTime - currentTime
         } else {

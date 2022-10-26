@@ -3,7 +3,7 @@ package com.vlatrof.subscriptionsmanager.presentation.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.vlatrof.subscriptionsmanager.R.layout.activity_main
-import com.vlatrof.subscriptionsmanager.presentation.utils.wip.SubscriptionsAlertsHelper
+import com.vlatrof.subscriptionsmanager.presentation.utils.SubscriptionsAlertsHelper
 
 class MainActivity : AppCompatActivity() {
 
