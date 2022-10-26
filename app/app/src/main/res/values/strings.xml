@@ -3,12 +3,17 @@
     <!-- General -->
     <string name="app_name">Subscriptions Manager</string>
 
+    <!-- Dates -->
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
+
+    <!-- Notifications -->
+    <string name="renewal_notification_message">%1$s: next renewal %2$s at cost %3$s %4$s</string>
+
     <!-- Subscriptions list screen -->
     <string name="subscriptions_btn_open_options_content_description">Open options</string>
     <string name="subscriptions_btn_new_content_description">Add new subscription</string>
     <string name="subscriptions_tv_screen_title">Subscriptions</string>
-    <string name="subscriptions_rv_tv_next_renewal_date_today">Today</string>
-    <string name="subscriptions_rv_tv_next_renewal_date_tomorrow">Tomorrow</string>
     <string name="subscriptions_rv_tv_next_renewal_date_pattern">dd MMMM</string>
     <string name="subscriptions_ll_not_found_tv_title">No subscriptions found</string>
     <string name="subscriptions_ll_not_found_tv_description">Add your first subscription to see it here</string>

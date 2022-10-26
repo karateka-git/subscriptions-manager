@@ -409,10 +409,10 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         val nextRenewalTitle = getString(R.string.subscription_details_tv_next_renewal_title)
         val formattedNextRenewalDate = when (nextRenewalDate) {
             LocalDate.now() -> {
-                getString(R.string.subscriptions_rv_tv_next_renewal_date_today)
+                getString(R.string.today)
             }
             LocalDate.now().plusDays(1) -> {
-                getString(R.string.subscriptions_rv_tv_next_renewal_date_tomorrow)
+                getString(R.string.tomorrow)
             }
             else -> {
                 nextRenewalDate.format(

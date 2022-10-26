@@ -1,10 +1,8 @@
 package com.vlatrof.subscriptionsmanager.presentation.adapters
 
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.DiffUtil
 import com.vlatrof.subscriptionsmanager.R
@@ -92,10 +90,10 @@ class SubscriptionsAdapter(
 
         nextRenewalDateTextView.text = when (subscription.nextRenewalDate) {
             LocalDate.now() -> {
-                context.getString(R.string.subscriptions_rv_tv_next_renewal_date_today)
+                context.getString(R.string.today)
             }
             LocalDate.now().plusDays(1) -> {
-                context.getString(R.string.subscriptions_rv_tv_next_renewal_date_tomorrow)
+                context.getString(R.string.tomorrow)
             }
             else -> {
                 subscription.nextRenewalDate.format(DateTimeFormatter.ofPattern(

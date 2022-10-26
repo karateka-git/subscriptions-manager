@@ -8,7 +8,6 @@ import com.vlatrof.subscriptionsmanager.R
 import com.vlatrof.subscriptionsmanager.databinding.FragmentSubscriptionsBinding
 import com.vlatrof.subscriptionsmanager.presentation.adapters.SubscriptionsActionListener
 import com.vlatrof.subscriptionsmanager.presentation.adapters.SubscriptionsAdapter
-import com.vlatrof.subscriptionsmanager.presentation.utils.wip.SubscriptionsAlertsHelper
 import com.vlatrof.subscriptionsmanager.presentation.viewmodels.SubscriptionsViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -42,20 +41,7 @@ class SubscriptionsFragment : Fragment(R.layout.fragment_subscriptions) {
 
         val listener = object: SubscriptionsActionListener {
             override fun onSubscriptionItemClick(subscriptionId: Int) {
-
-                //openSubscriptionDetailsScreen(subscriptionId)
-
-                // todo test ****************************************
-                subscriptionsViewModel.subscriptionsLiveData.value!!.forEach {
-                    if (it.id == subscriptionId) {
-//                        NotificationHelper(requireActivity())
-//                            .showRenewalNotification(it)
-                        SubscriptionsAlertsHelper(requireActivity().application)
-                            .launchAlertsWorker()
-                    }
-                }
-                // todo test ****************************************
-
+                openSubscriptionDetailsScreen(subscriptionId)
             }
         }
         subscriptionsAdapter = SubscriptionsAdapter(requireActivity(), listener)

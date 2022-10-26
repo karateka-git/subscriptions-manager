@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.map
 class SubscriptionsLocalDataSource(private val subscriptionsDao: SubscriptionsDao) {
 
     val allSubscriptionsFlow: Flow<List<DataSubscription>> =
-        subscriptionsDao.getAll().map { subscriptionsEntitiesList ->
+        subscriptionsDao.getAllFlow().map { subscriptionsEntitiesList ->
             mutableListOf<DataSubscription>().apply {
                 subscriptionsEntitiesList.forEach { subscriptionEntity ->
                     this.add(DataSubscription(subscriptionEntity))
