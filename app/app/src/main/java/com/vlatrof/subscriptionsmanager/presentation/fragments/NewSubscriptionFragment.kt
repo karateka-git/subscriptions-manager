@@ -137,7 +137,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
                 isEnabled = enabled
                 setTextColor(
                     if (enabled) ResourcesCompat.getColor(resources, R.color.green, null)
-                    else ResourcesCompat.getColor(resources, R.color.white_gray, null)
+                    else ResourcesCompat.getColor(resources, R.color.gray, null)
                 )
             }
         }

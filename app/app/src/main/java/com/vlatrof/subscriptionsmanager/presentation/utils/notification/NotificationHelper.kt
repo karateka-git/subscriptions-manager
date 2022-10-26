@@ -9,6 +9,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.res.ResourcesCompat
 import com.vlatrof.subscriptionsmanager.R
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import com.vlatrof.subscriptionsmanager.presentation.activities.MainActivity
@@ -74,9 +75,10 @@ class NotificationHelper(private val context: Context) {
             .setContentTitle(title)
             .setContentText(message)
             .setTicker(message)
-            .setSmallIcon(R.drawable.ic_baseline_notifications_24)
-            .setAutoCancel(true)
+            .setSmallIcon(R.drawable.ic_notification_small)
+            .setColor(ResourcesCompat.getColor(context.resources, R.color.green, null))
             .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
             .build()
 
     }

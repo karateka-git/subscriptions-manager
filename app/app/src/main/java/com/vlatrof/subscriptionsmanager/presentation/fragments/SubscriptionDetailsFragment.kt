@@ -181,7 +181,7 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
                 isEnabled = enabled
                 setTextColor(
                     if (enabled) ResourcesCompat.getColor(resources, R.color.green, null)
-                    else ResourcesCompat.getColor(resources, R.color.white_gray, null)
+                    else ResourcesCompat.getColor(resources, R.color.gray, null)
                 )
             }
         }
@@ -298,7 +298,7 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         subscriptionDetailsViewModel.handleNewNameTitleValue(subscription.name)
 
         // next renewal title
-        val nextRenewalStr = generateNextRenewalStr(subscription.nextRenewalDate)
+        val nextRenewalStr = generateNextRenewalTitleStr(subscription.nextRenewalDate)
         binding.tvSubscriptionDetailsNextRenewalTitle.text = nextRenewalStr
         subscriptionDetailsViewModel.handleNewNextRenewalTitleValue(nextRenewalStr)
 
@@ -404,7 +404,7 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
 
     }
 
-    private fun generateNextRenewalStr(nextRenewalDate: LocalDate): String {
+    private fun generateNextRenewalTitleStr(nextRenewalDate: LocalDate): String {
 
         val nextRenewalTitle = getString(R.string.subscription_details_tv_next_renewal_title)
         val formattedNextRenewalDate = when (nextRenewalDate) {
