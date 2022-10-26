@@ -59,8 +59,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
-            android:textColor="?android:textColorPrimary"
-            android:text="@string/subscriptions_ll_not_found_tv_title" />
+            android:text="@string/subscriptions_ll_not_found_tv_title"
+            android:textColor="?android:textColorPrimary" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -69,12 +69,12 @@
 
         <Button
             android:id="@+id/btn_ll_subscriptions_not_found_add_new"
-            android:layout_marginTop="@dimen/margin_5dp"
-            android:fontFamily="@font/inter_semibold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_5dp"
             android:backgroundTint="@color/green"
-            android:text="@string/subscriptions_ll_not_found_btn_add_new_text"/>
+            android:fontFamily="@font/inter_semibold"
+            android:text="@string/subscriptions_ll_not_found_btn_add_new_text" />
 
     </LinearLayout>
 

@@ -1,4 +1,4 @@
-package com.vlatrof.subscriptionsmanager.presentation.utils
+package com.vlatrof.subscriptionsmanager.presentation.utils.notification
 
 import android.app.Notification
 import android.app.NotificationChannel
