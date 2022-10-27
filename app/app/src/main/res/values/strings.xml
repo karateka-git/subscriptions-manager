@@ -2,6 +2,7 @@
 
     <!-- General -->
     <string name="app_name">Subscriptions Manager</string>
+    <string name="toast_error_message_something_went_wrong">Something went wrong</string>
 
     <!-- Dates -->
     <string name="today">Today</string>
@@ -11,33 +12,30 @@
     <string name="renewal_notification_title">%1$s subscription renewal soon</string>
     <string name="renewal_notification_message">%1$s: next renewal %2$s at cost %3$s %4$s</string>
 
-    <!-- Subscriptions list screen -->
+    <!-- Screen: Subscriptions list -->
     <string name="subscriptions_btn_open_options_content_description">Open options</string>
     <string name="subscriptions_btn_new_content_description">Add new subscription</string>
     <string name="subscriptions_tv_screen_title">Subscriptions</string>
-    <string name="subscriptions_rv_tv_next_renewal_date_pattern">dd MMMM</string>
     <string name="subscriptions_ll_not_found_tv_title">No subscriptions found</string>
     <string name="subscriptions_ll_not_found_tv_description">Add your first subscription to see it here</string>
     <string name="subscriptions_ll_not_found_btn_add_new_text">Add subscription</string>
 
-    <!-- New subscription screen -->
+    <!-- Screen: New subscription -->
     <string name="new_subscription_btn_go_back_text">Cancel</string>
     <string name="new_subscription_btn_create_text">Create</string>
     <string name="new_subscription_tv_screen_title">New subscription</string>
 
-    <!-- Subscription details screen -->
-    <string name="subscription_details_on_open_error_message">Something went wrong</string>
+    <!-- Screen: Subscription details -->
     <string name="subscription_details_btn_go_back_text">Back</string>
     <string name="subscription_details_btn_save_text">Save</string>
     <string name="subscription_details_tv_next_renewal_title">Next renewal: </string>
-    <string name="subscription_details_tv_next_renewal_date_pattern">dd MMMM yyyy</string>
     <string name="subscription_details_btn_delete_text">Delete subscription</string>
     <string name="subscription_details_delete_dialog_title">Delete Subscription</string>
     <string name="subscription_details_delete_dialog_message">This action cannot be undone</string>
     <string name="subscription_details_delete_dialog_btn_positive">Delete</string>
     <string name="subscription_details_delete_dialog_btn_negative">Cancel</string>
 
-    <!-- Options screen -->
+    <!-- Screen: Options -->
     <string name="options_title">Options</string>
     <string name="options_btn_close_options_content_description">Close options</string>
     <string name="options_tv_night_mode">Night Mode</string>
@@ -52,18 +50,28 @@
     <string name="subscription_e_f_til_name_hint">Name</string>
     <string name="subscription_e_f_til_description_hint">Description (optional)</string>
     <string name="subscription_e_f_til_cost_hint">Cost</string>
-    <string name="subscription_e_f_tiet_cost_initial_value">0.0</string>
     <string name="subscription_e_f_til_currency_hint">Currency</string>
-    <string name="subscription_e_f_tiet_currency_initial_value">USD</string>
     <string name="subscription_e_f_til_renewal_period_hint">Renewal Period</string>
     <string name="subscription_e_f_til_start_date_hint">Start date</string>
     <string name="subscription_e_f_til_start_date_end_icon_content_description">Start date picker</string>
     <string name="subscription_e_f_til_start_date_date_picker_title_text">Select start date</string>
     <string name="subscription_e_f_til_start_date_date_picker_tag">datePicker</string>
-    <string name="subscription_e_f_tiet_start_date_pattern">dd MMMM yyyy</string>
-    <string name="subscription_e_f_actv_renewal_period_initial_value">Monthly</string>
     <string name="subscription_e_f_til_alert_hint">Alert</string>
-    <string name="subscription_e_f_actv_alert_default_value">None</string>
-    <string name="subscription_e_f_alert_disabled_key">NONE</string>
+
+    <!-- Alert period options-->
+    <string name="option_alert_period_none">None</string>
+    <string name="option_alert_period_same_day">Same day</string>
+    <string name="option_alert_period_one_day_before">One day before</string>
+    <string name="option_alert_period_two_days_before">Two days before</string>
+    <string name="option_alert_period_one_week_before">One week before</string>
+
+    <!-- Renewal period options -->
+    <string name="option_renewal_period_daily">Daily</string>
+    <string name="option_renewal_period_weekly">Weekly</string>
+    <string name="option_renewal_period_every_two_weeks">Every 2 weeks</string>
+    <string name="option_renewal_period_monthly">Monthly</string>
+    <string name="option_renewal_period_every_three_months">Every 3 months</string>
+    <string name="option_renewal_period_every_six_months">Every 6 months</string>
+    <string name="option_renewal_period_yearly">Yearly</string>
 
 </resources>

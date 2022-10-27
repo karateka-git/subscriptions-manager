@@ -86,9 +86,7 @@ class SubscriptionsAdapter(
         val costStr = "${subscription.paymentCost} ${subscription.paymentCurrency.currencyCode}"
         holder.binding.tvSubscriptionCost.text = costStr
 
-        val nextRenewalDateTextView = holder.binding.tvSubscriptionNextRenewalDate
-
-        nextRenewalDateTextView.text = when (subscription.nextRenewalDate) {
+        holder.binding.tvSubscriptionNextRenewalDate.text = when (subscription.nextRenewalDate) {
             LocalDate.now() -> {
                 context.getString(R.string.today)
             }
@@ -96,9 +94,7 @@ class SubscriptionsAdapter(
                 context.getString(R.string.tomorrow)
             }
             else -> {
-                subscription.nextRenewalDate.format(DateTimeFormatter.ofPattern(
-                    context.getString(R.string.subscriptions_rv_tv_next_renewal_date_pattern)
-                ))
+                subscription.nextRenewalDate.format(DateTimeFormatter.ofPattern("dd MMMM"))
             }
         }
 

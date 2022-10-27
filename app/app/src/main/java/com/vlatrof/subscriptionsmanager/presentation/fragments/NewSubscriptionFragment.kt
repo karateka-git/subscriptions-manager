@@ -1,6 +1,5 @@
 package com.vlatrof.subscriptionsmanager.presentation.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
@@ -29,17 +28,17 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentNewSubscriptionBinding.bind(view)
         setupGoBackButton()
-        setupNameInputField()
-        setupCostInputField()
-        setupStartDateInputField()
+        setupNameInput()
+        setupCostInput()
+        setupStartDateInput()
         setupCreateButton()
     }
 
     override fun onResume() {
         super.onResume()
-        setupCurrencyInputField()
-        setupRenewalPeriodInputField()
-        setupAlertInputField()
+        setupCurrencyInput()
+        setupRenewalPeriodInput()
+        setupAlertPeriodInput()
     }
 
     private fun setupGoBackButton() {
@@ -51,7 +50,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
     }
 
-    private fun setupNameInputField() {
+    private fun setupNameInput() {
 
         // validate new value
         binding.tietNewSubscriptionName.doAfterTextChanged {
@@ -66,13 +65,12 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
     }
 
-    private fun setupCostInputField() {
+    private fun setupCostInput() {
 
         // set initial value
-        getString(R.string.subscription_e_f_tiet_cost_initial_value).let {
-            binding.tietNewSubscriptionCost.setText(it)
-            newSubscriptionViewModel.validateCostInput(it)
-        }
+        val initialValue = "0.0"
+        binding.tietNewSubscriptionCost.setText(initialValue)
+        newSubscriptionViewModel.validateCostInput(initialValue)
 
         // validate new value
         binding.tietNewSubscriptionCost.doAfterTextChanged {
@@ -87,7 +85,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
     }
 
-    private fun setupStartDateInputField() {
+    private fun setupStartDateInput() {
 
         val dateField = binding.tietNewSubscriptionStartDate
 
@@ -114,9 +112,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         newSubscriptionViewModel.startDateInputSelection.observe(viewLifecycleOwner) { newSelection ->
             binding.tietNewSubscriptionStartDate.setText(
                 Parser.parseLocalDateFromUTCMilliseconds(newSelection)
-                    .format(DateTimeFormatter.ofPattern(
-                        getString(R.string.subscription_e_f_tiet_start_date_pattern)
-                    ))
+                    .format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))
             )
         }
 
@@ -144,7 +140,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
     }
 
-    private fun setupCurrencyInputField() {
+    private fun setupCurrencyInput() {
 
         val currencyField = binding.actvNewSubscriptionCurrency
 
@@ -157,7 +153,8 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
         // restore value or set initial
         if (newSubscriptionViewModel.currencyInputState.value == BaseViewModel.InputState.INITIAL) {
-            getString(R.string.subscription_e_f_tiet_currency_initial_value).let{
+            // todo: implement shared prefs last currency saving and restore (default: USD)
+            "USD".let{
                 newSubscriptionViewModel.currencyInputSelection = it
                 newSubscriptionViewModel.validateCurrencyInput(it)
             }
@@ -189,57 +186,53 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
     }
 
-    private fun setupRenewalPeriodInputField() {
+    private fun setupRenewalPeriodInput() {
 
         val renewalPeriodField = binding.actvNewSubscriptionRenewalPeriod
+        val optionsHolder = RenewalPeriodOptionsHolder(resources)
 
         // set menu items
         renewalPeriodField.setAdapter(ArrayAdapter(
-            activity as Context,
+            requireActivity(),
             android.R.layout.simple_spinner_dropdown_item,
-            Parser.parseXmlResourceMap(requireActivity(), R.xml.map_subscription_renewal_period_options)
-                .values
-                .toTypedArray()
+            optionsHolder.options.values.toTypedArray()
         ))
 
-        // restore value or set initial
-        if (newSubscriptionViewModel.renewalPeriodInputSelection == "") {
-            newSubscriptionViewModel.renewalPeriodInputSelection =
-                getString(R.string.subscription_e_f_actv_renewal_period_initial_value)
+        // restore value or set default
+        if (newSubscriptionViewModel.renewalPeriodInputSelection.isEmpty()) {
+            newSubscriptionViewModel.renewalPeriodInputSelection = optionsHolder.defaultValue
         }
         renewalPeriodField.setText(newSubscriptionViewModel.renewalPeriodInputSelection, false)
 
         // handle new value
-        renewalPeriodField.doAfterTextChanged { newValue ->
-            newSubscriptionViewModel.renewalPeriodInputSelection = newValue.toString()
+        renewalPeriodField.doAfterTextChanged {
+            newSubscriptionViewModel.renewalPeriodInputSelection = it.toString()
         }
 
 
     }
 
-    private fun setupAlertInputField() {
+    private fun setupAlertPeriodInput() {
 
         val alertField = binding.actvNewSubscriptionAlert
+        val optionsHolder = AlertPeriodOptionsHolder(resources)
 
         // set menu items
         alertField.setAdapter(ArrayAdapter(
-            activity as Context,
+            requireActivity(),
             android.R.layout.simple_spinner_dropdown_item,
-            Parser.parseXmlResourceMap(requireActivity(), R.xml.map_subscription_alert_period_options)
-                .values
-                .toTypedArray()
+            optionsHolder.options.values.toTypedArray()
         ))
 
         // restore value or set default
         if (newSubscriptionViewModel.alertInputSelection == "") {
-            newSubscriptionViewModel.alertInputSelection =
-                getString(R.string.subscription_e_f_actv_alert_default_value)
+            newSubscriptionViewModel.alertInputSelection = optionsHolder.defaultValue
         }
         alertField.setText(newSubscriptionViewModel.alertInputSelection, false)
 
         // handle new value
-        alertField.doAfterTextChanged { newValue ->
-            newSubscriptionViewModel.alertInputSelection = newValue.toString()
+        alertField.doAfterTextChanged {
+            newSubscriptionViewModel.alertInputSelection = it.toString()
         }
 
     }
@@ -263,29 +256,23 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         )
 
         // renewal period
-        val renewalPeriodStr = binding.actvNewSubscriptionRenewalPeriod.text.toString()
-        val renewalPeriodKey =
-            Parser.parseXmlResourceMap(requireActivity(), R.xml.map_subscription_renewal_period_options)
-                .filterValues{ it == renewalPeriodStr }
-                .keys
-                .toTypedArray()[0]
-        val renewalPeriod = Period.parse(renewalPeriodKey)
+        val renewalPeriod = Period.parse(RenewalPeriodOptionsHolder(resources).options
+            .getFirstKey(binding.actvNewSubscriptionRenewalPeriod.text.toString())
+        )
 
-        // alert flag and period
+        // alert period
         val alertEnabled: Boolean
         val alertPeriod: Period
-        val alertPeriodStr = binding.actvNewSubscriptionAlert.text.toString()
-        val alertPeriodKey =
-            Parser.parseXmlResourceMap(requireActivity(), R.xml.map_subscription_alert_period_options)
-                .filterValues{ it == alertPeriodStr }
-                .keys
-                .toTypedArray()[0]
-        if (alertPeriodKey == getString(R.string.subscription_e_f_alert_disabled_key)) {
+        val alertPeriodOptionsHolder = AlertPeriodOptionsHolder(resources)
+        val alertPeriodValue = binding.actvNewSubscriptionAlert.text.toString()
+        if (alertPeriodValue == alertPeriodOptionsHolder.defaultValue) {
             alertEnabled = false
             alertPeriod = Period.ZERO
         } else {
             alertEnabled = true
-            alertPeriod = Period.parse(alertPeriodKey)
+            alertPeriod = Period.parse(
+                alertPeriodOptionsHolder.options.getFirstKey(alertPeriodValue)
+            )
         }
 
         return Subscription(

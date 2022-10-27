@@ -41,9 +41,7 @@ class NotificationHelper(private val context: Context) {
             LocalDate.now() -> {context.getString(R.string.today).lowercase()}
             LocalDate.now().plusDays(1) -> {context.getString(R.string.tomorrow).lowercase()}
             else -> {
-                subscription.nextRenewalDate.format(DateTimeFormatter.ofPattern(
-                    context.getString(R.string.subscriptions_rv_tv_next_renewal_date_pattern)
-                ))
+                subscription.nextRenewalDate.format(DateTimeFormatter.ofPattern("dd MMMM"))
             }
         }
 

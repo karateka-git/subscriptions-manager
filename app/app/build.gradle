@@ -59,6 +59,9 @@ dependencies {
     // Material Design
     implementation "com.google.android.material:material:$material_version"
 
+    // Splash Screen
+    implementation "androidx.core:core-splashscreen:$splash_screen_version"
+
     // Navigation Component
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_component_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_component_version"
