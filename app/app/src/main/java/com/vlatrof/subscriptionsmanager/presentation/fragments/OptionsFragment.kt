@@ -31,18 +31,18 @@ class OptionsFragment : Fragment(R.layout.fragment_options) {
 
     private fun setupNightModeRadioGroup() {
 
-        val rgNightModeMap = mapOf (
+        val radioGroupNightModeMap = mapOf (
             MODE_NIGHT_NO to binding.rbDay.id,
             MODE_NIGHT_YES to binding.rbNight.id,
             MODE_NIGHT_FOLLOW_SYSTEM to binding.rbSystem.id,
         )
 
         binding.rgOptionsNightMode.check(
-            rgNightModeMap[optionsViewModel.getCurrentNightMode()]!!
+            radioGroupNightModeMap[optionsViewModel.getCurrentNightMode()]!!
         )
 
         binding.rgOptionsNightMode.setOnCheckedChangeListener { _, checkedId ->
-            optionsViewModel.applyNightMode(rgNightModeMap.getFirstKey(checkedId)!!)
+            optionsViewModel.applyNightMode(radioGroupNightModeMap.getFirstKey(checkedId)!!)
         }
 
     }

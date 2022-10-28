@@ -3,6 +3,7 @@ package com.vlatrof.subscriptionsmanager.presentation.viewmodels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.vlatrof.subscriptionsmanager.app.App
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import com.vlatrof.subscriptionsmanager.domain.usecases.interfaces.InsertNewSubscriptionUseCase
 import kotlinx.coroutines.CoroutineDispatcher
@@ -13,6 +14,7 @@ import java.util.Currency
 
 class NewSubscriptionViewModel (
 
+    private val application: App,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
     private val insertNewSubscriptionUseCase: InsertNewSubscriptionUseCase,
 
@@ -90,6 +92,14 @@ class NewSubscriptionViewModel (
         viewModelScope.launch(ioDispatcher) {
             insertNewSubscriptionUseCase(subscription)
         }
+    }
+
+    fun getLastCurrencyCode(): String {
+        return application.getLastCurrencyCode()
+    }
+
+    fun saveLastCurrencyCode(currencyCode: String) {
+        application.saveLastCurrencyCode(currencyCode)
     }
 
 }

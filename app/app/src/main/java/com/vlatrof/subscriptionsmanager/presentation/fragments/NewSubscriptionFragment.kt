@@ -1,5 +1,6 @@
 package com.vlatrof.subscriptionsmanager.presentation.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.vlatrof.subscriptionsmanager.R
+import com.vlatrof.subscriptionsmanager.app.App
 import com.vlatrof.subscriptionsmanager.databinding.FragmentNewSubscriptionBinding
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import com.vlatrof.subscriptionsmanager.presentation.utils.*
@@ -121,8 +123,12 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
     private fun setupCreateButton() {
 
         // handle click
-        binding.btnNewSubscriptionCreate.setOnClickListener{
-            newSubscriptionViewModel.insertNewSubscription(parseSubscription())
+        binding.btnNewSubscriptionCreate.setOnClickListener {
+            val subscriptionToCreate = parseSubscription()
+            newSubscriptionViewModel.insertNewSubscription(subscriptionToCreate)
+            newSubscriptionViewModel.saveLastCurrencyCode(
+                subscriptionToCreate.paymentCurrency.currencyCode
+            )
             hideKeyboard()
             findNavController().popBackStack()
         }
@@ -151,13 +157,11 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
             Currency.getAvailableCurrencies().toTypedArray()
         ))
 
-        // restore value or set initial
+        // if initial input state: restore last value or set default
         if (newSubscriptionViewModel.currencyInputState.value == BaseViewModel.InputState.INITIAL) {
-            // todo: implement shared prefs last currency saving and restore (default: USD)
-            "USD".let{
-                newSubscriptionViewModel.currencyInputSelection = it
-                newSubscriptionViewModel.validateCurrencyInput(it)
-            }
+            val defaultCurrencyCode = newSubscriptionViewModel.getLastCurrencyCode()
+            newSubscriptionViewModel.currencyInputSelection = defaultCurrencyCode
+            newSubscriptionViewModel.validateCurrencyInput(defaultCurrencyCode)
         }
         currencyField.setText(newSubscriptionViewModel.currencyInputSelection)
 
