@@ -9,8 +9,8 @@ import com.vlatrof.subscriptionsmanager.presentation.utils.notification.Subscrip
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen()
         super.onCreate(savedInstanceState)
+        installSplashScreen()
         setContentView(activity_main)
 
         // launch subscriptions renewal alerts worker

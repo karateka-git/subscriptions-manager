@@ -3,7 +3,7 @@ package com.vlatrof.subscriptionsmanager.app
 import android.app.Application
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
 import com.vlatrof.subscriptionsmanager.di.appModule
 import com.vlatrof.subscriptionsmanager.di.dataModule
 import com.vlatrof.subscriptionsmanager.di.domainModule
@@ -20,7 +20,7 @@ class App : Application() {
         // apply current night mode on app start
         applyNightMode(
             getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE)
-                .getInt(NIGHT_MODE, MODE_NIGHT_NO)
+                .getInt(NIGHT_MODE, MODE_NIGHT_FOLLOW_SYSTEM)
         )
 
         // init Koin DI
