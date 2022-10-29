@@ -156,6 +156,10 @@ class SubscriptionDetailsViewModel(
 
     fun loadSubscriptionById(id: Int) {
 
+        if (subscriptionLiveData.value != null) {
+            return
+        }
+
         if (id == SubscriptionDetailsFragment.ARGUMENT_SUBSCRIPTION_ID_DEFAULT_VALUE) {
             throw IllegalArgumentException("Empty fragment argument: ${SubscriptionDetailsFragment.ARGUMENT_SUBSCRIPTION_ID_TAG}")
         }

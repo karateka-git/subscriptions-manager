@@ -33,11 +33,8 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentSubscriptionDetailsBinding.bind(view)
 
-        if (subscriptionDetailsViewModel.subscriptionLiveData.value == null) {
-            loadSubscription()
-            observeSubscriptionLiveData()
-        }
-
+        loadSubscription()
+        observeSubscriptionLiveData()
         setupGoBackButton()
         setupNameTitle()
         setupNextRenewalTitle()
