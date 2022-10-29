@@ -15,7 +15,6 @@ import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import com.vlatrof.subscriptionsmanager.presentation.utils.*
 import com.vlatrof.subscriptionsmanager.presentation.viewmodels.SubscriptionDetailsViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
 import java.util.Currency
@@ -23,7 +22,7 @@ import java.util.Currency
 class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_details) {
 
     companion object {
-        const val ARGUMENT_SUBSCRIPTION_ID_TAG = "ARGUMENT_SUBSCRIPTION_ID_TAG"
+        const val ARGUMENT_SUBSCRIPTION_ID_TAG = "ARGUMENT_SUBSCRIPTION_ID"
         const val ARGUMENT_SUBSCRIPTION_ID_DEFAULT_VALUE = -1
     }
 
@@ -58,12 +57,8 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
 
     private fun loadSubscription() {
         try {
-            val subscriptionId = getArgumentSubscriptionId()
-            if (subscriptionId == ARGUMENT_SUBSCRIPTION_ID_DEFAULT_VALUE) {
-                throw IllegalStateException("Empty fragment argument: subscription id")
-            }
-            subscriptionDetailsViewModel.loadSubscriptionById(subscriptionId)
-        } catch (exception: IllegalStateException) {
+            subscriptionDetailsViewModel.loadSubscriptionById(getArgumentSubscriptionId())
+        } catch (exception: IllegalArgumentException) {
             showToast(getString(R.string.toast_error_message_something_went_wrong))
             findNavController().popBackStack()
         }
@@ -83,14 +78,15 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
     }
 
     private fun setupNameTitle() {
-        // restore value from viewmodel
-        binding.tvSubscriptionDetailsNameTitle.text = subscriptionDetailsViewModel.nameTitleValue
+        subscriptionDetailsViewModel.nameTitleLiveData.observe(viewLifecycleOwner) {
+            binding.tvSubscriptionDetailsNameTitle.text = it
+        }
     }
 
     private fun setupNextRenewalTitle() {
-        // restore value from viewmodel
-        binding.tvSubscriptionDetailsNextRenewalTitle.text =
-            subscriptionDetailsViewModel.nextRenewalTitleValue
+        subscriptionDetailsViewModel.nextRenewalTitleLiveData.observe(viewLifecycleOwner) {
+            binding.tvSubscriptionDetailsNextRenewalTitle.text = it
+        }
     }
 
     private fun setupNameInput() {
@@ -131,7 +127,7 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
 
         // init DatePicker and restore selection from viewmodel
         val datePicker = MaterialDatePicker.Builder.datePicker()
-            .setSelection(subscriptionDetailsViewModel.startDateInputSelection.value)
+            .setSelection(subscriptionDetailsViewModel.startDateInputSelectionLiveData.value)
             .setTitleText(getString(R.string.subscription_e_f_til_start_date_date_picker_title_text))
             .build()
             .apply {
@@ -149,7 +145,7 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         }
 
         // handle new date selection
-        subscriptionDetailsViewModel.startDateInputSelection.observe(viewLifecycleOwner) { newSelection ->
+        subscriptionDetailsViewModel.startDateInputSelectionLiveData.observe(viewLifecycleOwner) { newSelection ->
 
             val newSelectedDate = Parser.parseLocalDateFromUTCMilliseconds(newSelection)
 
@@ -249,7 +245,8 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         ))
 
         // restore value from viewmodel
-        renewalPeriodField.setText(subscriptionDetailsViewModel.renewalPeriodInputValue, false)
+        val restoredValue = subscriptionDetailsViewModel.restoreRenewalPeriodValue()
+        renewalPeriodField.setText(restoredValue, false)
 
         // handle new value
         renewalPeriodField.doAfterTextChanged {
@@ -286,9 +283,7 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         subscriptionDetailsViewModel.handleNewNameTitleValue(subscription.name)
 
         // next renewal title
-        val nextRenewalStr = generateNextRenewalTitleStr(subscription.nextRenewalDate)
-        binding.tvSubscriptionDetailsNextRenewalTitle.text = nextRenewalStr
-        subscriptionDetailsViewModel.handleNewNextRenewalTitleValue(nextRenewalStr)
+        subscriptionDetailsViewModel.handleNewNextRenewalDate(subscription.nextRenewalDate)
 
         // name input
         binding.tietSubscriptionDetailsName.setText(subscription.name)
@@ -347,7 +342,7 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         )
 
         val startDate = Parser.parseLocalDateFromUTCMilliseconds(
-            subscriptionDetailsViewModel.startDateInputSelection.value!!
+            subscriptionDetailsViewModel.startDateInputSelectionLiveData.value!!
         )
 
         // renewal period
@@ -381,25 +376,6 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
             alertEnabled = alertEnabled,
             alertPeriod = alertPeriod
         )
-
-    }
-
-    private fun generateNextRenewalTitleStr(nextRenewalDate: LocalDate): String {
-
-        val nextRenewalTitle = getString(R.string.subscription_details_tv_next_renewal_title)
-        val formattedNextRenewalDate = when (nextRenewalDate) {
-            LocalDate.now() -> {
-                getString(R.string.today)
-            }
-            LocalDate.now().plusDays(1) -> {
-                getString(R.string.tomorrow)
-            }
-            else -> {
-                nextRenewalDate.format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))
-            }
-        }
-
-        return "$nextRenewalTitle $formattedNextRenewalDate"
 
     }
 

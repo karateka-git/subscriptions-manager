@@ -26,6 +26,7 @@ val appModule = module {
 
     viewModel<SubscriptionDetailsViewModel> {
         SubscriptionDetailsViewModel(
+            resources = androidContext().resources,
             getSubscriptionByIdUseCase = get(),
             updateSubscriptionUseCase = get(),
             deleteSubscriptionByIdUseCase = get(),
