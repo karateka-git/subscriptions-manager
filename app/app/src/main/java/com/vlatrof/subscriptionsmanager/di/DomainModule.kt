@@ -14,10 +14,6 @@ val domainModule = module {
         InsertNewSubscriptionUseCaseImpl(subscriptionsRepository = get())
     }
 
-    factory<DeleteAllSubscriptionsUseCase> {
-        DeleteAllSubscriptionsUseCaseImpl(subscriptionsRepository = get())
-    }
-
     factory<GetSubscriptionByIdUseCase> {
         GetSubscriptionByIdUseCaseImpl(subscriptionsRepository = get())
     }
