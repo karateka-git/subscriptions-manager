@@ -26,7 +26,7 @@
     <string name="new_subscription_tv_screen_title">Новая подписка</string>
 
     <!-- Screen: Subscription details -->
-    <string name="subscription_details_btn_go_back_text">Назад</string>
+    <string name="subscription_details_btn_go_back_text">Отмена</string>
     <string name="subscription_details_btn_save_text">Сохранить</string>
     <string name="subscription_details_tv_next_renewal_title">Следующее обновление: </string>
     <string name="subscription_details_btn_delete_text">Удалить подписку</string>

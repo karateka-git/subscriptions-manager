@@ -92,9 +92,7 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         binding.tietSubscriptionDetailsName.doAfterTextChanged {
             val newValue = it.toString()
             subscriptionDetailsViewModel.handleNewNameInputValue(newValue)
-            binding.tvSubscriptionDetailsNameTitle.text = newValue
             subscriptionDetailsViewModel.handleNewNameTitleValue(newValue)
-
         }
 
         // handle new state
@@ -327,9 +325,9 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
             ARGUMENT_SUBSCRIPTION_ID_TAG, ARGUMENT_SUBSCRIPTION_ID_DEFAULT_VALUE
         )
 
-        val name = binding.tietSubscriptionDetailsName.text.toString()
+        val name = binding.tietSubscriptionDetailsName.text.toString().trim()
 
-        val description = binding.tietSubscriptionDetailsDescription.text.toString()
+        val description = binding.tietSubscriptionDetailsDescription.text.toString().trim()
 
         val paymentCost =
             binding.tietSubscriptionDetailsCost.text.toString().toDouble().round(2)

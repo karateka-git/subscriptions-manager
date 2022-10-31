@@ -39,6 +39,7 @@ class NewSubscriptionViewModel (
     fun validateNameInput(newValue: String) {
         nameInputState.value =
             if (newValue.isEmpty()) InputState.EMPTY
+            else if (newValue.isBlank()) InputState.WRONG
             else InputState.CORRECT
     }
 

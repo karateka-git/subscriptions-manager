@@ -111,16 +111,15 @@ class SubscriptionDetailsViewModel(
     }
 
     private fun validateNameValue(newValue: String) : InputState {
-        return if (newValue.isEmpty())
-            InputState.EMPTY
-        else
-            InputState.CORRECT
+        if (newValue.isEmpty()) return InputState.EMPTY
+        if (newValue.isBlank()) return InputState.WRONG
+        return InputState.CORRECT
     }
 
     private fun validateCostValue(newValue: String): InputState {
-        if (newValue.isEmpty()) {
-            return InputState.EMPTY
-        }
+
+        if (newValue.isEmpty()) return InputState.EMPTY
+
         try {
             newValue.toDouble()
         } catch (nfe: NumberFormatException) {
@@ -223,9 +222,8 @@ class SubscriptionDetailsViewModel(
 
     fun restoreRenewalPeriodValue(): String {
 
-        RenewalPeriodOptionsHolder(resources).options[renewalPeriodValue.toString()]
+        return RenewalPeriodOptionsHolder(resources).options[renewalPeriodValue.toString()]!!
 
-        return ""
     }
 
 }
