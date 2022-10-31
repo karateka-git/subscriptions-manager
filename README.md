@@ -24,6 +24,8 @@ System Design patterns: (app architecture diagram [below](#app-architecture-diag
 * DataSource
 * Clean architecture principles
 
+<br />
+
 ## Screenshots
 (more screenshots [here](/screenshots))
 
