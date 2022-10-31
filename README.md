@@ -3,7 +3,8 @@ Offline-first Android application
 
 Screenshots:
 
-<img src="screenshots/day_splash.png" height="256" width="144">
+![Alt text](screenshots/day_splash.png?raw=true "Splash screen day mode")
+<!-- <img src="screenshots/day_splash.png" height="256" width="144"> -->
 <img src="screenshots/day_list_empty.png">
 <img src="screenshots/day_new_subscription.png">
 <img src="screenshots/day_list.png">
