@@ -1,0 +1,77 @@
+<resources>
+
+    <!-- General -->
+    <string name="app_name">Менеджер Подписок</string>
+    <string name="toast_error_message_something_went_wrong">Что-то пошло не так</string>
+
+    <!-- Dates -->
+    <string name="today">Сегодня</string>
+    <string name="tomorrow">Завтра</string>
+
+    <!-- Notifications -->
+    <string name="renewal_notification_title">%1$s: скоро обновление подписки</string>
+    <string name="renewal_notification_message">%1$s: следующее обновление %2$s по цене %3$s %4$s</string>
+
+    <!-- Screen: Subscriptions list -->
+    <string name="subscriptions_btn_open_options_content_description">Открыть настройки</string>
+    <string name="subscriptions_btn_new_content_description">Добавить подписку</string>
+    <string name="subscriptions_tv_screen_title">Подписки</string>
+    <string name="subscriptions_ll_not_found_tv_title">Подписки не найдены</string>
+    <string name="subscriptions_ll_not_found_tv_description">Добавьте свою первую подписку, чтобы увидеть ее здесь</string>
+    <string name="subscriptions_ll_not_found_btn_add_new_text">Добавить подписку</string>
+
+    <!-- Screen: New subscription -->
+    <string name="new_subscription_btn_go_back_text">Отмена</string>
+    <string name="new_subscription_btn_create_text">Создать</string>
+    <string name="new_subscription_tv_screen_title">Новая подписка</string>
+
+    <!-- Screen: Subscription details -->
+    <string name="subscription_details_btn_go_back_text">Назад</string>
+    <string name="subscription_details_btn_save_text">Сохранить</string>
+    <string name="subscription_details_tv_next_renewal_title">Следующее обновление: </string>
+    <string name="subscription_details_btn_delete_text">Удалить подписку</string>
+    <string name="subscription_details_delete_dialog_title">Удалить подписку</string>
+    <string name="subscription_details_delete_dialog_message">Это действие нельзя отменить</string>
+    <string name="subscription_details_delete_dialog_btn_positive">Удалить</string>
+    <string name="subscription_details_delete_dialog_btn_negative">Отмена</string>
+
+    <!-- Screen: Options -->
+    <string name="options_title">Настройки</string>
+    <string name="options_btn_close_options_content_description">Закрыть настройки</string>
+    <string name="options_tv_night_mode">Ночной режим</string>
+    <string name="options_rb_day">День</string>
+    <string name="options_rb_night">Ночь</string>
+    <string name="options_rb_system">Системный</string>
+
+    <!-- Subscription editing form -->
+    <string name="subscription_e_f_field_error_none"/>
+    <string name="subscription_e_f_field_error_empty">* Обязательное поле</string>
+    <string name="subscription_e_f_field_error_wrong">* Неправильное значение</string>
+    <string name="subscription_e_f_til_name_hint">Имя</string>
+    <string name="subscription_e_f_til_description_hint">Описание (необязательно)</string>
+    <string name="subscription_e_f_til_cost_hint">Цена</string>
+    <string name="subscription_e_f_til_currency_hint">Валюта</string>
+    <string name="subscription_e_f_til_renewal_period_hint">Период обновления</string>
+    <string name="subscription_e_f_til_start_date_hint">Дата начала</string>
+    <string name="subscription_e_f_til_start_date_end_icon_content_description">Выбор даты начала</string>
+    <string name="subscription_e_f_til_start_date_date_picker_title_text">Выбрать дату начала</string>
+    <string name="subscription_e_f_til_start_date_date_picker_tag">datePicker</string>
+    <string name="subscription_e_f_til_alert_hint">Уведомление</string>
+
+    <!-- Alert period options-->
+    <string name="option_alert_period_none">Нет</string>
+    <string name="option_alert_period_same_day">В тот же день</string>
+    <string name="option_alert_period_one_day_before">За 1 день</string>
+    <string name="option_alert_period_two_days_before">За 2 дня</string>
+    <string name="option_alert_period_one_week_before">За неделю</string>
+
+    <!-- Renewal period options -->
+    <string name="option_renewal_period_daily">Ежедневно</string>
+    <string name="option_renewal_period_weekly">Еженедельно</string>
+    <string name="option_renewal_period_every_two_weeks">Каждые 2 недели</string>
+    <string name="option_renewal_period_monthly">Ежемесячно</string>
+    <string name="option_renewal_period_every_three_months">Каждые 3 месяца</string>
+    <string name="option_renewal_period_every_six_months">Каждые 6 месяцев</string>
+    <string name="option_renewal_period_yearly">Ежегодно</string>
+
+</resources>
