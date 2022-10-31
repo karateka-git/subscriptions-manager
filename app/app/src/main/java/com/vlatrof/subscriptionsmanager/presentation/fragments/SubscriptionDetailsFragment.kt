@@ -181,10 +181,8 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
             MaterialAlertDialogBuilder(requireActivity(), R.style.Alert_dialog_delete_subscription)
                 .setTitle(R.string.subscription_details_delete_dialog_title)
                 .setMessage(R.string.subscription_details_delete_dialog_message)
-                .setPositiveButton(R.string.subscription_details_delete_dialog_btn_positive) {
-                        _, _ -> onPositiveActionDialogDelete() }
-                .setNegativeButton(R.string.subscription_details_delete_dialog_btn_negative) {
-                        _, _ -> }
+                .setPositiveButton(R.string.subscription_details_delete_dialog_btn_positive) { _, _ -> onPositiveActionDialogDelete() }
+                .setNegativeButton(R.string.subscription_details_delete_dialog_btn_negative) { _, _ -> }
                 .show()
 
         }
