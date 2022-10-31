@@ -1,16 +1,35 @@
-# 📝 Subscriptions manager (WIP)
-Offline-first Android application 
+# 📝 Subscriptions manager
+Offline-first Android application for subscription management.
 
-Screenshots:
+Tools:
+* Kotlin
+* Room
+* Koin DI
+* Navigation Component
+* WorkManager
+* Notifications
+* Kotlin Coroutines
+* Flow
+* LiveData
+* RecyclerView
+* Shared Preferences
 
-![Alt text](screenshots/day_splash.png?raw=true "Splash screen day mode")
-<!-- <img src="screenshots/day_splash.png" height="256" width="144"> -->
-<img src="screenshots/day_list_empty.png">
-<img src="screenshots/day_new_subscription.png">
-<img src="screenshots/day_list.png">
-<img src="screenshots/day_subscription_details.png">
-<img src="screenshots/day_options.png">
+System Design patterns: (app architecture diagram [below](#app-architecture-diagram))
+* MVVM
+* UseCase
+* Repository
+* DataSource
+* Clean architecture principles
 
-App architecture diagram:
+## Screenshots
+(more screenshots [here](/screenshots))
+
+<img src="screenshots/day_list_empty.png" alt="Screen: subscriptions list (with no items, day mode)" width="256"> <img src="screenshots/day_list.png" alt="Screen: subscriptions list (day mode)" width="256"> <img src="screenshots/day_subscription_details.png" alt=" Screen: subscription details (day mode)" width="256">
+
+<img src="screenshots/night_list_empty.png" alt="Screen: subscriptions list (with no items, night mode)" width="256"> <img src="screenshots/night_list.png" alt="Screen: subscriptions list (night mode)" width="256"> <img src="screenshots/night_subscription_details.png" alt=" Screen: subscription details (night mode)" width="256">
+
+<br />
+
+## App architecture diagram 
 
 <img src="architecture/Subscriptions Manager App Architecture Diagram.png">
