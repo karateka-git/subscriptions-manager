@@ -2,34 +2,26 @@
 
 <resources>
 
-    <!-- size -->
-    <dimen name="width_130dp">130dp</dimen>
-    <dimen name="width_140dp">140dp</dimen>
-    <dimen name="height_20dp">20dp</dimen>
-    <dimen name="height_25dp">25dp</dimen>
-    <dimen name="height_50dp">50dp</dimen>
-    <dimen name="height_85dp">85dp</dimen>
-    <dimen name="max_width_150dp">150dp</dimen>
-    <dimen name="max_width_500dp">500dp</dimen>
-
     <!-- text size -->
-    <dimen name="text_size_18sp">18sp</dimen>
-    <dimen name="text_size_24sp">24sp</dimen>
-    <dimen name="text_size_35sp">35sp</dimen>
+    <dimen name="text_size_small">18sp</dimen>
+    <dimen name="text_size_medium">24sp</dimen>
+    <dimen name="text_size_large">35sp</dimen>
 
-    <!-- margin -->
-    <dimen name="margin_5dp">5dp</dimen>
-    <dimen name="margin_10dp">10dp</dimen>
-    <dimen name="margin_13dp">13dp</dimen>
-    <dimen name="margin_14dp">14dp</dimen>
-    <dimen name="margin_18dp">18dp</dimen>
-    <dimen name="margin_20dp">20dp</dimen>
-    <dimen name="margin_30dp">30dp</dimen>
-    <dimen name="margin_50dp">50dp</dimen>
+    <!-- size -->
+    <dimen name="max_width_input_default_500dp">500dp</dimen>
+    <dimen name="width_currency_input_default_140dp">140dp</dimen>
 
     <!-- padding -->
-    <dimen name="padding_10dp">10dp</dimen>
-    <dimen name="padding_20dp">20dp</dimen>
-    <dimen name="padding_30dp">30dp</dimen>
+    <dimen name="padding_image_button_default_10dp">10dp</dimen>
+
+    <!-- margin -->
+    <dimen name="margin_default_30dp">30dp</dimen>
+    <dimen name="margin_top_nav_button_default_14dp">14dp</dimen>
+    <dimen name="margin_hor_nav_button_default_13dp">13dp</dimen>
+    <dimen name="margin_all_nav_image_button_default_20dp">20dp</dimen>
+    <dimen name="margin_top_title_default_10dp">10dp</dimen>
+    <dimen name="margin_top_subscription_name_input_default_20dp">20dp</dimen>
+    <dimen name="margin_end_cost_input_default_20dp">20dp</dimen>
+    <dimen name="margin_top_menu_input_default_18dp">18dp</dimen>
 
 </resources>

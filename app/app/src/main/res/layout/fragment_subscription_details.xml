@@ -15,20 +15,20 @@
             style="@style/Navigation_button_material_text_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_13dp"
-            android:layout_marginTop="@dimen/margin_14dp"
+            android:layout_marginStart="@dimen/margin_hor_nav_button_default_13dp"
+            android:layout_marginTop="@dimen/margin_top_nav_button_default_14dp"
             android:text="@string/subscription_details_btn_go_back_text"
             app:icon="@drawable/ic_baseline_arrow_back"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_subscription_details_save"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_14dp"
-            android:layout_marginEnd="@dimen/margin_13dp"
+            android:layout_marginTop="@dimen/margin_top_nav_button_default_14dp"
+            android:layout_marginEnd="@dimen/margin_hor_nav_button_default_13dp"
             android:fontFamily="@font/inter_semibold"
             android:text="@string/subscription_details_btn_save_text"
             app:layout_constraintEnd_toEndOf="parent"
@@ -38,12 +38,12 @@
             android:id="@+id/tv_subscription_details_name_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10dp"
+            android:layout_marginTop="@dimen/margin_top_title_default_10dp"
             android:ellipsize="end"
             android:fontFamily="@font/inter_semibold"
             android:maxLines="2"
             android:textColor="?android:textColorPrimary"
-            android:textSize="@dimen/text_size_35sp"
+            android:textSize="@dimen/text_size_large"
             app:layout_constraintEnd_toEndOf="@id/til_subscription_details_name"
             app:layout_constraintStart_toStartOf="@id/til_subscription_details_name"
             app:layout_constraintTop_toBottomOf="@id/btn_subscription_details_go_back"
@@ -53,12 +53,12 @@
             android:id="@+id/tv_subscription_details_next_renewal_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10dp"
+            android:layout_marginTop="@dimen/margin_top_title_default_10dp"
             android:ellipsize="end"
             android:fontFamily="@font/inter_regular"
             android:maxLines="2"
             android:textColor="?android:textColorPrimary"
-            android:textSize="@dimen/text_size_18sp"
+            android:textSize="@dimen/text_size_small"
             app:layout_constraintEnd_toEndOf="@id/til_subscription_details_name"
             app:layout_constraintStart_toStartOf="@id/til_subscription_details_name"
             app:layout_constraintTop_toBottomOf="@id/tv_subscription_details_name_title"
@@ -69,14 +69,14 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_30dp"
-            android:layout_marginTop="@dimen/margin_20dp"
+            android:layout_marginHorizontal="@dimen/margin_default_30dp"
+            android:layout_marginTop="@dimen/margin_top_subscription_name_input_default_20dp"
             app:endIconMode="clear_text"
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_subscription_details_next_renewal_title"
-            app:layout_constraintWidth_max="@dimen/max_width_500dp">
+            app:layout_constraintWidth_max="@dimen/max_width_input_default_500dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tiet_subscription_details_name"
@@ -115,7 +115,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_20dp"
+            android:layout_marginEnd="@dimen/margin_end_cost_input_default_20dp"
             app:endIconMode="clear_text"
             app:layout_constraintEnd_toStartOf="@id/til_subscription_details_currency"
             app:layout_constraintStart_toStartOf="@id/til_subscription_details_name"
@@ -134,7 +134,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_subscription_details_currency"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="@dimen/width_140dp"
+            android:layout_width="@dimen/width_currency_input_default_140dp"
             android:layout_height="wrap_content"
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="@id/til_subscription_details_name"
@@ -180,7 +180,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_18dp"
+            android:layout_marginTop="@dimen/margin_top_menu_input_default_18dp"
             app:layout_constraintEnd_toEndOf="@id/til_subscription_details_name"
             app:layout_constraintStart_toStartOf="@id/til_subscription_details_name"
             app:layout_constraintTop_toBottomOf="@id/til_subscription_details_start_date">
@@ -199,7 +199,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_18dp"
+            android:layout_marginTop="@dimen/margin_top_menu_input_default_18dp"
             app:layout_constraintEnd_toEndOf="@id/til_subscription_details_name"
             app:layout_constraintStart_toStartOf="@id/til_subscription_details_name"
             app:layout_constraintTop_toBottomOf="@id/til_subscription_details_renewal_period">
@@ -213,12 +213,12 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_subscription_details_delete"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_20dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/inter_semibold"
             android:text="@string/subscription_details_btn_delete_text"
             android:textColor="@color/red"
@@ -228,7 +228,7 @@
 
         <Space
             android:layout_width="0dp"
-            android:layout_height="@dimen/height_25dp"
+            android:layout_height="25dp"
             app:layout_constraintStart_toStartOf="@id/btn_subscription_details_delete"
             app:layout_constraintTop_toBottomOf="@+id/btn_subscription_details_delete" />
 
