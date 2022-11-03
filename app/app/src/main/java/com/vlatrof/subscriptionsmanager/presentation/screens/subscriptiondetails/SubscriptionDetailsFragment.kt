@@ -12,8 +12,14 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.vlatrof.subscriptionsmanager.R
 import com.vlatrof.subscriptionsmanager.databinding.FragmentSubscriptionDetailsBinding
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
-import com.vlatrof.subscriptionsmanager.presentation.utils.*
-import com.vlatrof.subscriptionsmanager.utils.*
+import com.vlatrof.subscriptionsmanager.utils.AlertPeriodOptionsHolder
+import com.vlatrof.subscriptionsmanager.utils.Parser
+import com.vlatrof.subscriptionsmanager.utils.RenewalPeriodOptionsHolder
+import com.vlatrof.subscriptionsmanager.utils.getFirstKey
+import com.vlatrof.subscriptionsmanager.utils.hideKeyboard
+import com.vlatrof.subscriptionsmanager.utils.round
+import com.vlatrof.subscriptionsmanager.utils.showToast
+import com.vlatrof.subscriptionsmanager.utils.toUTCMilliseconds
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.time.Period
 import java.time.format.DateTimeFormatter
@@ -87,7 +93,6 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
     }
 
     private fun setupNameInput() {
-
         // handle new value after text changed
         binding.tietSubscriptionDetailsName.doAfterTextChanged {
             val newValue = it.toString()
@@ -99,11 +104,9 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         subscriptionDetailsViewModel.nameInputState.observe(viewLifecycleOwner) {
             binding.tilSubscriptionDetailsName.error = getString(it.errorStringResourceId)
         }
-
     }
 
     private fun setupCostInput() {
-
         // handle new value after text changed
         binding.tietSubscriptionDetailsCost.doAfterTextChanged {
             subscriptionDetailsViewModel.handleNewCostInputValue(it.toString())
@@ -113,11 +116,9 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         subscriptionDetailsViewModel.costInputState.observe(viewLifecycleOwner) {
             binding.tilSubscriptionDetailsCost.error = getString(it.errorStringResourceId)
         }
-
     }
 
     private fun setupStartDateInput() {
-
         val dateField = binding.tietSubscriptionDetailsStartDate
 
         // init DatePicker and restore selection from viewmodel
@@ -147,15 +148,12 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
             binding.tietSubscriptionDetailsStartDate.setText(
                 newSelectedDate.format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))
             )
-
         }
-
     }
 
     private fun setupSaveButton() {
-
         // handle click
-        binding.btnSubscriptionDetailsSave.setOnClickListener{
+        binding.btnSubscriptionDetailsSave.setOnClickListener {
             subscriptionDetailsViewModel.updateSubscription(parseSubscription())
             hideKeyboard()
             findNavController().popBackStack()
@@ -171,41 +169,36 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
                 )
             }
         }
-
     }
 
     private fun setupDeleteButton() {
-
         binding.btnSubscriptionDetailsDelete.setOnClickListener {
-
             MaterialAlertDialogBuilder(requireActivity(), R.style.Alert_dialog_delete_subscription)
                 .setTitle(R.string.subscription_details_delete_dialog_title)
                 .setMessage(R.string.subscription_details_delete_dialog_message)
                 .setPositiveButton(R.string.subscription_details_delete_dialog_btn_positive) { _, _ -> onPositiveActionDialogDelete() }
                 .setNegativeButton(R.string.subscription_details_delete_dialog_btn_negative) { _, _ -> }
                 .show()
-
         }
-
     }
 
     private fun setupCurrencyInput() {
-
         val currencyField = binding.actvSubscriptionDetailsCurrency
 
         // set menu items
-        currencyField.setAdapter(ArrayAdapter(
-            requireActivity(),
-            android.R.layout.simple_spinner_dropdown_item,
-            Currency.getAvailableCurrencies().toTypedArray()
-        ))
+        currencyField.setAdapter(
+            ArrayAdapter(
+                requireActivity(),
+                android.R.layout.simple_spinner_dropdown_item,
+                Currency.getAvailableCurrencies().toTypedArray()
+            )
+        )
 
         // restore value from viewmodel
         currencyField.setText(subscriptionDetailsViewModel.currencyInputValue, false)
 
         // handle new value
         currencyField.doAfterTextChanged {
-
             var newValue = it.toString()
 
             // force only capital characters
@@ -216,26 +209,25 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
             }
 
             subscriptionDetailsViewModel.handleNewCurrencyValue(newValue)
-
         }
 
         // handle new input state
         subscriptionDetailsViewModel.currencyInputState.observe(viewLifecycleOwner) { newState ->
             binding.tilSubscriptionDetailsCurrency.error = getString(newState.errorStringResourceId)
         }
-
     }
 
     private fun setupRenewalPeriodInput() {
-
         val renewalPeriodField = binding.actvSubscriptionDetailsRenewalPeriod
 
         // set menu items
-        renewalPeriodField.setAdapter(ArrayAdapter(
-            requireActivity(),
-            android.R.layout.simple_spinner_dropdown_item,
-            RenewalPeriodOptionsHolder(resources).options.values.toTypedArray()
-        ))
+        renewalPeriodField.setAdapter(
+            ArrayAdapter(
+                requireActivity(),
+                android.R.layout.simple_spinner_dropdown_item,
+                RenewalPeriodOptionsHolder(resources).options.values.toTypedArray()
+            )
+        )
 
         // restore value from viewmodel
         val restoredValue = subscriptionDetailsViewModel.restoreRenewalPeriodValue()
@@ -245,19 +237,19 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         renewalPeriodField.doAfterTextChanged {
             subscriptionDetailsViewModel.handleNewRenewalPeriodValue(it.toString())
         }
-
     }
 
     private fun setupAlertPeriodInput() {
-
         val alertField = binding.actvSubscriptionDetailsAlert
 
         // set menu items
-        alertField.setAdapter(ArrayAdapter(
-            requireActivity(),
-            android.R.layout.simple_spinner_dropdown_item,
-            AlertPeriodOptionsHolder(resources).options.values.toTypedArray()
-        ))
+        alertField.setAdapter(
+            ArrayAdapter(
+                requireActivity(),
+                android.R.layout.simple_spinner_dropdown_item,
+                AlertPeriodOptionsHolder(resources).options.values.toTypedArray()
+            )
+        )
 
         // restore value from viewmodel
         alertField.setText(subscriptionDetailsViewModel.alertInputValue, false)
@@ -266,11 +258,9 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         alertField.doAfterTextChanged {
             subscriptionDetailsViewModel.handleNewAlertValue(it.toString())
         }
-
     }
 
     private fun populateUi(subscription: Subscription) {
-
         // name title
         binding.tvSubscriptionDetailsNameTitle.text = subscription.name
         subscriptionDetailsViewModel.handleNewNameTitleValue(subscription.name)
@@ -314,13 +304,12 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         }
         binding.actvSubscriptionDetailsAlert.setText(alertPeriodStr, false)
         subscriptionDetailsViewModel.handleNewAlertValue(alertPeriodStr)
-
     }
 
-    private fun parseSubscription() : Subscription {
-
+    private fun parseSubscription(): Subscription {
         val id = requireArguments().getInt(
-            ARGUMENT_SUBSCRIPTION_ID_TAG, ARGUMENT_SUBSCRIPTION_ID_DEFAULT_VALUE
+            ARGUMENT_SUBSCRIPTION_ID_TAG,
+            ARGUMENT_SUBSCRIPTION_ID_DEFAULT_VALUE
         )
 
         val name = binding.tietSubscriptionDetailsName.text.toString().trim()
@@ -341,7 +330,7 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         // renewal period
         val renewalPeriod = Period.parse(
             RenewalPeriodOptionsHolder(resources).options
-            .getFirstKey(binding.actvSubscriptionDetailsRenewalPeriod.text.toString())
+                .getFirstKey(binding.actvSubscriptionDetailsRenewalPeriod.text.toString())
         )
 
         // alert period
@@ -370,7 +359,6 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
             alertEnabled = alertEnabled,
             alertPeriod = alertPeriod
         )
-
     }
 
     private fun onPositiveActionDialogDelete() {
@@ -381,9 +369,8 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
 
     private fun getArgumentSubscriptionId(): Int {
         return requireArguments().getInt(
-            ARGUMENT_SUBSCRIPTION_ID_TAG, ARGUMENT_SUBSCRIPTION_ID_DEFAULT_VALUE
+            ARGUMENT_SUBSCRIPTION_ID_TAG,
+            ARGUMENT_SUBSCRIPTION_ID_DEFAULT_VALUE
         )
     }
-
 }
-

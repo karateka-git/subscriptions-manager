@@ -1,7 +1,7 @@
 package com.vlatrof.subscriptionsmanager.domain.repositories
 
-import kotlinx.coroutines.flow.Flow
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
+import kotlinx.coroutines.flow.Flow
 
 interface SubscriptionsRepository {
 
@@ -16,5 +16,4 @@ interface SubscriptionsRepository {
     fun deleteSubscriptionById(id: Int)
 
     fun updateSubscription(subscription: Subscription)
-
 }

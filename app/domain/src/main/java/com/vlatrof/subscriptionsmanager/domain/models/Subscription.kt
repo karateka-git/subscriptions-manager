@@ -1,10 +1,10 @@
 package com.vlatrof.subscriptionsmanager.domain.models
 
-import java.util.Currency
 import java.time.LocalDate
 import java.time.Period
+import java.util.Currency
 
-data class Subscription (
+data class Subscription(
 
     val id: Int = -1,
     val name: String = "",
@@ -15,6 +15,6 @@ data class Subscription (
     val renewalPeriod: Period = Period.ZERO,
     val nextRenewalDate: LocalDate = LocalDate.MIN,
     val alertEnabled: Boolean = false,
-    val alertPeriod: Period = Period.ZERO,
+    val alertPeriod: Period = Period.ZERO
 
 )

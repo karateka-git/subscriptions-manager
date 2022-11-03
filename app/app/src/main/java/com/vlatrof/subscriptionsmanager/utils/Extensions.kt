@@ -9,9 +9,7 @@ import androidx.fragment.app.Fragment
 import java.lang.IllegalArgumentException
 import java.math.BigDecimal
 import java.math.RoundingMode
-import java.time.Instant
 import java.time.LocalDate
-import java.time.ZoneId
 import java.time.ZoneOffset
 
 // Show Toast
@@ -38,7 +36,6 @@ fun Fragment.hideKeyboard() {
 // Round double value
 
 fun Double.round(places: Int, mode: RoundingMode = RoundingMode.DOWN): Double {
-
     if (places < 0) {
         throw IllegalArgumentException()
     }
@@ -47,12 +44,11 @@ fun Double.round(places: Int, mode: RoundingMode = RoundingMode.DOWN): Double {
         .valueOf(this)
         .setScale(places, mode)
         .toDouble()
-
 }
 
 // LocalDate to UTC milliseconds
 
-fun LocalDate.toUTCMilliseconds() : Long {
+fun LocalDate.toUTCMilliseconds(): Long {
     return this.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli()
 }
 
@@ -60,7 +56,8 @@ fun LocalDate.toUTCMilliseconds() : Long {
 
 fun <K, V> Map<K, V>.getFirstKey(value: V): K? {
     for (key in this.keys)
-        if (this[key] == value)
+        if (this[key] == value) {
             return key
+        }
     return null
 }

@@ -1,7 +1,7 @@
 package com.vlatrof.subscriptionsmanager.presentation.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.vlatrof.subscriptionsmanager.R.layout.activity_main
 import com.vlatrof.subscriptionsmanager.utils.notification.SubscriptionsAlertsHelper
@@ -16,5 +16,4 @@ class MainActivity : AppCompatActivity() {
         // relaunch subscriptions renewal alerts worker
         SubscriptionsAlertsHelper(applicationContext).launchAlertsWorker()
     }
-
 }

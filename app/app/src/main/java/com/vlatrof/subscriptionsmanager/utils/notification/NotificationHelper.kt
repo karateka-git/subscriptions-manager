@@ -23,23 +23,20 @@ class NotificationHelper(private val context: Context) {
     private var notificationId = 1
 
     fun showRenewalNotification(subscription: Subscription) {
-
         NotificationManagerCompat.from(context).notify(
             notificationId,
             createRenewalNotification(subscription)
         )
-
     }
 
-    private fun createRenewalNotification(subscription: Subscription) : Notification {
-
+    private fun createRenewalNotification(subscription: Subscription): Notification {
         // title str
         val title = context.getString(R.string.renewal_notification_title, subscription.name)
 
         // message date str
-        val dateStr = when(subscription.nextRenewalDate) {
-            LocalDate.now() -> {context.getString(R.string.today).lowercase()}
-            LocalDate.now().plusDays(1) -> {context.getString(R.string.tomorrow).lowercase()}
+        val dateStr = when (subscription.nextRenewalDate) {
+            LocalDate.now() -> { context.getString(R.string.today).lowercase() }
+            LocalDate.now().plusDays(1) -> { context.getString(R.string.tomorrow).lowercase() }
             else -> {
                 subscription.nextRenewalDate.format(DateTimeFormatter.ofPattern("dd MMMM"))
             }
@@ -51,12 +48,14 @@ class NotificationHelper(private val context: Context) {
             subscription.name,
             dateStr,
             subscription.paymentCost.toString(),
-            subscription.paymentCurrency.currencyCode,
+            subscription.paymentCurrency.currencyCode
         )
 
         // submit notification channel if needed by version
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(channelId, channelName,
+            val channel = NotificationChannel(
+                channelId,
+                channelName,
                 NotificationManager.IMPORTANCE_DEFAULT
             )
             (context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager)
@@ -78,7 +77,5 @@ class NotificationHelper(private val context: Context) {
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
             .build()
-
     }
-
 }

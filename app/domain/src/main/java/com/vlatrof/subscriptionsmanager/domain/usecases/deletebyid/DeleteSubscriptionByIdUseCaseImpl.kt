@@ -1,18 +1,14 @@
-package com.vlatrof.subscriptionsmanager.domain.usecases.implementations
+package com.vlatrof.subscriptionsmanager.domain.usecases.deletebyid
 
 import com.vlatrof.subscriptionsmanager.domain.repositories.SubscriptionsRepository
-import com.vlatrof.subscriptionsmanager.domain.usecases.interfaces.DeleteSubscriptionByIdUseCase
 
 class DeleteSubscriptionByIdUseCaseImpl(
 
     private val subscriptionsRepository: SubscriptionsRepository
 
-    ) : DeleteSubscriptionByIdUseCase {
+) : DeleteSubscriptionByIdUseCase {
 
     override operator fun invoke(id: Int) {
-
         subscriptionsRepository.deleteSubscriptionById(id)
-
     }
-
 }

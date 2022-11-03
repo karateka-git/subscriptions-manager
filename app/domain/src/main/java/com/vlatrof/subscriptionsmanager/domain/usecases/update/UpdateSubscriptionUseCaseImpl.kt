@@ -1,19 +1,15 @@
-package com.vlatrof.subscriptionsmanager.domain.usecases.implementations
+package com.vlatrof.subscriptionsmanager.domain.usecases.update
 
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import com.vlatrof.subscriptionsmanager.domain.repositories.SubscriptionsRepository
-import com.vlatrof.subscriptionsmanager.domain.usecases.interfaces.UpdateSubscriptionUseCase
 
 class UpdateSubscriptionUseCaseImpl(
 
     private val subscriptionsRepository: SubscriptionsRepository
 
-    ): UpdateSubscriptionUseCase {
+) : UpdateSubscriptionUseCase {
 
     override fun invoke(subscription: Subscription) {
-
         subscriptionsRepository.updateSubscription(subscription)
-
     }
-
 }

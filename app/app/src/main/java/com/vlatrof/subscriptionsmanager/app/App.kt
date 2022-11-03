@@ -27,14 +27,8 @@ class App : Application() {
         startKoin {
             androidLogger(Level.ERROR)
             androidContext(this@App)
-            modules(listOf(
-                    dataModule,
-                    domainModule,
-                    appModule,
-                )
-            )
+            modules(listOf(dataModule, domainModule, appModule))
         }
-
     }
 
     fun applyNightMode(nightMode: Int) {
@@ -76,5 +70,4 @@ class App : Application() {
         const val DEFAULT_NIGHT_MODE = MODE_NIGHT_FOLLOW_SYSTEM
         const val DEFAULT_CURRENCY_CODE = "USD"
     }
-
 }

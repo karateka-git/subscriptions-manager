@@ -1,9 +1,8 @@
-package com.vlatrof.subscriptionsmanager.domain.usecases.interfaces
+package com.vlatrof.subscriptionsmanager.domain.usecases.update
 
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 
-interface InsertNewSubscriptionUseCase {
+interface UpdateSubscriptionUseCase {
 
     operator fun invoke(subscription: Subscription)
-
 }

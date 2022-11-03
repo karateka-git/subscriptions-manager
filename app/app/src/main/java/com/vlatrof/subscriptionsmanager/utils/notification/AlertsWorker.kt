@@ -9,17 +9,15 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import java.time.LocalDate
 
-class AlertsWorker (
+class AlertsWorker(
 
     private val context: Context,
-    private val workerParameters: WorkerParameters
+    workerParameters: WorkerParameters
 
 ) : CoroutineWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
-
         coroutineScope {
-
             val deferred = async {
                 SubscriptionsRoomDatabase
                     .getDatabase(context)
@@ -31,23 +29,20 @@ class AlertsWorker (
 
             if (subscriptions.isEmpty()) return@coroutineScope
             subscriptions.forEach {
-
                 val subscription = Subscription(it).toDomainSubscription()
 
-                if (!subscription.alertEnabled)
+                if (!subscription.alertEnabled) {
                     return@coroutineScope
+                }
 
-                if (subscription.nextRenewalDate + subscription.alertPeriod != LocalDate.now())
+                if (subscription.nextRenewalDate + subscription.alertPeriod != LocalDate.now()) {
                     return@coroutineScope
+                }
 
                 NotificationHelper(context).showRenewalNotification(subscription)
-
             }
-
         }
 
         return Result.success()
-
     }
-
 }

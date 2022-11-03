@@ -13,5 +13,4 @@ class OptionsViewModel(private val application: App) : AndroidViewModel(applicat
     fun getCurrentNightMode(): Int {
         return application.getCurrentNightMode()
     }
-
 }

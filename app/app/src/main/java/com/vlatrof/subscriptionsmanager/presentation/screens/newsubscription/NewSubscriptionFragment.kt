@@ -11,9 +11,13 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.vlatrof.subscriptionsmanager.R
 import com.vlatrof.subscriptionsmanager.databinding.FragmentNewSubscriptionBinding
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
-import com.vlatrof.subscriptionsmanager.presentation.utils.*
 import com.vlatrof.subscriptionsmanager.presentation.screens.base.BaseViewModel
-import com.vlatrof.subscriptionsmanager.utils.*
+import com.vlatrof.subscriptionsmanager.utils.AlertPeriodOptionsHolder
+import com.vlatrof.subscriptionsmanager.utils.Parser
+import com.vlatrof.subscriptionsmanager.utils.RenewalPeriodOptionsHolder
+import com.vlatrof.subscriptionsmanager.utils.getFirstKey
+import com.vlatrof.subscriptionsmanager.utils.hideKeyboard
+import com.vlatrof.subscriptionsmanager.utils.round
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.time.Period
 import java.time.format.DateTimeFormatter
@@ -42,16 +46,13 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
     }
 
     private fun setupGoBackButton() {
-
         binding.btnNewSubscriptionGoBack.setOnClickListener {
             hideKeyboard()
             findNavController().popBackStack()
         }
-
     }
 
     private fun setupNameInput() {
-
         // validate new value
         binding.tietNewSubscriptionName.doAfterTextChanged {
             newSubscriptionViewModel.validateNameInput(it.toString())
@@ -62,11 +63,9 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         newSubscriptionViewModel.nameInputState.observe(viewLifecycleOwner) {
             binding.tilNewSubscriptionName.error = getString(it.errorStringResourceId)
         }
-
     }
 
     private fun setupCostInput() {
-
         // set initial value
         val initialValue = "0.0"
         binding.tietNewSubscriptionCost.setText(initialValue)
@@ -82,11 +81,9 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         newSubscriptionViewModel.costInputState.observe(viewLifecycleOwner) {
             binding.tilNewSubscriptionCost.error = getString(it.errorStringResourceId)
         }
-
     }
 
     private fun setupStartDateInput() {
-
         val dateField = binding.tietNewSubscriptionStartDate
 
         // init DatePicker and restore selection
@@ -115,11 +112,9 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
                     .format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))
             )
         }
-
     }
 
     private fun setupCreateButton() {
-
         // handle click
         binding.btnNewSubscriptionCreate.setOnClickListener {
             val subscriptionToCreate = parseSubscription()
@@ -141,19 +136,19 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
                 )
             }
         }
-
     }
 
     private fun setupCurrencyInput() {
-
         val currencyField = binding.actvNewSubscriptionCurrency
 
         // set menu items
-        currencyField.setAdapter(ArrayAdapter(
-            requireActivity(),
-            android.R.layout.simple_spinner_dropdown_item,
-            Currency.getAvailableCurrencies().toTypedArray()
-        ))
+        currencyField.setAdapter(
+            ArrayAdapter(
+                requireActivity(),
+                android.R.layout.simple_spinner_dropdown_item,
+                Currency.getAvailableCurrencies().toTypedArray()
+            )
+        )
 
         // if initial input state: restore last value or set default
         if (newSubscriptionViewModel.currencyInputState.value == BaseViewModel.InputState.INITIAL) {
@@ -165,7 +160,6 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
         // handle new value
         currencyField.doAfterTextChanged {
-
             var newValue = it.toString()
 
             // force only capital characters
@@ -178,27 +172,26 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
             newSubscriptionViewModel.currencyInputSelection = newValue
             newSubscriptionViewModel.validateCurrencyInput(newValue)
             newSubscriptionViewModel.updateCreateButtonState()
-
         }
 
         // handle new input state
         newSubscriptionViewModel.currencyInputState.observe(viewLifecycleOwner) { newState ->
             binding.tilNewSubscriptionCurrency.error = getString(newState.errorStringResourceId)
         }
-
     }
 
     private fun setupRenewalPeriodInput() {
-
         val renewalPeriodField = binding.actvNewSubscriptionRenewalPeriod
         val optionsHolder = RenewalPeriodOptionsHolder(resources)
 
         // set menu items
-        renewalPeriodField.setAdapter(ArrayAdapter(
-            requireActivity(),
-            android.R.layout.simple_spinner_dropdown_item,
-            optionsHolder.options.values.toTypedArray()
-        ))
+        renewalPeriodField.setAdapter(
+            ArrayAdapter(
+                requireActivity(),
+                android.R.layout.simple_spinner_dropdown_item,
+                optionsHolder.options.values.toTypedArray()
+            )
+        )
 
         // restore value or set default
         if (newSubscriptionViewModel.renewalPeriodInputSelection.isEmpty()) {
@@ -210,21 +203,20 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         renewalPeriodField.doAfterTextChanged {
             newSubscriptionViewModel.renewalPeriodInputSelection = it.toString()
         }
-
-
     }
 
     private fun setupAlertPeriodInput() {
-
         val alertField = binding.actvNewSubscriptionAlert
         val optionsHolder = AlertPeriodOptionsHolder(resources)
 
         // set menu items
-        alertField.setAdapter(ArrayAdapter(
-            requireActivity(),
-            android.R.layout.simple_spinner_dropdown_item,
-            optionsHolder.options.values.toTypedArray()
-        ))
+        alertField.setAdapter(
+            ArrayAdapter(
+                requireActivity(),
+                android.R.layout.simple_spinner_dropdown_item,
+                optionsHolder.options.values.toTypedArray()
+            )
+        )
 
         // restore value or set default
         if (newSubscriptionViewModel.alertInputSelection == "") {
@@ -236,11 +228,9 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         alertField.doAfterTextChanged {
             newSubscriptionViewModel.alertInputSelection = it.toString()
         }
-
     }
 
-    private fun parseSubscription() : Subscription {
-
+    private fun parseSubscription(): Subscription {
         val name = binding.tietNewSubscriptionName.text.toString().trim()
 
         val description = binding.tietNewSubscriptionDescription.text.toString().trim()
@@ -260,7 +250,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         // renewal period
         val renewalPeriod = Period.parse(
             RenewalPeriodOptionsHolder(resources).options
-            .getFirstKey(binding.actvNewSubscriptionRenewalPeriod.text.toString())
+                .getFirstKey(binding.actvNewSubscriptionRenewalPeriod.text.toString())
         )
 
         // alert period
@@ -288,7 +278,5 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
             alertEnabled = alertEnabled,
             alertPeriod = alertPeriod
         )
-
     }
-
 }

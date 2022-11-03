@@ -26,18 +26,15 @@ class SubscriptionsFragment : Fragment(R.layout.fragment_subscriptions) {
     }
 
     private fun setupNotFoundLayoutNewSubscriptionButton() {
-
-        binding.btnLlSubscriptionsNotFoundAddNew.setOnClickListener{
+        binding.btnLlSubscriptionsNotFoundAddNew.setOnClickListener {
             findNavController().navigate(
                 R.id.action_fragment_subscriptions_list_to_fragment_new_subscription
             )
         }
-
     }
 
     private fun setupSubscriptionsRVAdapter() {
-
-        val listener = object: SubscriptionsActionListener {
+        val listener = object : SubscriptionsActionListener {
             override fun onSubscriptionItemClick(subscriptionId: Int) {
                 openSubscriptionDetailsScreen(subscriptionId)
             }
@@ -47,9 +44,8 @@ class SubscriptionsFragment : Fragment(R.layout.fragment_subscriptions) {
     }
 
     private fun observeSubscriptionsLiveData() {
-
         subscriptionsViewModel.subscriptionsLiveData.observe(viewLifecycleOwner) {
-            updatedSubscriptionsList ->
+                updatedSubscriptionsList ->
 
             if (updatedSubscriptionsList.isEmpty()) {
                 binding.rvSubscriptionsList.visibility = View.GONE
@@ -60,14 +56,11 @@ class SubscriptionsFragment : Fragment(R.layout.fragment_subscriptions) {
             }
 
             subscriptionsAdapter.setData(updatedSubscriptionsList)
-
         }
-
     }
 
     private fun setupNewSubscriptionButton() {
-
-        binding.btnSubscriptionsAddNew.setOnClickListener{
+        binding.btnSubscriptionsAddNew.setOnClickListener {
             findNavController().navigate(
                 R.id.action_fragment_subscriptions_list_to_fragment_new_subscription
             )
@@ -75,7 +68,6 @@ class SubscriptionsFragment : Fragment(R.layout.fragment_subscriptions) {
     }
 
     private fun openSubscriptionDetailsScreen(subscriptionId: Int) {
-
         findNavController().navigate(
             R.id.action_fragment_subscriptions_list_to_fragment_subscription_details,
             Bundle().apply {
@@ -88,12 +80,10 @@ class SubscriptionsFragment : Fragment(R.layout.fragment_subscriptions) {
     }
 
     private fun setupOpenOptionsButton() {
-
-        binding.btnOpenOptions.setOnClickListener{
+        binding.btnOpenOptions.setOnClickListener {
             findNavController().navigate(
                 R.id.action_fragment_subscriptions_list_to_fragment_options
             )
         }
     }
-
 }

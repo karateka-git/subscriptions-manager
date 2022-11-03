@@ -1,9 +1,9 @@
 package com.vlatrof.subscriptionsmanager.data.local
 
 import com.vlatrof.subscriptionsmanager.data.local.room.dao.SubscriptionsDao
-import com.vlatrof.subscriptionsmanager.data.models.Subscription as DataSubscription
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import com.vlatrof.subscriptionsmanager.data.models.Subscription as DataSubscription
 
 class SubscriptionsLocalDataSource(private val subscriptionsDao: SubscriptionsDao) {
 
@@ -35,5 +35,4 @@ class SubscriptionsLocalDataSource(private val subscriptionsDao: SubscriptionsDa
     fun updateSubscription(subscription: DataSubscription) {
         subscriptionsDao.update(subscription.toSubscriptionEntity())
     }
-
 }

@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.vlatrof.subscriptionsmanager.app.App
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
-import com.vlatrof.subscriptionsmanager.domain.usecases.interfaces.InsertNewSubscriptionUseCase
+import com.vlatrof.subscriptionsmanager.domain.usecases.insertnew.InsertNewSubscriptionUseCase
 import com.vlatrof.subscriptionsmanager.presentation.screens.base.BaseViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -13,13 +13,13 @@ import kotlinx.coroutines.launch
 import java.lang.NumberFormatException
 import java.util.Currency
 
-class NewSubscriptionViewModel (
+class NewSubscriptionViewModel(
 
     private val application: App,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
-    private val insertNewSubscriptionUseCase: InsertNewSubscriptionUseCase,
+    private val insertNewSubscriptionUseCase: InsertNewSubscriptionUseCase
 
-    ) : BaseViewModel() {
+) : BaseViewModel() {
 
     // value holders
     var currencyInputSelection = ""
@@ -45,7 +45,6 @@ class NewSubscriptionViewModel (
     }
 
     fun validateCostInput(newValue: String) {
-
         if (newValue.isEmpty()) {
             costInputState.value = InputState.EMPTY
             return
@@ -59,11 +58,9 @@ class NewSubscriptionViewModel (
         }
 
         costInputState.value = InputState.CORRECT
-
     }
 
     fun validateCurrencyInput(newValue: String) {
-
         if (newValue.isEmpty()) {
             currencyInputState.value = InputState.EMPTY
             return
@@ -80,14 +77,13 @@ class NewSubscriptionViewModel (
         }
 
         currencyInputState.value = InputState.CORRECT
-
     }
 
     fun updateCreateButtonState() {
         buttonCreateState.value =
-            nameInputState.value == InputState.CORRECT
-            && costInputState.value == InputState.CORRECT
-            && currencyInputState.value == InputState.CORRECT
+            nameInputState.value == InputState.CORRECT &&
+            costInputState.value == InputState.CORRECT &&
+            currencyInputState.value == InputState.CORRECT
     }
 
     fun insertNewSubscription(subscription: Subscription) {
@@ -103,5 +99,4 @@ class NewSubscriptionViewModel (
     fun saveLastCurrencyCode(currencyCode: String) {
         application.saveLastCurrencyCode(currencyCode)
     }
-
 }

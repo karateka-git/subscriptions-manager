@@ -1,8 +1,7 @@
-package com.vlatrof.subscriptionsmanager.domain.usecases.implementations
+package com.vlatrof.subscriptionsmanager.domain.usecases.getbyid
 
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import com.vlatrof.subscriptionsmanager.domain.repositories.SubscriptionsRepository
-import com.vlatrof.subscriptionsmanager.domain.usecases.interfaces.GetSubscriptionByIdUseCase
 
 class GetSubscriptionByIdUseCaseImpl(
 
@@ -13,5 +12,4 @@ class GetSubscriptionByIdUseCaseImpl(
     override fun invoke(id: Int): Subscription {
         return subscriptionsRepository.getSubscriptionById(id)
     }
-
 }

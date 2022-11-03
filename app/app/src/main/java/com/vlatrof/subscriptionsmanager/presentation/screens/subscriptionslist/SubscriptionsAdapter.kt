@@ -3,8 +3,8 @@ package com.vlatrof.subscriptionsmanager.presentation.screens.subscriptionslist
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.vlatrof.subscriptionsmanager.R
 import com.vlatrof.subscriptionsmanager.databinding.RvItemSubscriptionBinding
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
@@ -33,7 +33,6 @@ class SubscriptionsDiffUtilCallback(
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         return oldList[oldItemPosition] == newList[newItemPosition]
     }
-
 }
 
 class SubscriptionsAdapter(
@@ -41,30 +40,29 @@ class SubscriptionsAdapter(
     private val context: Context,
     private val listener: SubscriptionsActionListener
 
-    ) : RecyclerView.Adapter<SubscriptionsAdapter.SubscriptionViewHolder>() {
+) : RecyclerView.Adapter<SubscriptionsAdapter.SubscriptionViewHolder>() {
 
     var subscriptions: List<Subscription> = emptyList()
 
     fun setData(newSubscriptionsList: List<Subscription>) {
-
-        val newSortedList= newSubscriptionsList.sortedBy { it.nextRenewalDate }
+        val newSortedList = newSubscriptionsList.sortedBy { it.nextRenewalDate }
         val subscriptionsDiffUtilCallback =
             SubscriptionsDiffUtilCallback(subscriptions, newSortedList)
         val diffResult = DiffUtil.calculateDiff(subscriptionsDiffUtilCallback)
         subscriptions = newSortedList
         diffResult.dispatchUpdatesTo(this@SubscriptionsAdapter)
-
     }
 
     override fun getItemCount(): Int = subscriptions.size
 
-    class SubscriptionViewHolder(val binding: RvItemSubscriptionBinding)
-        : RecyclerView.ViewHolder(binding.root)
+    class SubscriptionViewHolder(val binding: RvItemSubscriptionBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubscriptionViewHolder {
-
         val binding = RvItemSubscriptionBinding.inflate(
-            LayoutInflater.from(parent.context), parent, false
+            LayoutInflater.from(parent.context),
+            parent,
+            false
         )
 
         binding.root.setOnClickListener { subscriptionItemView ->
@@ -72,11 +70,9 @@ class SubscriptionsAdapter(
         }
 
         return SubscriptionViewHolder(binding)
-
     }
 
     override fun onBindViewHolder(holder: SubscriptionViewHolder, position: Int) {
-
         val subscription = subscriptions[position]
 
         holder.itemView.tag = subscription.id
@@ -97,7 +93,5 @@ class SubscriptionsAdapter(
                 subscription.nextRenewalDate.format(DateTimeFormatter.ofPattern("dd MMMM"))
             }
         }
-
     }
-
 }

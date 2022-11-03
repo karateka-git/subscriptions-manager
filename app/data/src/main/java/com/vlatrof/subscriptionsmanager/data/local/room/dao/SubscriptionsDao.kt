@@ -1,6 +1,10 @@
 package com.vlatrof.subscriptionsmanager.data.local.room.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Update
 import com.vlatrof.subscriptionsmanager.data.local.room.entities.SubscriptionEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -27,5 +31,4 @@ interface SubscriptionsDao {
 
     @Update
     fun update(subscription: SubscriptionEntity)
-
 }

@@ -1,8 +1,8 @@
-package com.vlatrof.subscriptionsmanager.domain.usecases.interfaces
+package com.vlatrof.subscriptionsmanager.domain.usecases.insertnew
 
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 
-interface UpdateSubscriptionUseCase {
+interface InsertNewSubscriptionUseCase {
 
     operator fun invoke(subscription: Subscription)
 

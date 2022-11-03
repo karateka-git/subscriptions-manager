@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "subscriptions")
-data class SubscriptionEntity (
+data class SubscriptionEntity(
 
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
@@ -36,6 +36,6 @@ data class SubscriptionEntity (
 
     // Alert period in java.time.Period pattern (example: P-1D - minus 1 day)
     @ColumnInfo(name = "alert_period")
-    val alertPeriod: String = "",
+    val alertPeriod: String = ""
 
 )
