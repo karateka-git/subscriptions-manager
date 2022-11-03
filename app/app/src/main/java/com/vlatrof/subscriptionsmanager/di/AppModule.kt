@@ -1,10 +1,10 @@
 package com.vlatrof.subscriptionsmanager.di
 
 import com.vlatrof.subscriptionsmanager.app.App
-import com.vlatrof.subscriptionsmanager.presentation.viewmodels.NewSubscriptionViewModel
-import com.vlatrof.subscriptionsmanager.presentation.viewmodels.OptionsViewModel
-import com.vlatrof.subscriptionsmanager.presentation.viewmodels.SubscriptionDetailsViewModel
-import com.vlatrof.subscriptionsmanager.presentation.viewmodels.SubscriptionsViewModel
+import com.vlatrof.subscriptionsmanager.presentation.screens.newsubscription.NewSubscriptionViewModel
+import com.vlatrof.subscriptionsmanager.presentation.screens.options.OptionsViewModel
+import com.vlatrof.subscriptionsmanager.presentation.screens.subscriptiondetails.SubscriptionDetailsViewModel
+import com.vlatrof.subscriptionsmanager.presentation.screens.subscriptionslist.SubscriptionsViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module

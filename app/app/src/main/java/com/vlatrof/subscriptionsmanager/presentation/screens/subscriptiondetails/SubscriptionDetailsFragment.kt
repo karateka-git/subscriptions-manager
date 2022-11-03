@@ -1,4 +1,4 @@
-package com.vlatrof.subscriptionsmanager.presentation.fragments
+package com.vlatrof.subscriptionsmanager.presentation.screens.subscriptiondetails
 
 import android.os.Bundle
 import android.view.View
@@ -13,7 +13,7 @@ import com.vlatrof.subscriptionsmanager.R
 import com.vlatrof.subscriptionsmanager.databinding.FragmentSubscriptionDetailsBinding
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import com.vlatrof.subscriptionsmanager.presentation.utils.*
-import com.vlatrof.subscriptionsmanager.presentation.viewmodels.SubscriptionDetailsViewModel
+import com.vlatrof.subscriptionsmanager.utils.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.time.Period
 import java.time.format.DateTimeFormatter
@@ -339,7 +339,8 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         )
 
         // renewal period
-        val renewalPeriod = Period.parse(RenewalPeriodOptionsHolder(resources).options
+        val renewalPeriod = Period.parse(
+            RenewalPeriodOptionsHolder(resources).options
             .getFirstKey(binding.actvSubscriptionDetailsRenewalPeriod.text.toString())
         )
 

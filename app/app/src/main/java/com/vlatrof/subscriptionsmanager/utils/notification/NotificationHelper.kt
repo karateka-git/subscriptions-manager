@@ -1,4 +1,4 @@
-package com.vlatrof.subscriptionsmanager.presentation.utils.notification
+package com.vlatrof.subscriptionsmanager.utils.notification
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -12,7 +12,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.res.ResourcesCompat
 import com.vlatrof.subscriptionsmanager.R
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
-import com.vlatrof.subscriptionsmanager.presentation.activities.MainActivity
+import com.vlatrof.subscriptionsmanager.presentation.activity.MainActivity
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 

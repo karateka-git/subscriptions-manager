@@ -1,4 +1,4 @@
-package com.vlatrof.subscriptionsmanager.presentation.utils.notification
+package com.vlatrof.subscriptionsmanager.utils.notification
 
 import android.content.Context
 import androidx.work.*

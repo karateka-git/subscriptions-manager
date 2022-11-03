@@ -1,4 +1,4 @@
-package com.vlatrof.subscriptionsmanager.presentation.fragments
+package com.vlatrof.subscriptionsmanager.presentation.screens.options
 
 import android.os.Bundle
 import android.view.View
@@ -7,8 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.vlatrof.subscriptionsmanager.R
 import com.vlatrof.subscriptionsmanager.databinding.FragmentOptionsBinding
-import com.vlatrof.subscriptionsmanager.presentation.utils.getFirstKey
-import com.vlatrof.subscriptionsmanager.presentation.viewmodels.OptionsViewModel
+import com.vlatrof.subscriptionsmanager.utils.getFirstKey
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class OptionsFragment : Fragment(R.layout.fragment_options) {

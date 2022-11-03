@@ -1,4 +1,4 @@
-package com.vlatrof.subscriptionsmanager.presentation.fragments
+package com.vlatrof.subscriptionsmanager.presentation.screens.subscriptionslist
 
 import android.os.Bundle
 import android.view.View
@@ -6,9 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.vlatrof.subscriptionsmanager.R
 import com.vlatrof.subscriptionsmanager.databinding.FragmentSubscriptionsBinding
-import com.vlatrof.subscriptionsmanager.presentation.adapters.SubscriptionsActionListener
-import com.vlatrof.subscriptionsmanager.presentation.adapters.SubscriptionsAdapter
-import com.vlatrof.subscriptionsmanager.presentation.viewmodels.SubscriptionsViewModel
+import com.vlatrof.subscriptionsmanager.presentation.screens.subscriptiondetails.SubscriptionDetailsFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SubscriptionsFragment : Fragment(R.layout.fragment_subscriptions) {
@@ -81,7 +79,8 @@ class SubscriptionsFragment : Fragment(R.layout.fragment_subscriptions) {
         findNavController().navigate(
             R.id.action_fragment_subscriptions_list_to_fragment_subscription_details,
             Bundle().apply {
-                putInt(SubscriptionDetailsFragment.ARGUMENT_SUBSCRIPTION_ID_TAG,
+                putInt(
+                    SubscriptionDetailsFragment.ARGUMENT_SUBSCRIPTION_ID_TAG,
                     subscriptionId
                 )
             }

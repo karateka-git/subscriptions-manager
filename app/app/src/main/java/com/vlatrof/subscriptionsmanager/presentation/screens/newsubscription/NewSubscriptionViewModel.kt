@@ -1,4 +1,4 @@
-package com.vlatrof.subscriptionsmanager.presentation.viewmodels
+package com.vlatrof.subscriptionsmanager.presentation.screens.newsubscription
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -6,6 +6,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.vlatrof.subscriptionsmanager.app.App
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import com.vlatrof.subscriptionsmanager.domain.usecases.interfaces.InsertNewSubscriptionUseCase
+import com.vlatrof.subscriptionsmanager.presentation.screens.base.BaseViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package com.vlatrof.subscriptionsmanager.presentation.viewmodels
+package com.vlatrof.subscriptionsmanager.presentation.screens.base
 
 import androidx.lifecycle.ViewModel
 import com.vlatrof.subscriptionsmanager.R

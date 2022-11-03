@@ -1,4 +1,4 @@
-package com.vlatrof.subscriptionsmanager.presentation.viewmodels
+package com.vlatrof.subscriptionsmanager.presentation.screens.subscriptiondetails
 
 import android.content.res.Resources
 import androidx.lifecycle.MutableLiveData
@@ -9,10 +9,10 @@ import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import com.vlatrof.subscriptionsmanager.domain.usecases.interfaces.DeleteSubscriptionByIdUseCase
 import com.vlatrof.subscriptionsmanager.domain.usecases.interfaces.GetSubscriptionByIdUseCase
 import com.vlatrof.subscriptionsmanager.domain.usecases.interfaces.UpdateSubscriptionUseCase
-import com.vlatrof.subscriptionsmanager.presentation.fragments.SubscriptionDetailsFragment
-import com.vlatrof.subscriptionsmanager.presentation.utils.Parser
-import com.vlatrof.subscriptionsmanager.presentation.utils.RenewalPeriodOptionsHolder
-import com.vlatrof.subscriptionsmanager.presentation.utils.getFirstKey
+import com.vlatrof.subscriptionsmanager.utils.Parser
+import com.vlatrof.subscriptionsmanager.utils.RenewalPeriodOptionsHolder
+import com.vlatrof.subscriptionsmanager.utils.getFirstKey
+import com.vlatrof.subscriptionsmanager.presentation.screens.base.BaseViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
