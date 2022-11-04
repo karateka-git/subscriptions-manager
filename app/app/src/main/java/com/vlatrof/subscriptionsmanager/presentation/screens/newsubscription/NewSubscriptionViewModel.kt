@@ -22,7 +22,7 @@ class NewSubscriptionViewModel(
 ) : BaseViewModel() {
 
     // value holders
-    var currencyInputSelection = ""
+    var currencyInputValue = ""
     var renewalPeriodInputSelection = ""
     var alertInputSelection = ""
     val startDateInputSelection = MutableLiveData(

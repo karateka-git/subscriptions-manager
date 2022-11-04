@@ -69,6 +69,12 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
 
     private fun observeSubscriptionLiveData() {
         subscriptionDetailsViewModel.subscriptionLiveData.observe(viewLifecycleOwner) {
+            if (it == null) {
+                showToast(getString(R.string.toast_error_message_something_went_wrong))
+                findNavController().popBackStack()
+                return@observe
+            }
+
             populateUi(subscription = it)
         }
     }
@@ -282,7 +288,7 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
 
         // currency input
         val currencyStr = subscription.paymentCurrency.currencyCode
-        binding.actvSubscriptionDetailsCurrency.setText(currencyStr)
+        binding.actvSubscriptionDetailsCurrency.setText(currencyStr, false)
         subscriptionDetailsViewModel.handleNewCurrencyValue(currencyStr)
 
         // start date input

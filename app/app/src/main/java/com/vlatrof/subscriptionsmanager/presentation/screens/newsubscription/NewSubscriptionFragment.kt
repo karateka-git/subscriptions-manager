@@ -150,13 +150,13 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
             )
         )
 
-        // if initial input state: restore last value or set default
+        // if input state initial: restore last value or set default
         if (newSubscriptionViewModel.currencyInputState.value == BaseViewModel.InputState.INITIAL) {
             val defaultCurrencyCode = newSubscriptionViewModel.getLastCurrencyCode()
-            newSubscriptionViewModel.currencyInputSelection = defaultCurrencyCode
+            newSubscriptionViewModel.currencyInputValue = defaultCurrencyCode
             newSubscriptionViewModel.validateCurrencyInput(defaultCurrencyCode)
         }
-        currencyField.setText(newSubscriptionViewModel.currencyInputSelection)
+        currencyField.setText(newSubscriptionViewModel.currencyInputValue, false)
 
         // handle new value
         currencyField.doAfterTextChanged {
@@ -169,7 +169,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
                 currencyField.setSelection(newValue.length)
             }
 
-            newSubscriptionViewModel.currencyInputSelection = newValue
+            newSubscriptionViewModel.currencyInputValue = newValue
             newSubscriptionViewModel.validateCurrencyInput(newValue)
             newSubscriptionViewModel.updateCreateButtonState()
         }

@@ -34,7 +34,7 @@ class SubscriptionDetailsViewModel(
 
 ) : BaseViewModel() {
 
-    val subscriptionLiveData = MutableLiveData<Subscription>()
+    val subscriptionLiveData = MutableLiveData<Subscription?>()
 
     private val availableCurrencies = Currency.getAvailableCurrencies()
 
