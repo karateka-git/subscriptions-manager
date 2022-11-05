@@ -42,7 +42,6 @@ class OptionsFragment : Fragment(R.layout.fragment_options) {
             registerForActivityResult(ActivityResultContracts.OpenDocument()) { contentUri ->
                 if (contentUri != null) {
                     optionsViewModel.importSubscriptions(contentUri)
-                    findNavController().popBackStack()
                 }
             }
     }

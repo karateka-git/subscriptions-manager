@@ -4,14 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
-import com.vlatrof.subscriptionsmanager.domain.usecases.getall.GetAllSubscriptionsUseCase
+import com.vlatrof.subscriptionsmanager.domain.usecases.getallflow.GetAllSubscriptionsFlowUseCase
 
 class SubscriptionsViewModel(
 
-    getAllSubscriptionsUseCase: GetAllSubscriptionsUseCase
+    getAllSubscriptionsFlowUseCase: GetAllSubscriptionsFlowUseCase
 
 ) : ViewModel() {
 
     val subscriptionsLiveData: LiveData<List<Subscription>> =
-        getAllSubscriptionsUseCase().asLiveData()
+        getAllSubscriptionsFlowUseCase().asLiveData()
 }
