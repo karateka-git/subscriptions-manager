@@ -36,15 +36,18 @@
     <string name="subscription_details_delete_dialog_btn_negative">Cancel</string>
 
     <!-- Screen: Options -->
-    <string name="options_title">Options</string>
+    <string name="options_tv_title">Options</string>
     <string name="options_btn_close_options_content_description">Close options</string>
     <string name="options_tv_night_mode">Night Mode</string>
     <string name="options_rb_day">Day</string>
     <string name="options_rb_night">Night</string>
     <string name="options_rb_system">System</string>
+    <string name="options_tv_subscriptions">Subscriptions</string>
+    <string name="options_btn_export">Export</string>
+    <string name="options_btn_import">Import</string>
 
     <!-- Subscription editing form -->
-    <string name="subscription_e_f_field_error_none"/>
+    <string name="subscription_e_f_field_error_none" translatable="false" />
     <string name="subscription_e_f_field_error_empty">* Required</string>
     <string name="subscription_e_f_field_error_wrong">* Wrong value</string>
     <string name="subscription_e_f_til_name_hint">Name</string>

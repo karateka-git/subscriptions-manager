@@ -1,81 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageButton
-        android:id="@+id/btn_options_close"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_all_nav_image_button_default_20dp"
-        android:layout_marginTop="@dimen/margin_all_nav_image_button_default_20dp"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
-        android:contentDescription="@string/options_btn_close_options_content_description"
-        android:padding="@dimen/padding_image_button_default_10dp"
-        android:src="@drawable/ic_baseline_menu_open_24"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tv_options_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_default_30dp"
-        android:layout_marginTop="@dimen/margin_top_title_default_10dp"
-        android:fontFamily="@font/inter_semibold"
-        android:text="@string/options_title"
-        android:textColor="?android:textColorPrimary"
-        android:textSize="@dimen/text_size_large"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_options_close" />
-
-    <TextView
-        android:id="@+id/tv_options_night_mode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_default_30dp"
-        android:fontFamily="@font/inter_regular"
-        android:text="@string/options_tv_night_mode"
-        android:textColor="?android:textColorPrimary"
-        android:textSize="@dimen/text_size_small"
-        app:layout_constraintStart_toStartOf="@id/tv_options_title"
-        app:layout_constraintTop_toBottomOf="@id/tv_options_title" />
-
-    <RadioGroup
-        android:id="@+id/rg_options_night_mode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_options_night_mode"
-        tools:checkedButton="@id/rb_day">
-
-        <RadioButton
-            android:id="@+id/rb_day"
-            android:layout_width="match_parent"
+        <ImageButton
+            android:id="@+id/btn_options_close"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_all_nav_image_button_20dp"
+            android:layout_marginTop="@dimen/margin_all_nav_image_button_20dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/options_btn_close_options_content_description"
+            android:padding="@dimen/padding_image_button_default_10dp"
+            android:src="@drawable/ic_baseline_menu_open_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_options_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default_30dp"
+            android:layout_marginTop="@dimen/margin_top_title_10dp"
+            android:fontFamily="@font/inter_semibold"
+            android:text="@string/options_tv_title"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/text_size_large"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_options_close" />
+
+        <TextView
+            android:id="@+id/tv_options_night_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default_30dp"
+            android:layout_marginTop="@dimen/margin_default_30dp"
             android:fontFamily="@font/inter_regular"
-            android:text="@string/options_rb_day" />
+            android:text="@string/options_tv_night_mode"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_options_title" />
 
-        <RadioButton
+        <RadioGroup
+            android:id="@+id/rg_options_night_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_options_night_mode"
+            tools:checkedButton="@id/rb_day">
 
-            android:id="@+id/rb_night"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            <RadioButton
+                android:id="@+id/rb_day"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
+                android:text="@string/options_rb_day" />
+
+            <RadioButton
+
+                android:id="@+id/rb_night"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/inter_regular"
+                android:text="@string/options_rb_night" />
+
+            <RadioButton
+                android:id="@+id/rb_system"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/inter_regular"
+                android:text="@string/options_rb_system" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/tv_options_subscriptions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default_30dp"
+            android:layout_marginTop="@dimen/margin_default_30dp"
             android:fontFamily="@font/inter_regular"
-            android:text="@string/options_rb_night" />
+            android:text="@string/options_tv_subscriptions"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rg_options_night_mode" />
 
-        <RadioButton
-            android:id="@+id/rb_system"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/inter_regular"
-            android:text="@string/options_rb_system" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_options_export_subscriptions"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_start_options_btn_22dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/inter_semibold"
+            android:text="@string/options_btn_export"
+            android:textColor="@color/green"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_options_subscriptions" />
 
-    </RadioGroup>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_options_import_subscriptions"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_start_options_btn_22dp"
+            android:fontFamily="@font/inter_semibold"
+            android:text="@string/options_btn_import"
+            android:textColor="@color/green"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_options_export_subscriptions" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_options_import_subscriptions" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlinx-serialization'
 }
 
 android {
@@ -74,6 +75,9 @@ dependencies {
     implementation "io.insert-koin:koin-core:$koin_version"
     implementation "io.insert-koin:koin-android:$koin_version"
 
+    // Kotlin Serialization JSON module
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1"
+    
     // Testing
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:$ext_junit_version"

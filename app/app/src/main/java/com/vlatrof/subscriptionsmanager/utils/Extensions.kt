@@ -14,8 +14,8 @@ import java.time.ZoneOffset
 
 // Show Toast
 
-fun Fragment.showToast(message: String) {
-    Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show()
+fun Fragment.showToast(message: String, toastLength: Int = Toast.LENGTH_SHORT) {
+    Toast.makeText(requireActivity(), message, toastLength).show()
 }
 
 // Hide Keyboard

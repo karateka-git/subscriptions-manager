@@ -36,12 +36,15 @@
     <string name="subscription_details_delete_dialog_btn_negative">Отмена</string>
 
     <!-- Screen: Options -->
-    <string name="options_title">Настройки</string>
+    <string name="options_tv_title">Настройки</string>
     <string name="options_btn_close_options_content_description">Закрыть настройки</string>
     <string name="options_tv_night_mode">Ночной режим</string>
     <string name="options_rb_day">День</string>
     <string name="options_rb_night">Ночь</string>
     <string name="options_rb_system">Системный</string>
+    <string name="options_tv_subscriptions">Подписки</string>
+    <string name="options_btn_export">Экпортировать</string>
+    <string name="options_btn_import">Импортировать</string>
 
     <!-- Subscription editing form -->
     <string name="subscription_e_f_field_error_none"/>

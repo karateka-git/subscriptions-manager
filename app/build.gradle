@@ -4,12 +4,14 @@ buildscript {
 
     repositories {
         google()
+        mavenCentral()
     }
 
     ext.nav_component_version = "2.5.2"
 
     dependencies {
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$nav_component_version")
+        classpath("org.jetbrains.kotlin:kotlin-serialization:1.7.10")
     }
 
 }
@@ -22,8 +24,6 @@ plugins {
 }
 
 ext {
-
-    // Dependencies versions
 
     // Common dependencies
     core_ktx_version = '1.8.0'
