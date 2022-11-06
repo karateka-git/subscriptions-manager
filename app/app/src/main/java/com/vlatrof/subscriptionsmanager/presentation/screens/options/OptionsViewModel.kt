@@ -1,16 +1,15 @@
 package com.vlatrof.subscriptionsmanager.presentation.screens.options
 
 import android.net.Uri
+import android.widget.Toast
 import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.vlatrof.subscriptionsmanager.app.App
 import com.vlatrof.subscriptionsmanager.data.local.room.database.SubscriptionsRoomDatabase
 import com.vlatrof.subscriptionsmanager.data.local.room.entities.SubscriptionEntity
-import com.vlatrof.subscriptionsmanager.domain.usecases.insertnew.InsertNewSubscriptionUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
@@ -21,8 +20,7 @@ import java.util.Scanner
 class OptionsViewModel(
 
     private val application: App,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
-    private val insertNewSubscriptionUseCase: InsertNewSubscriptionUseCase
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 
 ) : AndroidViewModel(application) {
 
@@ -35,30 +33,28 @@ class OptionsViewModel(
         return application.getCurrentNightMode()
     }
 
-    // todo: this needs BIG refactor
-    fun importSubscriptions(contentUri: Uri) {
-        viewModelScope.launch(ioDispatcher) {
-            application.contentResolver.openInputStream(contentUri).use { inputStream ->
-                val s = Scanner(inputStream).useDelimiter("\\A")
-                val jsonStr = if (s.hasNext()) s.next() else ""
-                val importedSubscriptions =
-                    Json.decodeFromString<List<SubscriptionEntity>>(jsonStr!!)
-                val subscriptionsDao =
-                    SubscriptionsRoomDatabase.getDatabase(application).getSubscriptionsDao()
-                importedSubscriptions.forEach {
-                    subscriptionsDao.insert(it)
-                }
-            }
+    fun exportSubscriptions(directoryUri: Uri?) {
+        if (directoryUri == null) {
+            // TODO: message from resources
+            Toast.makeText(application, "false", Toast.LENGTH_SHORT).show()
+            return
         }
+        exportOnBackground(directoryUri)
     }
 
-    // todo: this needs BIG refactor
-    fun exportSubscriptions(directoryUri: Uri) = viewModelScope.launch(ioDispatcher) {
-        // get subscriptions from database
-        val deferred = async() {
-            SubscriptionsRoomDatabase.getDatabase(application).getSubscriptionsDao().getAll()
+    fun importSubscriptions(contentUri: Uri?) {
+        if (contentUri == null) {
+            // TODO: message from resources
+            Toast.makeText(application, "false", Toast.LENGTH_SHORT).show()
+            return
         }
-        val subscriptions = deferred.await()
+        importObBackground(contentUri)
+    }
+    
+    private fun exportOnBackground(directoryUri: Uri) = viewModelScope.launch(ioDispatcher) {
+        // get subscriptions from database
+        val subscriptions =
+            SubscriptionsRoomDatabase.getDatabase(application).getSubscriptionsDao().getAll()
 
         // create file to save subscriptions
         val fileToSave = DocumentFile.fromTreeUri(application, directoryUri)!!
@@ -70,9 +66,30 @@ class OptionsViewModel(
                 val jsonData = Json.encodeToString(subscriptions)
                 outputStream!!.write(jsonData.toByteArray(charset = Charsets.UTF_8))
             }
+            // TODO: message from resources
+            Toast.makeText(application, "true", Toast.LENGTH_SHORT).show()
         } catch (e: IOException) {
-            // todo
-            return@launch
+            // TODO: message from resources
+            Toast.makeText(application, "false", Toast.LENGTH_SHORT).show()
+        }
+    }
+    
+    private fun importObBackground(contentUri: Uri) = viewModelScope.launch(ioDispatcher) {
+        try {
+            application.contentResolver.openInputStream(contentUri).use { inputStream ->
+                val scanner = Scanner(inputStream).useDelimiter("\\A")
+                val jsonStr = if (scanner.hasNext()) scanner.next() else ""
+                val importedSubscriptions =
+                    Json.decodeFromString<List<SubscriptionEntity>>(jsonStr!!)
+                val subscriptionsDao =
+                    SubscriptionsRoomDatabase.getDatabase(application).getSubscriptionsDao()
+                importedSubscriptions.forEach { subscriptionsDao.insert(it) }
+                // TODO: message from resources
+                Toast.makeText(application, "true", Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: IOException) {
+            // TODO: message from resources
+            Toast.makeText(application, "false", Toast.LENGTH_SHORT).show()
         }
     }
 }

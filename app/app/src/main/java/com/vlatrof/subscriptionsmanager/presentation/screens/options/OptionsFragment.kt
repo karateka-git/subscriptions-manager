@@ -19,13 +19,13 @@ class OptionsFragment : Fragment(R.layout.fragment_options) {
 
     private val optionsViewModel by viewModel<OptionsViewModel>()
     private lateinit var binding: FragmentOptionsBinding
-    private lateinit var filePickerLauncher: ActivityResultLauncher<Array<String>>
-    private lateinit var directoryPickerLauncher: ActivityResultLauncher<Uri?>
+    private lateinit var exportLauncher: ActivityResultLauncher<Uri?>
+    private lateinit var importLauncher: ActivityResultLauncher<Array<String>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        registerFilePickerLauncher()
-        registerDirectoryPickerLauncher()
+        registerExportLauncher()
+        registerImportLauncher()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -33,38 +33,42 @@ class OptionsFragment : Fragment(R.layout.fragment_options) {
         binding = FragmentOptionsBinding.bind(view)
         setupCloseOptionsButton()
         setupNightModeRadioGroup()
-        setupImportSubscriptionsButton()
         setupExportSubscriptionsButton()
-    }
-
-    private fun registerFilePickerLauncher() {
-        filePickerLauncher =
-            registerForActivityResult(ActivityResultContracts.OpenDocument()) { contentUri ->
-                if (contentUri != null) {
-                    optionsViewModel.importSubscriptions(contentUri)
-                }
-            }
-    }
-
-    private fun registerDirectoryPickerLauncher() {
-        directoryPickerLauncher =
-            registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { dirUri ->
-                if (dirUri != null) {
-                    optionsViewModel.exportSubscriptions(dirUri)
-                }
-            }
-    }
-
-    private fun setupImportSubscriptionsButton() {
-        binding.btnOptionsImportSubscriptions.setOnClickListener() {
-            filePickerLauncher.launch(arrayOf("*/*"))
-        }
+        setupImportSubscriptionsButton()
     }
 
     private fun setupExportSubscriptionsButton() {
-        binding.btnOptionsExportSubscriptions.setOnClickListener() {
-            directoryPickerLauncher.launch(null)
+        binding.btnOptionsExportSubscriptions.setOnClickListener {
+            exportLauncher.launch(null)
         }
+    }
+
+    private fun setupImportSubscriptionsButton() {
+        binding.btnOptionsImportSubscriptions.setOnClickListener {
+            importLauncher.launch(arrayOf("*/*"))
+        }
+    }
+
+    private fun registerExportLauncher() {
+        exportLauncher =
+            registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { directoryUri ->
+                onExportSubscriptions(directoryUri)
+            }
+    }
+
+    private fun registerImportLauncher() {
+        importLauncher =
+            registerForActivityResult(ActivityResultContracts.OpenDocument()) { contentUri ->
+                onImportSubscriptions(contentUri)
+            }
+    }
+
+    private fun onExportSubscriptions(directoryUri: Uri?) {
+        optionsViewModel.exportSubscriptions(directoryUri)
+    }
+
+    private fun onImportSubscriptions(contentUri: Uri?) {
+        optionsViewModel.importSubscriptions(contentUri)
     }
 
     private fun setupCloseOptionsButton() {
