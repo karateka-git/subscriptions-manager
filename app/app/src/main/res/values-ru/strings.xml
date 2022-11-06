@@ -45,6 +45,8 @@
     <string name="options_tv_subscriptions">Подписки</string>
     <string name="options_btn_export">Экпортировать</string>
     <string name="options_btn_import">Импортировать</string>
+    <string name="options_toast_subscriptions_export_no_dir_chosen">Пожалуйста, выберите директорию для сохранения</string>
+    <string name="options_toast_subscriptions_import_no_file_chosen">Пожалуйста, выберите файл для импорта</string>
 
     <!-- Subscription editing form -->
     <string name="subscription_e_f_field_error_none"/>

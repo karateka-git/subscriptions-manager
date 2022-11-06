@@ -35,8 +35,7 @@ val appModule = module {
 
     viewModel<OptionsViewModel> {
         OptionsViewModel(
-            application = androidContext() as App,
-            insertNewSubscriptionUseCase = get()
+            application = androidContext() as App
         )
     }
 }

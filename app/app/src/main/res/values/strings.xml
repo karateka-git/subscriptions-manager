@@ -45,6 +45,8 @@
     <string name="options_tv_subscriptions">Subscriptions</string>
     <string name="options_btn_export">Export</string>
     <string name="options_btn_import">Import</string>
+    <string name="options_toast_subscriptions_export_no_dir_chosen">Please choose the directory for export</string>
+    <string name="options_toast_subscriptions_import_no_file_chosen">Please choose file for import</string>
 
     <!-- Subscription editing form -->
     <string name="subscription_e_f_field_error_none" translatable="false" />

@@ -58,8 +58,8 @@ class OptionsFragment : Fragment(R.layout.fragment_options) {
 
     private fun registerImportLauncher() {
         importLauncher =
-            registerForActivityResult(ActivityResultContracts.OpenDocument()) { contentUri ->
-                onImportSubscriptions(contentUri)
+            registerForActivityResult(ActivityResultContracts.OpenDocument()) { contentFileUri ->
+                onImportSubscriptions(contentFileUri)
             }
     }
 
@@ -67,8 +67,8 @@ class OptionsFragment : Fragment(R.layout.fragment_options) {
         optionsViewModel.exportSubscriptions(directoryUri)
     }
 
-    private fun onImportSubscriptions(contentUri: Uri?) {
-        optionsViewModel.importSubscriptions(contentUri)
+    private fun onImportSubscriptions(contentFileUri: Uri?) {
+        optionsViewModel.importSubscriptions(contentFileUri)
     }
 
     private fun setupCloseOptionsButton() {
