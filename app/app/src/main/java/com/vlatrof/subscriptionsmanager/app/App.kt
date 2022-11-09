@@ -4,31 +4,28 @@ import android.app.Application
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-import com.vlatrof.subscriptionsmanager.di.appModule
-import com.vlatrof.subscriptionsmanager.di.dataModule
-import com.vlatrof.subscriptionsmanager.di.domainModule
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.startKoin
-import org.koin.core.logger.Level
+import com.vlatrof.subscriptionsmanager.di.AppComponent
+import com.vlatrof.subscriptionsmanager.di.AppModule
+import com.vlatrof.subscriptionsmanager.di.DaggerAppComponent
 
 class App : Application() {
 
+    lateinit var appComponent: AppComponent
+
     override fun onCreate() {
         super.onCreate()
+
+        // configure Dagger DI AppComponent
+        appComponent = DaggerAppComponent
+            .builder()
+            .appModule(AppModule(applicationContext = this))
+            .build()
 
         // apply current night mode on app start
         applyNightMode(
             getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE)
                 .getInt(NIGHT_MODE, DEFAULT_NIGHT_MODE)
         )
-
-        // init Koin DI
-        startKoin {
-            androidLogger(Level.ERROR)
-            androidContext(this@App)
-            modules(listOf(dataModule, domainModule, appModule))
-        }
     }
 
     fun applyNightMode(nightMode: Int) {

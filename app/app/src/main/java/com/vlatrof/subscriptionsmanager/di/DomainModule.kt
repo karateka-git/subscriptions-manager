@@ -1,36 +1,64 @@
 package com.vlatrof.subscriptionsmanager.di
 
-import com.vlatrof.subscriptionsmanager.domain.usecases.deletebyid.DeleteSubscriptionByIdUseCaseImpl
-import com.vlatrof.subscriptionsmanager.domain.usecases.getallflow.GetAllSubscriptionsFlowUseCaseImpl
-import com.vlatrof.subscriptionsmanager.domain.usecases.getbyid.GetSubscriptionByIdUseCaseImpl
-import com.vlatrof.subscriptionsmanager.domain.usecases.insertnew.InsertNewSubscriptionUseCaseImpl
-import com.vlatrof.subscriptionsmanager.domain.usecases.update.UpdateSubscriptionUseCaseImpl
+import com.vlatrof.subscriptionsmanager.domain.repositories.SubscriptionsRepository
 import com.vlatrof.subscriptionsmanager.domain.usecases.deletebyid.DeleteSubscriptionByIdUseCase
+import com.vlatrof.subscriptionsmanager.domain.usecases.deletebyid.DeleteSubscriptionByIdUseCaseImpl
 import com.vlatrof.subscriptionsmanager.domain.usecases.getallflow.GetAllSubscriptionsFlowUseCase
+import com.vlatrof.subscriptionsmanager.domain.usecases.getallflow.GetAllSubscriptionsFlowUseCaseImpl
 import com.vlatrof.subscriptionsmanager.domain.usecases.getbyid.GetSubscriptionByIdUseCase
+import com.vlatrof.subscriptionsmanager.domain.usecases.getbyid.GetSubscriptionByIdUseCaseImpl
 import com.vlatrof.subscriptionsmanager.domain.usecases.insertnew.InsertNewSubscriptionUseCase
+import com.vlatrof.subscriptionsmanager.domain.usecases.insertnew.InsertNewSubscriptionUseCaseImpl
 import com.vlatrof.subscriptionsmanager.domain.usecases.update.UpdateSubscriptionUseCase
-import org.koin.dsl.module
+import com.vlatrof.subscriptionsmanager.domain.usecases.update.UpdateSubscriptionUseCaseImpl
+import dagger.Module
+import dagger.Provides
 
-val domainModule = module {
+@Module
+class DomainModule {
 
-    factory<GetAllSubscriptionsFlowUseCase> {
-        GetAllSubscriptionsFlowUseCaseImpl(subscriptionsRepository = get())
+    @Provides
+    fun provideDeleteSubscriptionByIdUseCase(
+        subscriptionsRepository: SubscriptionsRepository
+    ): DeleteSubscriptionByIdUseCase {
+        return DeleteSubscriptionByIdUseCaseImpl(
+            subscriptionsRepository = subscriptionsRepository
+        )
     }
 
-    factory<InsertNewSubscriptionUseCase> {
-        InsertNewSubscriptionUseCaseImpl(subscriptionsRepository = get())
+    @Provides
+    fun provideGetAllSubscriptionsFlowUseCase(
+        subscriptionsRepository: SubscriptionsRepository
+    ): GetAllSubscriptionsFlowUseCase {
+        return GetAllSubscriptionsFlowUseCaseImpl(
+            subscriptionsRepository = subscriptionsRepository
+        )
     }
 
-    factory<GetSubscriptionByIdUseCase> {
-        GetSubscriptionByIdUseCaseImpl(subscriptionsRepository = get())
+    @Provides
+    fun provideGetSubscriptionByIdUseCase(
+        subscriptionsRepository: SubscriptionsRepository
+    ): GetSubscriptionByIdUseCase {
+        return GetSubscriptionByIdUseCaseImpl(
+            subscriptionsRepository = subscriptionsRepository
+        )
     }
 
-    factory<DeleteSubscriptionByIdUseCase> {
-        DeleteSubscriptionByIdUseCaseImpl(subscriptionsRepository = get())
+    @Provides
+    fun provideInsertNewSubscriptionUseCase(
+        subscriptionsRepository: SubscriptionsRepository
+    ): InsertNewSubscriptionUseCase {
+        return InsertNewSubscriptionUseCaseImpl(
+            subscriptionsRepository = subscriptionsRepository
+        )
     }
 
-    factory<UpdateSubscriptionUseCase> {
-        UpdateSubscriptionUseCaseImpl(subscriptionsRepository = get())
+    @Provides
+    fun provideUpdateSubscriptionUseCase(
+        subscriptionsRepository: SubscriptionsRepository
+    ): UpdateSubscriptionUseCase {
+        return UpdateSubscriptionUseCaseImpl(
+            subscriptionsRepository = subscriptionsRepository
+        )
     }
 }

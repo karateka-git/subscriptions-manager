@@ -6,10 +6,12 @@ import android.widget.ArrayAdapter
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.vlatrof.subscriptionsmanager.R
+import com.vlatrof.subscriptionsmanager.app.App
 import com.vlatrof.subscriptionsmanager.databinding.FragmentSubscriptionDetailsBinding
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import com.vlatrof.subscriptionsmanager.utils.AlertPeriodOptionsHolder
@@ -20,10 +22,10 @@ import com.vlatrof.subscriptionsmanager.utils.hideKeyboard
 import com.vlatrof.subscriptionsmanager.utils.round
 import com.vlatrof.subscriptionsmanager.utils.showToast
 import com.vlatrof.subscriptionsmanager.utils.toUTCMilliseconds
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.time.Period
 import java.time.format.DateTimeFormatter
 import java.util.Currency
+import javax.inject.Inject
 
 class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_details) {
 
@@ -32,13 +34,19 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         const val ARGUMENT_SUBSCRIPTION_ID_DEFAULT_VALUE = -1
     }
 
-    private val subscriptionDetailsViewModel by viewModel<SubscriptionDetailsViewModel>()
+    @Inject lateinit var subscriptionDetailsViewModelFactory: SubscriptionDetailsViewModelFactory
+    private lateinit var subscriptionDetailsViewModel: SubscriptionDetailsViewModel
     private lateinit var binding: FragmentSubscriptionDetailsBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        injectDependencies()
+        createSubscriptionDetailsViewModel()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentSubscriptionDetailsBinding.bind(view)
-
         loadSubscription()
         observeSubscriptionLiveData()
         setupGoBackButton()
@@ -56,6 +64,17 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         setupCurrencyInput()
         setupRenewalPeriodInput()
         setupAlertPeriodInput()
+    }
+
+    private fun injectDependencies() {
+        (requireActivity().applicationContext as App).appComponent.inject(this)
+    }
+
+    private fun createSubscriptionDetailsViewModel() {
+        subscriptionDetailsViewModel = ViewModelProvider(
+            this,
+            subscriptionDetailsViewModelFactory
+        )[SubscriptionDetailsViewModel::class.java]
     }
 
     private fun loadSubscription() {
@@ -130,7 +149,9 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         // init DatePicker and restore selection from viewmodel
         val datePicker = MaterialDatePicker.Builder.datePicker()
             .setSelection(subscriptionDetailsViewModel.startDateInputSelectionLiveData.value)
-            .setTitleText(getString(R.string.subscription_e_f_til_start_date_date_picker_title_text))
+            .setTitleText(
+                getString(R.string.subscription_e_f_til_start_date_date_picker_title_text)
+            )
             .build()
             .apply {
                 addOnPositiveButtonClickListener { selection ->

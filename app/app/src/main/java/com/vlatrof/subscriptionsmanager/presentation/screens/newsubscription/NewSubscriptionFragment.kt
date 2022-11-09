@@ -6,9 +6,11 @@ import android.widget.ArrayAdapter
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.vlatrof.subscriptionsmanager.R
+import com.vlatrof.subscriptionsmanager.app.App
 import com.vlatrof.subscriptionsmanager.databinding.FragmentNewSubscriptionBinding
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import com.vlatrof.subscriptionsmanager.presentation.screens.base.BaseViewModel
@@ -18,15 +20,22 @@ import com.vlatrof.subscriptionsmanager.utils.RenewalPeriodOptionsHolder
 import com.vlatrof.subscriptionsmanager.utils.getFirstKey
 import com.vlatrof.subscriptionsmanager.utils.hideKeyboard
 import com.vlatrof.subscriptionsmanager.utils.round
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.time.Period
 import java.time.format.DateTimeFormatter
 import java.util.Currency
+import javax.inject.Inject
 
 class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
-    private val newSubscriptionViewModel by viewModel<NewSubscriptionViewModel>()
+    @Inject lateinit var newSubscriptionViewModelFactory: NewSubscriptionViewModelFactory
+    private lateinit var newSubscriptionViewModel: NewSubscriptionViewModel
     private lateinit var binding: FragmentNewSubscriptionBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        injectDependencies()
+        createNewSubscriptionViewModel()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,6 +52,17 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         setupCurrencyInput()
         setupRenewalPeriodInput()
         setupAlertPeriodInput()
+    }
+
+    private fun injectDependencies() {
+        (requireActivity().applicationContext as App).appComponent.inject(this)
+    }
+
+    private fun createNewSubscriptionViewModel() {
+        newSubscriptionViewModel = ViewModelProvider(
+            this,
+            newSubscriptionViewModelFactory
+        )[NewSubscriptionViewModel::class.java]
     }
 
     private fun setupGoBackButton() {
@@ -89,7 +109,9 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         // init DatePicker and restore selection
         val datePicker = MaterialDatePicker.Builder.datePicker()
             .setSelection(newSubscriptionViewModel.startDateInputSelection.value)
-            .setTitleText(getString(R.string.subscription_e_f_til_start_date_date_picker_title_text))
+            .setTitleText(
+                getString(R.string.subscription_e_f_til_start_date_date_picker_title_text)
+            )
             .build()
             .apply {
                 addOnPositiveButtonClickListener {

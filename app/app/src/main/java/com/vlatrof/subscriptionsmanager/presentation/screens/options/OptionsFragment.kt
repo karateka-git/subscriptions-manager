@@ -9,21 +9,26 @@ import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.vlatrof.subscriptionsmanager.R
+import com.vlatrof.subscriptionsmanager.app.App
 import com.vlatrof.subscriptionsmanager.databinding.FragmentOptionsBinding
 import com.vlatrof.subscriptionsmanager.utils.getFirstKey
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import javax.inject.Inject
 
 class OptionsFragment : Fragment(R.layout.fragment_options) {
 
-    private val optionsViewModel by viewModel<OptionsViewModel>()
+    @Inject lateinit var optionsViewModelFactory: OptionsViewModelFactory
+    private lateinit var optionsViewModel: OptionsViewModel
     private lateinit var binding: FragmentOptionsBinding
     private lateinit var exportLauncher: ActivityResultLauncher<Uri?>
     private lateinit var importLauncher: ActivityResultLauncher<Array<String>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        injectDependencies()
+        createOptionsViewModel()
         registerExportLauncher()
         registerImportLauncher()
     }
@@ -35,6 +40,15 @@ class OptionsFragment : Fragment(R.layout.fragment_options) {
         setupNightModeRadioGroup()
         setupExportSubscriptionsButton()
         setupImportSubscriptionsButton()
+    }
+
+    private fun injectDependencies() {
+        (requireActivity().applicationContext as App).appComponent.inject(this)
+    }
+
+    private fun createOptionsViewModel() {
+        optionsViewModel =
+            ViewModelProvider(this, optionsViewModelFactory)[OptionsViewModel::class.java]
     }
 
     private fun setupExportSubscriptionsButton() {

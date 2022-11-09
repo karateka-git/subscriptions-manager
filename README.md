@@ -6,13 +6,13 @@ Offline-first Android application for subscription management and notifications
 
 Tools:
 * Kotlin
+* Dagger2
 * Room
-* Koin DI
 * Navigation Component
 * WorkManager
 * Notifications
 * Kotlin Coroutines
-* Flow
+* Kotlin Flow
 * LiveData
 * RecyclerView
 * Shared Preferences

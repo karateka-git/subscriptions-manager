@@ -51,8 +51,8 @@ ext {
     // Room
     room_version = '2.4.3'
 
-    // Koin DI
-    koin_version = '3.1.2'
+    // Dagger DI
+    dagger_version = '2.42'
 
     // Testing
     junit_version = '4.13.2'

@@ -1,24 +1,39 @@
 package com.vlatrof.subscriptionsmanager.di
 
+import com.vlatrof.subscriptionsmanager.app.App
 import com.vlatrof.subscriptionsmanager.data.local.SubscriptionsLocalDataSource
 import com.vlatrof.subscriptionsmanager.data.local.room.dao.SubscriptionsDao
 import com.vlatrof.subscriptionsmanager.data.local.room.database.SubscriptionsRoomDatabase
 import com.vlatrof.subscriptionsmanager.data.repositories.SubscriptionsRepositoryImpl
 import com.vlatrof.subscriptionsmanager.domain.repositories.SubscriptionsRepository
-import org.koin.android.ext.koin.androidApplication
-import org.koin.dsl.module
+import dagger.Module
+import dagger.Provides
 
-val dataModule = module {
+@Module
+class DataModule {
 
-    single<SubscriptionsRepository> {
-        SubscriptionsRepositoryImpl(subscriptionsLocalDataSource = get())
+    @Provides
+    fun provideSubscriptionsRepository(
+        subscriptionsLocalDataSource: SubscriptionsLocalDataSource
+    ): SubscriptionsRepository {
+        return SubscriptionsRepositoryImpl(
+            subscriptionsLocalDataSource = subscriptionsLocalDataSource
+        )
     }
 
-    single<SubscriptionsLocalDataSource> {
-        SubscriptionsLocalDataSource(subscriptionsDao = get())
+    @Provides
+    fun provideSubscriptionsLocalDataSource(
+        subscriptionsDao: SubscriptionsDao
+    ): SubscriptionsLocalDataSource {
+        return SubscriptionsLocalDataSource(
+            subscriptionsDao = subscriptionsDao
+        )
     }
 
-    single<SubscriptionsDao> {
-        SubscriptionsRoomDatabase.getDatabase(androidApplication()).getSubscriptionsDao()
+    @Provides
+    fun provideSubscriptionsDao(
+        application: App
+    ): SubscriptionsDao {
+        return SubscriptionsRoomDatabase.getDatabase(application).getSubscriptionsDao()
     }
 }
