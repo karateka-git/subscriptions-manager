@@ -13,7 +13,7 @@ class SubscriptionsAlertsHelper(private val context: Context) {
         // repeat interval in hours
         val repeatInterval = 24L
 
-        // initial delay in seconds (to the next time point 12.00)
+        // initial delay in seconds (calculate amount of time to the next time point at 12.00 PM)
         val currentTime = LocalTime.now().toSecondOfDay()
         val alertTime = LocalTime.of(12, 0).toSecondOfDay()
         val initialDelay = if (currentTime < alertTime) {
@@ -29,7 +29,7 @@ class SubscriptionsAlertsHelper(private val context: Context) {
         ).setInitialDelay(initialDelay.toLong(), TimeUnit.SECONDS)
             .build()
 
-        // launch periodic work
+        // launch periodic work with replace policy
         WorkManager.getInstance(context).enqueueUniquePeriodicWork(
             "subscriptionAlerts",
             ExistingPeriodicWorkPolicy.REPLACE,
