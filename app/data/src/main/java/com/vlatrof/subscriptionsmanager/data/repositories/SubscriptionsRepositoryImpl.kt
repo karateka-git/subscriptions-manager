@@ -4,9 +4,11 @@ import com.vlatrof.subscriptionsmanager.data.local.SubscriptionsLocalDataSource
 import com.vlatrof.subscriptionsmanager.domain.repositories.SubscriptionsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Singleton
 import com.vlatrof.subscriptionsmanager.data.models.Subscription as DataSubscription
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription as DomainSubscription
 
+@Singleton
 class SubscriptionsRepositoryImpl(
 
     private val subscriptionsLocalDataSource: SubscriptionsLocalDataSource

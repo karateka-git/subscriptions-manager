@@ -3,8 +3,10 @@ package com.vlatrof.subscriptionsmanager.data.local
 import com.vlatrof.subscriptionsmanager.data.local.room.dao.SubscriptionsDao
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Singleton
 import com.vlatrof.subscriptionsmanager.data.models.Subscription as DataSubscription
 
+@Singleton
 class SubscriptionsLocalDataSource(private val subscriptionsDao: SubscriptionsDao) {
 
     val allSubscriptionsFlow: Flow<List<DataSubscription>> =
