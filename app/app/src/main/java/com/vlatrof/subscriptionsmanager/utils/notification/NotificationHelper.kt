@@ -19,8 +19,10 @@ import java.time.format.DateTimeFormatter
 class NotificationHelper(private val context: Context) {
 
     private val channelId = "SUBSCRIPTIONS_RENEWAL_ALERTS"
-    private val channelName = context.resources.getString(R.string.renewal_notification_channel_name)
-    private var notificationId = 1
+    private val channelName = context.resources.getString(
+        R.string.renewal_notification_channel_name
+    )
+    private val notificationId = 1
 
     fun showRenewalNotification(subscription: Subscription) {
         NotificationManagerCompat.from(context).notify(
@@ -65,7 +67,16 @@ class NotificationHelper(private val context: Context) {
         // create pending intent to open app by click on notification
         val intent = Intent(context, MainActivity::class.java)
             .apply { flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK }
-        val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
+        val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PendingIntent.getActivity(
+                context,
+                0,
+                intent,
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+            )
+        } else {
+            PendingIntent.getActivity(context, 0, intent, 0)
+        }
 
         // build notification
         return NotificationCompat.Builder(context, channelId)
