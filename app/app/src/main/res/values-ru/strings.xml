@@ -9,6 +9,7 @@
     <string name="tomorrow">Завтра</string>
 
     <!-- Notifications -->
+    <string name="renewal_notification_channel_name">Уведмоления об обновлениях подписок</string>
     <string name="renewal_notification_title">%1$s: скоро обновление подписки</string>
     <string name="renewal_notification_message">%1$s: следующее обновление %2$s по цене %3$s %4$s</string>
 

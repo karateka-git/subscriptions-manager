@@ -9,6 +9,7 @@
     <string name="tomorrow">Tomorrow</string>
 
     <!-- Notifications -->
+    <string name="renewal_notification_channel_name">Subscriptions renewal alerts</string>
     <string name="renewal_notification_title">%1$s subscription renewal soon</string>
     <string name="renewal_notification_message">%1$s: next renewal %2$s at cost %3$s %4$s</string>
 

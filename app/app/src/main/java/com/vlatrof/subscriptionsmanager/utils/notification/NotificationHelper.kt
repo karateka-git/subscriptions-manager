@@ -19,7 +19,7 @@ import java.time.format.DateTimeFormatter
 class NotificationHelper(private val context: Context) {
 
     private val channelId = "SUBSCRIPTIONS_RENEWAL_ALERTS"
-    private val channelName = "Subscription renewal alerts"
+    private val channelName = context.resources.getString(R.string.renewal_notification_channel_name)
     private var notificationId = 1
 
     fun showRenewalNotification(subscription: Subscription) {
