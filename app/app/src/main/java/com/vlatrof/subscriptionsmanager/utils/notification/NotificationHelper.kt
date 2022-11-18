@@ -22,11 +22,10 @@ class NotificationHelper(private val context: Context) {
     private val channelName = context.resources.getString(
         R.string.renewal_notification_channel_name
     )
-    private val notificationId = 1
 
     fun showRenewalNotification(subscription: Subscription) {
         NotificationManagerCompat.from(context).notify(
-            notificationId,
+            subscription.id,
             createRenewalNotification(subscription)
         )
     }
@@ -87,6 +86,7 @@ class NotificationHelper(private val context: Context) {
             .setColor(ResourcesCompat.getColor(context.resources, R.color.green, null))
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .build()
     }
 }
