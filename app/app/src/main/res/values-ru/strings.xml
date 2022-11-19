@@ -50,7 +50,6 @@
     <string name="options_toast_subscriptions_import_no_file_chosen">Пожалуйста, выберите файл для импорта</string>
 
     <!-- Subscription editing form -->
-    <string name="subscription_e_f_field_error_none"/>
     <string name="subscription_e_f_field_error_empty">* Обязательное поле</string>
     <string name="subscription_e_f_field_error_wrong">* Неправильное значение</string>
     <string name="subscription_e_f_til_name_hint">Имя</string>

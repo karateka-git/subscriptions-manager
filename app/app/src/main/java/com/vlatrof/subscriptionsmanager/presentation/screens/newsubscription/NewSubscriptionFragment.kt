@@ -80,8 +80,8 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         }
 
         // handle new state
-        newSubscriptionViewModel.nameInputState.observe(viewLifecycleOwner) {
-            binding.tilNewSubscriptionName.error = getString(it.errorStringResourceId)
+        newSubscriptionViewModel.nameInputState.observe(viewLifecycleOwner) { newState ->
+            binding.tilNewSubscriptionName.error = getInputErrorStringByState(newState)
         }
     }
 
@@ -98,8 +98,8 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         }
 
         // handle new state
-        newSubscriptionViewModel.costInputState.observe(viewLifecycleOwner) {
-            binding.tilNewSubscriptionCost.error = getString(it.errorStringResourceId)
+        newSubscriptionViewModel.costInputState.observe(viewLifecycleOwner) { newState ->
+            binding.tilNewSubscriptionCost.error = getInputErrorStringByState(newState)
         }
     }
 
@@ -173,7 +173,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         )
 
         // if input state initial: restore last value or set default
-        if (newSubscriptionViewModel.currencyInputState.value == BaseViewModel.InputState.INITIAL) {
+        if (newSubscriptionViewModel.currencyInputState.value == BaseViewModel.InputState.Initial) {
             val defaultCurrencyCode = newSubscriptionViewModel.getLastCurrencyCode()
             newSubscriptionViewModel.currencyInputValue = defaultCurrencyCode
             newSubscriptionViewModel.validateCurrencyInput(defaultCurrencyCode)
@@ -198,7 +198,7 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
 
         // handle new input state
         newSubscriptionViewModel.currencyInputState.observe(viewLifecycleOwner) { newState ->
-            binding.tilNewSubscriptionCurrency.error = getString(newState.errorStringResourceId)
+            binding.tilNewSubscriptionCurrency.error = getInputErrorStringByState(newState)
         }
     }
 
@@ -249,6 +249,19 @@ class NewSubscriptionFragment : Fragment(R.layout.fragment_new_subscription) {
         // handle new value
         alertField.doAfterTextChanged {
             newSubscriptionViewModel.alertInputSelection = it.toString()
+        }
+    }
+
+    private fun getInputErrorStringByState(newState: BaseViewModel.InputState): String {
+        return when (newState) {
+            is BaseViewModel.InputState.Initial -> { "" }
+            is BaseViewModel.InputState.Correct -> { "" }
+            is BaseViewModel.InputState.Empty -> {
+                getString(R.string.subscription_e_f_field_error_empty)
+            }
+            is BaseViewModel.InputState.Wrong -> {
+                getString(R.string.subscription_e_f_field_error_wrong)
+            }
         }
     }
 

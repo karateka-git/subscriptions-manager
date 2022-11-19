@@ -14,6 +14,7 @@ import com.vlatrof.subscriptionsmanager.R
 import com.vlatrof.subscriptionsmanager.app.App
 import com.vlatrof.subscriptionsmanager.databinding.FragmentSubscriptionDetailsBinding
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
+import com.vlatrof.subscriptionsmanager.presentation.screens.base.BaseViewModel
 import com.vlatrof.subscriptionsmanager.utils.AlertPeriodOptionsHolder
 import com.vlatrof.subscriptionsmanager.utils.Parser
 import com.vlatrof.subscriptionsmanager.utils.RenewalPeriodOptionsHolder
@@ -126,8 +127,8 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         }
 
         // handle new state
-        subscriptionDetailsViewModel.nameInputState.observe(viewLifecycleOwner) {
-            binding.tilSubscriptionDetailsName.error = getString(it.errorStringResourceId)
+        subscriptionDetailsViewModel.nameInputState.observe(viewLifecycleOwner) { newState ->
+            binding.tilSubscriptionDetailsName.error = getInputErrorStringByState(newState)
         }
     }
 
@@ -138,8 +139,8 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         }
 
         // handle new state
-        subscriptionDetailsViewModel.costInputState.observe(viewLifecycleOwner) {
-            binding.tilSubscriptionDetailsCost.error = getString(it.errorStringResourceId)
+        subscriptionDetailsViewModel.costInputState.observe(viewLifecycleOwner) { newState ->
+            binding.tilSubscriptionDetailsCost.error = getInputErrorStringByState(newState)
         }
     }
 
@@ -240,7 +241,7 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
 
         // handle new input state
         subscriptionDetailsViewModel.currencyInputState.observe(viewLifecycleOwner) { newState ->
-            binding.tilSubscriptionDetailsCurrency.error = getString(newState.errorStringResourceId)
+            binding.tilSubscriptionDetailsCurrency.error = getInputErrorStringByState(newState)
         }
     }
 
@@ -287,6 +288,19 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         }
     }
 
+    private fun getInputErrorStringByState(newState: BaseViewModel.InputState): String {
+        return when (newState) {
+            is BaseViewModel.InputState.Initial -> { "" }
+            is BaseViewModel.InputState.Correct -> { "" }
+            is BaseViewModel.InputState.Empty -> {
+                getString(R.string.subscription_e_f_field_error_empty)
+            }
+            is BaseViewModel.InputState.Wrong -> {
+                getString(R.string.subscription_e_f_field_error_wrong)
+            }
+        }
+    }
+
     private fun populateUi(subscription: Subscription) {
         // name title
         binding.tvSubscriptionDetailsNameTitle.text = subscription.name
@@ -318,7 +332,8 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         )
 
         // renewal period input
-        val renewalPeriodStr = RenewalPeriodOptionsHolder(resources).options[subscription.renewalPeriod.toString()]
+        val renewalPeriodStr = RenewalPeriodOptionsHolder(resources)
+            .options[subscription.renewalPeriod.toString()]
         binding.actvSubscriptionDetailsRenewalPeriod.setText(renewalPeriodStr, false)
         subscriptionDetailsViewModel.handleNewRenewalPeriodValue(renewalPeriodStr!!)
 

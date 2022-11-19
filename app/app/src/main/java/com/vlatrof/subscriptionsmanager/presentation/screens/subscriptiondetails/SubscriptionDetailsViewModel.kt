@@ -13,15 +13,15 @@ import com.vlatrof.subscriptionsmanager.presentation.screens.base.BaseViewModel
 import com.vlatrof.subscriptionsmanager.utils.Parser
 import com.vlatrof.subscriptionsmanager.utils.RenewalPeriodOptionsHolder
 import com.vlatrof.subscriptionsmanager.utils.getFirstKey
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 import java.lang.NumberFormatException
 import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
 import java.util.Currency
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class SubscriptionDetailsViewModel(
 
@@ -49,9 +49,9 @@ class SubscriptionDetailsViewModel(
     )
 
     // state holders
-    val nameInputState = MutableLiveData(InputState.INITIAL)
-    val costInputState = MutableLiveData(InputState.INITIAL)
-    val currencyInputState = MutableLiveData(InputState.INITIAL)
+    val nameInputState = MutableLiveData<InputState>(InputState.Initial)
+    val costInputState = MutableLiveData<InputState>(InputState.Initial)
+    val currencyInputState = MutableLiveData<InputState>(InputState.Initial)
     val buttonSaveState = MutableLiveData(false)
 
     fun handleNewNameTitleValue(newValue: String) {
@@ -109,43 +109,43 @@ class SubscriptionDetailsViewModel(
     }
 
     private fun validateNameValue(newValue: String): InputState {
-        if (newValue.isEmpty()) return InputState.EMPTY
-        if (newValue.isBlank()) return InputState.WRONG
-        return InputState.CORRECT
+        if (newValue.isEmpty()) return InputState.Empty
+        if (newValue.isBlank()) return InputState.Wrong
+        return InputState.Correct
     }
 
     private fun validateCostValue(newValue: String): InputState {
-        if (newValue.isEmpty()) return InputState.EMPTY
+        if (newValue.isEmpty()) return InputState.Empty
 
         try {
             newValue.toDouble()
         } catch (nfe: NumberFormatException) {
-            return InputState.WRONG
+            return InputState.Wrong
         }
 
-        return InputState.CORRECT
+        return InputState.Correct
     }
 
     private fun validateCurrencyValue(newValue: String): InputState {
         if (newValue.isEmpty()) {
-            return InputState.EMPTY
+            return InputState.Empty
         }
 
         try {
             if (!availableCurrencies.contains(Currency.getInstance(newValue))) {
-                return InputState.WRONG
+                return InputState.Wrong
             }
         } catch (exception: IllegalArgumentException) {
-            return InputState.WRONG
+            return InputState.Wrong
         }
 
-        return InputState.CORRECT
+        return InputState.Correct
     }
 
     private fun validateSaveButtonState(): Boolean {
-        return nameInputState.value == InputState.CORRECT &&
-            costInputState.value == InputState.CORRECT &&
-            currencyInputState.value == InputState.CORRECT
+        return nameInputState.value == InputState.Correct &&
+            costInputState.value == InputState.Correct &&
+            currencyInputState.value == InputState.Correct
     }
 
     fun loadSubscriptionById(id: Int) {
@@ -154,7 +154,10 @@ class SubscriptionDetailsViewModel(
         }
 
         if (id == SubscriptionDetailsFragment.ARGUMENT_SUBSCRIPTION_ID_DEFAULT_VALUE) {
-            throw IllegalArgumentException("Empty fragment argument: ${SubscriptionDetailsFragment.ARGUMENT_SUBSCRIPTION_ID_TAG}")
+            throw IllegalArgumentException(
+                "Empty fragment argument: ${
+                SubscriptionDetailsFragment.ARGUMENT_SUBSCRIPTION_ID_TAG}"
+            )
         }
 
         // Create and start new coroutine with Dispatchers.Main;
