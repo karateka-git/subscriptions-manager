@@ -9,6 +9,9 @@ import com.vlatrof.subscriptionsmanager.R
 import com.vlatrof.subscriptionsmanager.app.App
 import com.vlatrof.subscriptionsmanager.data.local.room.database.SubscriptionsRoomDatabase
 import com.vlatrof.subscriptionsmanager.data.local.room.entities.SubscriptionEntity
+import java.io.FileNotFoundException
+import java.io.IOException
+import java.util.Scanner
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,9 +19,6 @@ import kotlinx.serialization.SerializationException
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import java.io.FileNotFoundException
-import java.io.IOException
-import java.util.Scanner
 
 class OptionsViewModel(
 
@@ -39,7 +39,9 @@ class OptionsViewModel(
             // User didn't choose any directory for export
             Toast.makeText(
                 application,
-                application.resources.getString(R.string.options_toast_subscriptions_export_no_dir_chosen),
+                application.resources.getString(
+                    R.string.options_toast_subscriptions_export_no_dir_chosen
+                ),
                 Toast.LENGTH_LONG
             ).show()
             return
@@ -52,7 +54,9 @@ class OptionsViewModel(
             // User didn't choose any file for import
             Toast.makeText(
                 application,
-                application.resources.getString(R.string.options_toast_subscriptions_import_no_file_chosen),
+                application.resources.getString(
+                    R.string.options_toast_subscriptions_import_no_file_chosen
+                ),
                 Toast.LENGTH_LONG
             ).show()
             return
