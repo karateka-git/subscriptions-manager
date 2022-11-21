@@ -22,20 +22,21 @@ class App : Application() {
             .build()
 
         // apply current night mode on app start
-        applyNightMode(
+        AppCompatDelegate.setDefaultNightMode(
             getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE)
                 .getInt(NIGHT_MODE, DEFAULT_NIGHT_MODE)
         )
     }
 
-    fun applyNightMode(nightMode: Int) {
-        AppCompatDelegate.setDefaultNightMode(nightMode)
+    fun applyNightMode(mode: Int) {
+        saveNightMode(mode = mode)
+        AppCompatDelegate.setDefaultNightMode(mode)
     }
 
-    fun saveNightMode(nightMode: Int) {
+    private fun saveNightMode(mode: Int) {
         getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE)
             .edit()
-            .putInt(NIGHT_MODE, nightMode)
+            .putInt(NIGHT_MODE, mode)
             .apply()
     }
 

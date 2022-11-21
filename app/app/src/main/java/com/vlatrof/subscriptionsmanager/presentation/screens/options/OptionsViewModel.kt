@@ -1,11 +1,9 @@
 package com.vlatrof.subscriptionsmanager.presentation.screens.options
 
 import android.net.Uri
-import android.widget.Toast
 import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.vlatrof.subscriptionsmanager.R
 import com.vlatrof.subscriptionsmanager.app.App
 import com.vlatrof.subscriptionsmanager.data.local.room.database.SubscriptionsRoomDatabase
 import com.vlatrof.subscriptionsmanager.data.local.room.entities.SubscriptionEntity
@@ -30,20 +28,12 @@ class OptionsViewModel(
     fun getCurrentNightMode() = application.getCurrentNightMode()
 
     fun applyNightMode(nightMode: Int) {
-        application.saveNightMode(nightMode)
         application.applyNightMode(nightMode)
     }
 
     fun exportSubscriptions(directoryUri: Uri?) {
         if (directoryUri == null) {
             // User didn't choose any directory for export
-            Toast.makeText(
-                application,
-                application.resources.getString(
-                    R.string.options_toast_subscriptions_export_no_dir_chosen
-                ),
-                Toast.LENGTH_LONG
-            ).show()
             return
         }
         exportOnBackground(directoryUri)
@@ -52,13 +42,6 @@ class OptionsViewModel(
     fun importSubscriptions(contentFileUri: Uri?) {
         if (contentFileUri == null) {
             // User didn't choose any file for import
-            Toast.makeText(
-                application,
-                application.resources.getString(
-                    R.string.options_toast_subscriptions_import_no_file_chosen
-                ),
-                Toast.LENGTH_LONG
-            ).show()
             return
         }
         importOnBackground(contentFileUri)
