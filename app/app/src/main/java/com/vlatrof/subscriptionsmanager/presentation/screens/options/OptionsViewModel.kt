@@ -39,12 +39,15 @@ class OptionsViewModel(
         exportOnBackground(directoryUri)
     }
 
-    fun importSubscriptions(contentFileUri: Uri?) {
-        if (contentFileUri == null) {
+    fun importSubscriptions(contentUri: Uri?) {
+        if (contentUri == null) {
             // User didn't choose any file for import
             return
         }
-        importOnBackground(contentFileUri)
+        if (contentUri.path?.endsWith(".json") == false) {
+            return
+        }
+        importOnBackground(contentUri)
     }
 
     private fun exportOnBackground(directoryUri: Uri) = viewModelScope.launch(ioDispatcher) {
@@ -66,9 +69,9 @@ class OptionsViewModel(
         }
     }
 
-    private fun importOnBackground(contentFileUri: Uri) = viewModelScope.launch(ioDispatcher) {
+    private fun importOnBackground(contentUri: Uri) = viewModelScope.launch(ioDispatcher) {
         try {
-            application.contentResolver.openInputStream(contentFileUri).use { inputStream ->
+            application.contentResolver.openInputStream(contentUri).use { inputStream ->
                 val scanner = Scanner(inputStream).useDelimiter("\\A")
                 val jsonStr = if (scanner.hasNext()) scanner.next() else ""
                 if (jsonStr.isEmpty()) return@launch
