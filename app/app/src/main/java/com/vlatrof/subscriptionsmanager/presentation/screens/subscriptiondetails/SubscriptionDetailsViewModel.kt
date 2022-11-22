@@ -1,215 +1,48 @@
 package com.vlatrof.subscriptionsmanager.presentation.screens.subscriptiondetails
 
-import android.content.res.Resources
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import com.google.android.material.datepicker.MaterialDatePicker
-import com.vlatrof.subscriptionsmanager.R
+import androidx.lifecycle.LiveData
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
-import com.vlatrof.subscriptionsmanager.domain.usecases.deletebyid.DeleteSubscriptionByIdUseCase
-import com.vlatrof.subscriptionsmanager.domain.usecases.getbyid.GetSubscriptionByIdUseCase
-import com.vlatrof.subscriptionsmanager.domain.usecases.update.UpdateSubscriptionUseCase
 import com.vlatrof.subscriptionsmanager.presentation.screens.base.BaseViewModel
-import com.vlatrof.subscriptionsmanager.utils.Parser
-import com.vlatrof.subscriptionsmanager.utils.RenewalPeriodOptionsHolder
-import com.vlatrof.subscriptionsmanager.utils.getFirstKey
-import java.lang.NumberFormatException
-import java.time.LocalDate
-import java.time.Period
-import java.time.format.DateTimeFormatter
-import java.util.Currency
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 
-class SubscriptionDetailsViewModel(
+abstract class SubscriptionDetailsViewModel : BaseViewModel() {
 
-    private val resources: Resources,
-    private val getSubscriptionByIdUseCase: GetSubscriptionByIdUseCase,
-    private val updateSubscriptionUseCase: UpdateSubscriptionUseCase,
-    private val deleteSubscriptionByIdUseCase: DeleteSubscriptionByIdUseCase,
-    private val mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+    abstract val subscriptionLiveData: LiveData<Subscription?>
 
-) : BaseViewModel() {
+    abstract val nameTitleLiveData: LiveData<String>
 
-    val subscriptionLiveData = MutableLiveData<Subscription?>()
+    abstract val nextRenewalTitleLiveData: LiveData<String>
 
-    private val availableCurrencies = Currency.getAvailableCurrencies()
+    abstract val nameInputState: LiveData<InputState>
 
-    // value holders
-    var currencyInputValue: String = ""
-    var alertInputValue: String = ""
-    private var renewalPeriodValue: Period = Period.parse("P1D")
-    val nameTitleLiveData = MutableLiveData("")
-    val nextRenewalTitleLiveData = MutableLiveData("")
-    val startDateInputSelectionLiveData = MutableLiveData(
-        MaterialDatePicker.todayInUtcMilliseconds()
-    )
+    abstract val costInputState: LiveData<InputState>
 
-    // state holders
-    val nameInputState = MutableLiveData<InputState>(InputState.Initial)
-    val costInputState = MutableLiveData<InputState>(InputState.Initial)
-    val currencyInputState = MutableLiveData<InputState>(InputState.Initial)
-    val buttonSaveState = MutableLiveData(false)
+    abstract val currencyInputState: LiveData<InputState>
 
-    fun handleNewNameTitleValue(newValue: String) {
-        nameTitleLiveData.value = newValue
-    }
+    abstract val startDateInputSelectionLiveData: LiveData<Long>
 
-    fun handleNewNextRenewalDate(nextRenewalDate: LocalDate) {
-        nextRenewalTitleLiveData.value = generateNextRenewalTitleStr(nextRenewalDate)
-    }
+    abstract val buttonSaveState: LiveData<Boolean>
 
-    fun handleNewNameInputValue(newValue: String) {
-        nameInputState.value = validateNameValue(newValue)
-        buttonSaveState.value = validateSaveButtonState()
-    }
+    abstract var currencyInputValue: String
 
-    fun handleNewCostInputValue(newValue: String) {
-        costInputState.value = validateCostValue(newValue)
-        buttonSaveState.value = validateSaveButtonState()
-    }
+    abstract var renewalPeriodValue: String
 
-    fun handleNewCurrencyValue(newValue: String) {
-        currencyInputValue = newValue
-        currencyInputState.value = validateCurrencyValue(newValue)
-        buttonSaveState.value = validateSaveButtonState()
-    }
+    abstract var alertInputValue: String
 
-    fun handleNewStartDateValue(newValue: Long) {
-        startDateInputSelectionLiveData.value = newValue
-        val newStartDate = Parser.parseLocalDateFromUTCMilliseconds(newValue)
-        val newNextRenewalDate = calculateNextRenewalDate(newStartDate, renewalPeriodValue)
-        handleNewNextRenewalDate(newNextRenewalDate)
-    }
+    abstract fun loadSubscriptionById(id: Int)
 
-    fun handleNewRenewalPeriodValue(newValue: String) {
-        renewalPeriodValue = Period.parse(
-            RenewalPeriodOptionsHolder(resources).options.getFirstKey(newValue)
-        )
-        val startDate =
-            Parser.parseLocalDateFromUTCMilliseconds(startDateInputSelectionLiveData.value!!)
-        val newNextRenewalDate = calculateNextRenewalDate(startDate, renewalPeriodValue)
-        handleNewNextRenewalDate(newNextRenewalDate)
-    }
+    abstract fun updateSubscription(subscription: Subscription)
 
-    private fun calculateNextRenewalDate(startDate: LocalDate, renewalPeriod: Period): LocalDate {
-        val currentDate = LocalDate.now()
-        var nextRenewalDate: LocalDate = LocalDate.from(startDate)
-        while (nextRenewalDate < currentDate) {
-            nextRenewalDate = renewalPeriod.addTo(nextRenewalDate) as LocalDate
-        }
-        return nextRenewalDate
-    }
+    abstract fun deleteSubscriptionById(id: Int)
 
-    fun handleNewAlertValue(newValue: String) {
-        alertInputValue = newValue
-    }
+    abstract fun handleNewNameInputValue(newValue: String)
 
-    private fun validateNameValue(newValue: String): InputState {
-        if (newValue.isEmpty()) return InputState.Empty
-        if (newValue.isBlank()) return InputState.Wrong
-        return InputState.Correct
-    }
+    abstract fun handleNewCostInputValue(newValue: String)
 
-    private fun validateCostValue(newValue: String): InputState {
-        if (newValue.isEmpty()) return InputState.Empty
+    abstract fun handleNewCurrencyValue(newValue: String)
 
-        try {
-            newValue.toDouble()
-        } catch (nfe: NumberFormatException) {
-            return InputState.Wrong
-        }
+    abstract fun handleNewStartDateValue(newValue: Long)
 
-        return InputState.Correct
-    }
-
-    private fun validateCurrencyValue(newValue: String): InputState {
-        if (newValue.isEmpty()) {
-            return InputState.Empty
-        }
-
-        try {
-            if (!availableCurrencies.contains(Currency.getInstance(newValue))) {
-                return InputState.Wrong
-            }
-        } catch (exception: IllegalArgumentException) {
-            return InputState.Wrong
-        }
-
-        return InputState.Correct
-    }
-
-    private fun validateSaveButtonState(): Boolean {
-        return nameInputState.value == InputState.Correct &&
-            costInputState.value == InputState.Correct &&
-            currencyInputState.value == InputState.Correct
-    }
-
-    fun loadSubscriptionById(id: Int) {
-        if (subscriptionLiveData.value != null) {
-            return
-        }
-
-        if (id == SubscriptionDetailsFragment.ARGUMENT_SUBSCRIPTION_ID_DEFAULT_VALUE) {
-            throw IllegalArgumentException(
-                "Empty fragment argument: ${
-                SubscriptionDetailsFragment.ARGUMENT_SUBSCRIPTION_ID_TAG}"
-            )
-        }
-
-        // Create and start new coroutine with Dispatchers.Main;
-        // We need coroutine to use await() suspend function and receive future value from db;
-        // We need Dispatchers.Main because only on main thread we have access to save data into
-        // LiveData.value
-        viewModelScope.launch(mainDispatcher) {
-            // Create and start new coroutine with Dispatchers.IO;
-            // We use Dispatchers.IO to work on background thread to load data from Room Database;
-            // async() builder will create the coroutine and return its related DeferredJob;
-            val deferredLoadingJob = viewModelScope.async(ioDispatcher) {
-                return@async getSubscriptionByIdUseCase(id)
-            }
-
-            // we use await() on this deferred job to receive completed value in future
-            subscriptionLiveData.value = deferredLoadingJob.await()
-        }
-    }
-
-    fun deleteSubscriptionById(id: Int) {
-        viewModelScope.launch(ioDispatcher) {
-            deleteSubscriptionByIdUseCase(id)
-        }
-    }
-
-    fun updateSubscription(subscription: Subscription) {
-        viewModelScope.launch(ioDispatcher) {
-            updateSubscriptionUseCase(subscription)
-        }
-    }
-
-    private fun generateNextRenewalTitleStr(nextRenewalDate: LocalDate): String {
-        val nextRenewalTitle = resources.getString(
-            R.string.subscription_details_tv_next_renewal_title
-        )
-
-        val nextRenewalDateFormatted = when (nextRenewalDate) {
-            LocalDate.now() -> {
-                resources.getString(R.string.today)
-            }
-            LocalDate.now().plusDays(1) -> {
-                resources.getString(R.string.tomorrow)
-            }
-            else -> {
-                nextRenewalDate.format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))
-            }
-        }
-
-        return "$nextRenewalTitle $nextRenewalDateFormatted"
-    }
-
-    fun restoreRenewalPeriodValue(): String {
-        return RenewalPeriodOptionsHolder(resources).options[renewalPeriodValue.toString()]!!
-    }
+    abstract fun handleNewRenewalPeriodValue(newValue: String)
+    
+    abstract fun handleNewAlertValue(newValue: String)
 }

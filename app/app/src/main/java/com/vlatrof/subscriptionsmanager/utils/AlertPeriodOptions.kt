@@ -3,7 +3,7 @@ package com.vlatrof.subscriptionsmanager.utils
 import android.content.res.Resources
 import com.vlatrof.subscriptionsmanager.R
 
-class AlertPeriodOptionsHolder(resources: Resources) {
+class AlertPeriodOptions(resources: Resources) {
 
     val options = linkedMapOf(
         "NONE" to resources.getString(R.string.option_alert_period_none),
@@ -13,5 +13,5 @@ class AlertPeriodOptionsHolder(resources: Resources) {
         "P-7D" to resources.getString(R.string.option_alert_period_one_week_before)
     )
 
-    val defaultValue = options["NONE"]!!
+    val default = options["NONE"]!!
 }

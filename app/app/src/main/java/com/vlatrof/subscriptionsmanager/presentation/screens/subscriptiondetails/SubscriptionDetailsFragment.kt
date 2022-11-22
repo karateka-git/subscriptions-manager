@@ -15,9 +15,9 @@ import com.vlatrof.subscriptionsmanager.app.App
 import com.vlatrof.subscriptionsmanager.databinding.FragmentSubscriptionDetailsBinding
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import com.vlatrof.subscriptionsmanager.presentation.screens.base.BaseViewModel
-import com.vlatrof.subscriptionsmanager.utils.AlertPeriodOptionsHolder
+import com.vlatrof.subscriptionsmanager.utils.AlertPeriodOptions
 import com.vlatrof.subscriptionsmanager.utils.Parser
-import com.vlatrof.subscriptionsmanager.utils.RenewalPeriodOptionsHolder
+import com.vlatrof.subscriptionsmanager.utils.RenewalPeriodOptions
 import com.vlatrof.subscriptionsmanager.utils.getFirstKey
 import com.vlatrof.subscriptionsmanager.utils.hideKeyboard
 import com.vlatrof.subscriptionsmanager.utils.round
@@ -48,7 +48,9 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentSubscriptionDetailsBinding.bind(view)
-        loadSubscription()
+        if (subscriptionDetailsViewModel.subscriptionLiveData.value == null) {
+            loadSubscription()
+        }
         observeSubscriptionLiveData()
         setupGoBackButton()
         setupNameTitle()
@@ -79,12 +81,7 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
     }
 
     private fun loadSubscription() {
-        try {
-            subscriptionDetailsViewModel.loadSubscriptionById(getArgumentSubscriptionId())
-        } catch (exception: IllegalArgumentException) {
-            showToast(getString(R.string.toast_error_message_something_went_wrong))
-            findNavController().popBackStack()
-        }
+        subscriptionDetailsViewModel.loadSubscriptionById(getArgumentSubscriptionId())
     }
 
     private fun observeSubscriptionLiveData() {
@@ -121,9 +118,7 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
     private fun setupNameInput() {
         // handle new value after text changed
         binding.tietSubscriptionDetailsName.doAfterTextChanged {
-            val newValue = it.toString()
-            subscriptionDetailsViewModel.handleNewNameInputValue(newValue)
-            subscriptionDetailsViewModel.handleNewNameTitleValue(newValue)
+            subscriptionDetailsViewModel.handleNewNameInputValue(it.toString())
         }
 
         // handle new state
@@ -253,12 +248,12 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
             ArrayAdapter(
                 requireActivity(),
                 android.R.layout.simple_spinner_dropdown_item,
-                RenewalPeriodOptionsHolder(resources).options.values.toTypedArray()
+                RenewalPeriodOptions(resources).options.values.toTypedArray()
             )
         )
 
         // restore value from viewmodel
-        val restoredValue = subscriptionDetailsViewModel.restoreRenewalPeriodValue()
+        val restoredValue = subscriptionDetailsViewModel.renewalPeriodValue
         renewalPeriodField.setText(restoredValue, false)
 
         // handle new value
@@ -275,7 +270,7 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
             ArrayAdapter(
                 requireActivity(),
                 android.R.layout.simple_spinner_dropdown_item,
-                AlertPeriodOptionsHolder(resources).options.values.toTypedArray()
+                AlertPeriodOptions(resources).options.values.toTypedArray()
             )
         )
 
@@ -302,13 +297,6 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
     }
 
     private fun populateUi(subscription: Subscription) {
-        // name title
-        binding.tvSubscriptionDetailsNameTitle.text = subscription.name
-        subscriptionDetailsViewModel.handleNewNameTitleValue(subscription.name)
-
-        // next renewal title
-        subscriptionDetailsViewModel.handleNewNextRenewalDate(subscription.nextRenewalDate)
-
         // name input
         binding.tietSubscriptionDetailsName.setText(subscription.name)
         subscriptionDetailsViewModel.handleNewNameInputValue(subscription.name)
@@ -332,27 +320,24 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         )
 
         // renewal period input
-        val renewalPeriodStr = RenewalPeriodOptionsHolder(resources)
+        val renewalPeriodStr = RenewalPeriodOptions(resources)
             .options[subscription.renewalPeriod.toString()]
         binding.actvSubscriptionDetailsRenewalPeriod.setText(renewalPeriodStr, false)
         subscriptionDetailsViewModel.handleNewRenewalPeriodValue(renewalPeriodStr!!)
 
         // alert period input
-        val alertPeriodOptionsHolder = AlertPeriodOptionsHolder(resources)
+        val alertPeriodOptions = AlertPeriodOptions(resources)
         val alertPeriodStr = if (subscription.alertEnabled) {
-            alertPeriodOptionsHolder.options[subscription.alertPeriod.toString()]!!
+            alertPeriodOptions.options[subscription.alertPeriod.toString()]!!
         } else {
-            alertPeriodOptionsHolder.defaultValue
+            alertPeriodOptions.default
         }
         binding.actvSubscriptionDetailsAlert.setText(alertPeriodStr, false)
         subscriptionDetailsViewModel.handleNewAlertValue(alertPeriodStr)
     }
 
     private fun parseSubscription(): Subscription {
-        val id = requireArguments().getInt(
-            ARGUMENT_SUBSCRIPTION_ID_TAG,
-            ARGUMENT_SUBSCRIPTION_ID_DEFAULT_VALUE
-        )
+        val id = getArgumentSubscriptionId()
 
         val name = binding.tietSubscriptionDetailsName.text.toString().trim()
 
@@ -371,22 +356,22 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
 
         // renewal period
         val renewalPeriod = Period.parse(
-            RenewalPeriodOptionsHolder(resources).options
+            RenewalPeriodOptions(resources).options
                 .getFirstKey(binding.actvSubscriptionDetailsRenewalPeriod.text.toString())
         )
 
         // alert period
         val alertEnabled: Boolean
         val alertPeriod: Period
-        val alertPeriodOptionsHolder = AlertPeriodOptionsHolder(resources)
+        val alertPeriodOptions = AlertPeriodOptions(resources)
         val alertPeriodValue = binding.actvSubscriptionDetailsAlert.text.toString()
-        if (alertPeriodValue == alertPeriodOptionsHolder.defaultValue) {
+        if (alertPeriodValue == alertPeriodOptions.default) {
             alertEnabled = false
             alertPeriod = Period.ZERO
         } else {
             alertEnabled = true
             alertPeriod = Period.parse(
-                alertPeriodOptionsHolder.options.getFirstKey(alertPeriodValue)
+                alertPeriodOptions.options.getFirstKey(alertPeriodValue)
             )
         }
 
@@ -410,9 +395,15 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
     }
 
     private fun getArgumentSubscriptionId(): Int {
-        return requireArguments().getInt(
+        requireArguments().getInt(
             ARGUMENT_SUBSCRIPTION_ID_TAG,
             ARGUMENT_SUBSCRIPTION_ID_DEFAULT_VALUE
-        )
+        ).let { id ->
+            if (id == ARGUMENT_SUBSCRIPTION_ID_DEFAULT_VALUE) {
+                showToast(getString(R.string.toast_error_message_something_went_wrong))
+                findNavController().popBackStack()
+            }
+            return id
+        }
     }
 }

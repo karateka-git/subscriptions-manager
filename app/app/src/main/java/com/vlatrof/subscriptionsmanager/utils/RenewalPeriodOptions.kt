@@ -3,7 +3,7 @@ package com.vlatrof.subscriptionsmanager.utils
 import android.content.res.Resources
 import com.vlatrof.subscriptionsmanager.R
 
-class RenewalPeriodOptionsHolder(resources: Resources) {
+class RenewalPeriodOptions(resources: Resources) {
 
     val options = linkedMapOf(
         "P1D" to resources.getString(R.string.option_renewal_period_daily),
@@ -15,5 +15,5 @@ class RenewalPeriodOptionsHolder(resources: Resources) {
         "P1Y" to resources.getString(R.string.option_renewal_period_yearly)
     )
 
-    val defaultValue = options["P1M"]!!
+    val default = options["P1M"]!!
 }

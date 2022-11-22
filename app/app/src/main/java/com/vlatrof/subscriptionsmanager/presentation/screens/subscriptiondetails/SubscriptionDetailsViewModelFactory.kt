@@ -20,7 +20,7 @@ class SubscriptionDetailsViewModelFactory(
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return SubscriptionDetailsViewModel(
+        return SubscriptionDetailsViewModelImpl(
             resources = resources,
             getSubscriptionByIdUseCase = getSubscriptionByIdUseCase,
             updateSubscriptionUseCase = updateSubscriptionUseCase,
