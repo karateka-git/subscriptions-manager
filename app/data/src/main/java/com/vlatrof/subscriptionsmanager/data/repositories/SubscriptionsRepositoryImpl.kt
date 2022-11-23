@@ -24,7 +24,7 @@ class SubscriptionsRepositoryImpl(
             }
         }
 
-    override fun getSubscriptionById(id: Int): DomainSubscription {
+    override suspend fun getSubscriptionById(id: Int): DomainSubscription {
         return subscriptionsLocalDataSource.getSubscriptionById(id).toDomainSubscription()
     }
 

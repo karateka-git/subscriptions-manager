@@ -18,7 +18,7 @@ interface SubscriptionsDao {
     fun getAllFlow(): Flow<List<SubscriptionEntity>>
 
     @Query("SELECT * FROM subscriptions WHERE id=:id ")
-    fun getById(id: Int): SubscriptionEntity
+    suspend fun getById(id: Int): SubscriptionEntity
 
     @Query("DELETE FROM subscriptions")
     fun deleteAll()

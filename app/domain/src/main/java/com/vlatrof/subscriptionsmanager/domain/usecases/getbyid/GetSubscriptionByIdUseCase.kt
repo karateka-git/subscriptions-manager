@@ -5,5 +5,5 @@ import kotlinx.coroutines.Deferred
 
 interface GetSubscriptionByIdUseCase {
 
-    operator fun invoke(id: Int): Deferred<Subscription>
+    suspend operator fun invoke(id: Int): Subscription
 }

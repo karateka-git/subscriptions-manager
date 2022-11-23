@@ -2,10 +2,7 @@ package com.vlatrof.subscriptionsmanager.domain.usecases.getbyid
 
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import com.vlatrof.subscriptionsmanager.domain.repositories.SubscriptionsRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
+import kotlinx.coroutines.*
 
 class GetSubscriptionByIdUseCaseImpl(
 
@@ -13,9 +10,7 @@ class GetSubscriptionByIdUseCaseImpl(
 
 ) : GetSubscriptionByIdUseCase {
 
-    override fun invoke(id: Int): Deferred<Subscription> {
-        return CoroutineScope(Dispatchers.IO).async {
-            subscriptionsRepository.getSubscriptionById(id)
-        }
+    override suspend fun invoke(id: Int): Subscription = withContext(Dispatchers.IO) {
+        subscriptionsRepository.getSubscriptionById(id)
     }
 }

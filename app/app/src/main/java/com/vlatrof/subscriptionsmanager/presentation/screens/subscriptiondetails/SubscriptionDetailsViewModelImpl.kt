@@ -61,7 +61,7 @@ class SubscriptionDetailsViewModelImpl(
 
     override fun loadSubscriptionById(id: Int) {
         viewModelScope.launch(mainDispatcher) {
-            subscriptionLiveData.value = getSubscriptionByIdUseCase(id).await()
+            subscriptionLiveData.value = getSubscriptionByIdUseCase(id)
         }
     }
 

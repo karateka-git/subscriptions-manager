@@ -18,7 +18,7 @@ class SubscriptionsLocalDataSource(private val subscriptionsDao: SubscriptionsDa
             }
         }
 
-    fun getSubscriptionById(id: Int): DataSubscription {
+    suspend fun getSubscriptionById(id: Int): DataSubscription {
         return DataSubscription(subscriptionsDao.getById(id))
     }
 
