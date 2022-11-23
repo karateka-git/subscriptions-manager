@@ -34,11 +34,11 @@ class SubscriptionDetailsViewModelImpl(
 
     override val subscriptionLiveData = MutableLiveData<Subscription?>()
 
-    override val nameTitleLiveData = MutableLiveData("")
+    // стандартный Pair может быть заменён на свою модель, к примеру ValueAndStateEditText(value: String, State: InputState)
+    // ну и название переменных тоже стоит изменить :)
+    override val nameTitleLiveData: MutableLiveData<Pair<String, InputState>> = MutableLiveData(Pair("", InputState.Initial))
 
     override val nextRenewalTitleLiveData = MutableLiveData("")
-
-    override val nameInputState = MutableLiveData<InputState>(InputState.Initial)
 
     override val costInputState = MutableLiveData<InputState>(InputState.Initial)
 
@@ -76,22 +76,21 @@ class SubscriptionDetailsViewModelImpl(
             deleteSubscriptionByIdUseCase(id)
         }
     }
-    
+
     override fun handleNewNameInputValue(newValue: String) {
-        nameTitleLiveData.value = newValue
-        nameInputState.value = validateNameValue(newValue)
-        buttonSaveState.value = validateSaveButtonState()
+        nameTitleLiveData.value = Pair(newValue, validateNameValue(newValue))
+        validateSaveButtonState()
     }
 
     override fun handleNewCostInputValue(newValue: String) {
         costInputState.value = validateCostValue(newValue)
-        buttonSaveState.value = validateSaveButtonState()
+        validateSaveButtonState()
     }
 
     override fun handleNewCurrencyValue(newValue: String) {
         currencyInputValue = newValue
         currencyInputState.value = validateCurrencyValue(newValue)
-        buttonSaveState.value = validateSaveButtonState()
+        validateSaveButtonState()
     }
 
     override fun handleNewStartDateValue(newValue: Long) {
@@ -150,8 +149,9 @@ class SubscriptionDetailsViewModelImpl(
         return InputState.Correct
     }
 
-    private fun validateSaveButtonState(): Boolean {
-        return nameInputState.value == InputState.Correct &&
+    // лучше чтобы значение buttonSaveState изменялось внутри метода за это отвечающего, к чему передача наверх?)
+    private fun validateSaveButtonState() {
+        buttonSaveState.value = nameTitleLiveData.value?.second == InputState.Correct &&
             costInputState.value == InputState.Correct &&
             currencyInputState.value == InputState.Correct
     }

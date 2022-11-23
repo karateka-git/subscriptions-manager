@@ -105,7 +105,8 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
 
     private fun setupNameTitle() {
         subscriptionDetailsViewModel.nameTitleLiveData.observe(viewLifecycleOwner) {
-            binding.tvSubscriptionDetailsNameTitle.text = it
+            binding.tvSubscriptionDetailsNameTitle.text = it.first
+            binding.tilSubscriptionDetailsName.error = getInputErrorStringByState(it.second)
         }
     }
 
@@ -119,11 +120,6 @@ class SubscriptionDetailsFragment : Fragment(R.layout.fragment_subscription_deta
         // handle new value after text changed
         binding.tietSubscriptionDetailsName.doAfterTextChanged {
             subscriptionDetailsViewModel.handleNewNameInputValue(it.toString())
-        }
-
-        // handle new state
-        subscriptionDetailsViewModel.nameInputState.observe(viewLifecycleOwner) { newState ->
-            binding.tilSubscriptionDetailsName.error = getInputErrorStringByState(newState)
         }
     }
 

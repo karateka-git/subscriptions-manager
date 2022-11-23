@@ -1,6 +1,7 @@
 package com.vlatrof.subscriptionsmanager.presentation.screens.subscriptiondetails
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.vlatrof.subscriptionsmanager.domain.models.Subscription
 import com.vlatrof.subscriptionsmanager.presentation.screens.base.BaseViewModel
 
@@ -8,11 +9,9 @@ abstract class SubscriptionDetailsViewModel : BaseViewModel() {
 
     abstract val subscriptionLiveData: LiveData<Subscription?>
 
-    abstract val nameTitleLiveData: LiveData<String>
+    abstract val nameTitleLiveData: MutableLiveData<Pair<String, InputState>>
 
     abstract val nextRenewalTitleLiveData: LiveData<String>
-
-    abstract val nameInputState: LiveData<InputState>
 
     abstract val costInputState: LiveData<InputState>
 
